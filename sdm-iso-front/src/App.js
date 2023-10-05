@@ -1,16 +1,15 @@
 import logo from './logo.svg';
-import './App.css';
 
 function App() {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
+    <div className="text-center m-0">
+      <header className="bg-[#282c34] items-center justify-center text-white flex min-h[100vh] flex-col">
+        <img src={logo} className="h-[40vmin] pointer-events-none animate-logo-spin" alt="logo" />
         <p>
           Edit <code>src/App.js</code> and save to reload.
         </p>
         <a
-          className="App-link"
+          className="text-[#61dafb]"
           href="https://reactjs.org"
           target="_blank"
           rel="noopener noreferrer"
