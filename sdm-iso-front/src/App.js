@@ -1,24 +1,16 @@
-import logo from './logo.svg';
+import React from 'react';
+import { BrowserRouter, Route, Routes } from 'react-router-dom'
+import MainPage from './components/MainPage/MainPage'
+import './index.css';
 
 function App() {
-  return (
-    <div className="text-center m-0">
-      <header className="bg-[#282c34] items-center justify-center text-white flex min-h[100vh] flex-col">
-        <img src={logo} className="h-[40vmin] pointer-events-none animate-logo-spin" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="text-[#61dafb]"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
-}
-
-export default App;
+    return (
+      <BrowserRouter>
+        <Routes>
+          <Route path="/" element={<MainPage/>}/>
+        </Routes>      
+      </BrowserRouter>
+    )
+  }
+  
+  export default App
