@@ -5,7 +5,11 @@ module.exports = {
     extend: {
       animation: {
         'logo-spin': 'spin infinite 20s linear'
-      }
+      },
+
+      colors: {
+        'iso-slate': '#3E515B'
+      },
     },
   },
   plugins: [],
