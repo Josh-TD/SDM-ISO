@@ -10,7 +10,7 @@ export default function MainPage() {
       <Header />
       <PageTitleWithSearchBar />
       <main className="flex-grow overflow-visible">
-        <FileListLayout />
+        <FileList />
       </main>
     </div>
   )
