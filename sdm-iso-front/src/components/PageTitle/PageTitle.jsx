@@ -1,7 +1,7 @@
 import React from "react";
 import SearchBar from "../SearchBar/SearchBar";
 
-const PageTitle = () => {
+export default function PageTitle() {
   return (
     <div className="bg-iso-offwhite w-full">
       <div className="container pl-10 flex items-center justify-between w-full">
@@ -12,9 +12,8 @@ const PageTitle = () => {
     </div> 
   )
 };
-export default PageTitle;
 
-export const PageTitleWithSearchBar = () => {
+export function PageTitleWithSearchBar() {
   return (
     <div className="bg-iso-offwhite w-full">
       <div className="container pl-10 flex items-center justify-between w-full ">

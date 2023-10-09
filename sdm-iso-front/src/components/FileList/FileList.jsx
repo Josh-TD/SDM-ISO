@@ -1,6 +1,6 @@
 import React from "react";
 
-const FileList = () => {
+export default function FileList() {
   return (
     <div className="grid grid-rows-[0%,95%] grid-cols-[12%,88%] h-full">
       {/* Top 5% for functions */}
@@ -18,14 +18,11 @@ const FileList = () => {
         {/* File list */}
       </div>
     </div>
-  );
-
+  )
 };
-export default FileList;
 
 
-
-export const FileListLayout = () => {
+export function FileListLayout() {
   return (
     <div className="grid grid-rows-[0%,95%] grid-cols-[12%,88%] h-full">
       {/* Top 5% for functions */}

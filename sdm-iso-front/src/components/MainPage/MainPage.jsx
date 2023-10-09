@@ -4,7 +4,7 @@ import { PageTitleWithSearchBar } from '../PageTitle/PageTitle';
 import FileList, { FileListLayout } from '../FileList/FileList';
 
 
-const MainPage = () => {
+export default function MainPage() {
   return (
     <div className='flex flex-col h-screen'>
       <Header />
@@ -13,7 +13,5 @@ const MainPage = () => {
         <FileListLayout />
       </main>
     </div>
-  );
+  )
 };
-
-export default MainPage;

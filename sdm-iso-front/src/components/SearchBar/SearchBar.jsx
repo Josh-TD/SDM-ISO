@@ -1,6 +1,6 @@
 import React from 'react';
 
-const SearchBar = () => {
+export default function SearchBar() {
   return(
     <div className='mr-4 flex items-center justify-between bg-white border-2 border-iso-border-light'>
       <input
@@ -17,5 +17,3 @@ const SearchBar = () => {
     </div>
   )
 };
-
-export default SearchBar

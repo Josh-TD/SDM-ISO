@@ -1,6 +1,6 @@
 import React from 'react';
 
-const Header = () => {
+export default function Header() {
   return (
     <div className="bg-white w-full">
       {/* Icon */}
@@ -15,7 +15,5 @@ const Header = () => {
         {/* We can put elements in here if we want, for example a logout button */}
       </div>
     </div>
-  );
+  )
 };
-
-export default Header;
