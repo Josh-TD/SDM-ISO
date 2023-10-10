@@ -11,8 +11,10 @@ module.exports = {
         'iso-slate': '#3E515B',
         'iso-offwhite': '#F4F2EB',
         'iso-dark-text': '#1F303B',
-        'iso-secondary-text': '#9DA6AA',
-        'iso-border-light': '#E6E6E6'
+        'iso-medium-gray': '#9DA6AA',
+        'iso-light-gray': '#717070',
+        'iso-border-light': '#E6E6E6',
+        "iso-link-blue": '#6DABE3'
       },
     },
   },

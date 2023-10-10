@@ -9,7 +9,9 @@ export default function LoginPage () {
       <Header />
       <PageTitle /> 
       <main className="flex-grow overflow-visible">
-        <h1>Sign in</h1>
+        <div>
+          <h1 className="text-xl mt-10">Sign in</h1>
+        </div>
         <AuthBox />
       </main>
     </div>
