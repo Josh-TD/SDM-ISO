@@ -10,7 +10,7 @@ export default function LoginPage () {
       <PageTitle /> 
       <main className="flex-grow overflow-visible">
         <div>
-          <h1 className="text-xl mt-10">Sign in</h1>
+          <h1 className="text-4xl mt-10">Sign in</h1>
         </div>
         <AuthBox />
       </main>
