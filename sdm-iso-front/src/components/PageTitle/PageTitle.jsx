@@ -1,7 +1,7 @@
 import React from "react";
 import SearchBar from "../SearchBar/SearchBar";
 
-export default function PageTitle() {
+export function PageTitle() {
   return (
     <div className="bg-iso-offwhite w-full">
       <div className="container pl-10 flex items-center justify-between w-full">
