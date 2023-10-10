@@ -21,7 +21,7 @@ export function AuthBox() {
           </div>
 
           {/* container for the inline Keep Me Signed In and Sign In button */}
-          <div class="display-block w-full min-h-">
+          <div class="display-block w-full m-5">
             <div className="inline-flex items-center justify-between mx-3 float-left">
               <div className="pr-1">
                 <input class="cursor-pointer" type="checkbox" id="staySignedIn" name="staySignedIn" value="staySignedIn"></input>
