@@ -10,7 +10,7 @@ export default function LoginPage () {
       <PageTitle /> 
       <main className="flex-grow overflow-visible">
         <div className="justify-center text-center">
-          <div className="w-2/5"> 
+          <div className="w-2/3">
             <h1 className="text-4xl mt-10 mb-3 w-min-min text-center align-baseline">Sign in</h1>
           </div>
           <AuthBox />
