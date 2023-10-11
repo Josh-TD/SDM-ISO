@@ -9,10 +9,12 @@ module.exports = {
 
       colors: {
         'iso-slate': '#3E515B',
+        'iso-light-slate': '#8e979b',
         'iso-offwhite': '#F4F2EB',
         'iso-dark-text': '#1F303B',
-        'iso-medium-gray': '#9DA6AA',
-        'iso-light-gray': '#717070',
+        'iso-light-gray': '#9da6aa',
+        'iso-dim-gray': '#666666',
+        'iso-medium-gray': '#717070',
         'iso-border-light': '#E6E6E6',
         "iso-link-blue": '#6DABE3'
       },

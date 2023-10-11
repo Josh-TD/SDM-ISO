@@ -4,18 +4,18 @@ export function AuthBox() {
   return (
     <div class="min-w-screen min-h-0 h-full flex justify-center items-center">
       <div class="relative bg-iso-offwhite w-2/5 h-2/3 shadow">
-        <span class="m-10 flex justify-center items-center text-xl font-semibold text-iso-dark-text">Please enter your email address and password.</span>
+        <span class="m-10 flex justify-center items-center text-xl font-semibold text-iso-slate font-semibold">Please enter your email address and password.</span>
         <div className="w-full display-block text-center pr-7">
           {/* Email Address*/}
           <div className="mb-5">
-            <label className="m-2 top-0 font-semibold text-iso-light-gray justify-right" for="email">Email Address:</label>
+            <label className="m-2 top-0 text-iso-dim-gray justify-right font-regular" for="email">Email Address:</label>
             <input className="placeholder-color-iso-light-gray shadow cursor-text h-7 w-1/2 pl-2" placeholder="Email Address">
             </input>
           </div>
 
           {/* Password*/}
           <div>
-            <label className="m-2 pl-8 font-semibold text-iso-light-gray justify-right" for="password">Password:</label>
+            <label className="m-2 pl-9 text-iso-dim-gray justify-right font-regular" for="password">Password:</label>
             <input className="placeholder-color-iso-light-gray pl-2 shadow cursor-text h-7 w-1/2" placeholder="Password">
             </input>
           </div>
@@ -26,16 +26,16 @@ export function AuthBox() {
               <div className="pr-1">
                 <input className="cursor-pointer" type="checkbox" id="staySignedIn" name="staySignedIn" value="staySignedIn"></input>
               </div>
-              <label for="html" className="text-base font-semibold text-iso-light-gray pr-10">Keep Me Signed In</label>
+              <label for="html" className="text-base font-regular text-iso-medium-gray pr-10 font-regular">Keep Me Signed In</label>
             </div>
 
               <div className = "inline-flex mt-5 pl-10 items-right">
-                <button className="bg-iso-medium-gray hover:bg-iso-link-blue text-white font-bold py-2 px-4 rounded cursor-pointer float-right">Sign In</button>
+                <button className="bg-iso-light-slate hover:bg-iso-link-blue text-white font-semibold py-2 px-4 rounded cursor-pointer float-right">Sign In</button>
               </div>
           </div> 
 
           <div className="w-full text-right p-7">
-            <a className="text-iso-link-blue">Forgot your password?</a>
+            <a className="text-iso-link-blue font-regular">Forgot your password?</a>
           </div> 
  
         </div>
