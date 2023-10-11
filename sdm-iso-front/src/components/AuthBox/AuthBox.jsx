@@ -9,14 +9,14 @@ export function AuthBox() {
           {/* Email Address*/}
           <div className="mb-5">
             <label className="m-2 top-0 font-semibold text-iso-light-gray justify-right" for="email">Email Address:</label>
-            <input className="shadow cursor-text h-7 w-1/2">
+            <input className="placeholder-color-iso-light-gray shadow cursor-text h-7 w-1/2 pl-2" placeholder="Email Address">
             </input>
           </div>
 
           {/* Password*/}
           <div>
             <label className="m-2 pl-8 font-semibold text-iso-light-gray justify-right" for="password">Password:</label>
-            <input className="pl-4 shadow cursor-text h-7 w-1/2">
+            <input className="placeholder-color-iso-light-gray pl-2 shadow cursor-text h-7 w-1/2" placeholder="Password">
             </input>
           </div>
 
