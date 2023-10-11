@@ -16,6 +16,12 @@ module.exports = {
         'iso-border-light': '#E6E6E6',
         "iso-link-blue": '#6DABE3'
       },
+
+      fontFamily: {
+        'light': ['Open Sans', 'light'],
+        'regular': ['Open Sans', 'regular'],
+        'semibold': ['Open Sans', 'semibold']
+      },
     },
   },
   plugins: [],

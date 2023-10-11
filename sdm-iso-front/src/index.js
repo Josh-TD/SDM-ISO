@@ -4,6 +4,10 @@ import reportWebVitals from './reportWebVitals';
 import App from './App';
 
 import './index.css';
+import "@fontsource/open-sans";
+import "@fontsource/open-sans/300.css";
+import "@fontsource/open-sans/400.css";
+import "@fontsource/open-sans/700.css";
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(<App />);
