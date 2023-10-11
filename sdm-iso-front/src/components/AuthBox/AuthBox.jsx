@@ -26,15 +26,15 @@ export function AuthBox() {
               <div className="pr-1">
                 <input className="cursor-pointer" type="checkbox" id="staySignedIn" name="staySignedIn" value="staySignedIn"></input>
               </div>
-              <label for="html" className="text-base font-semibold text-iso-light-gray">Keep Me Signed In</label>
+              <label for="html" className="text-base font-semibold text-iso-light-gray pr-10">Keep Me Signed In</label>
             </div>
 
-              <div className = "inline-flex m-5 items-right">
+              <div className = "inline-flex mt-5 pl-10 items-right">
                 <button className="bg-iso-medium-gray hover:bg-iso-link-blue text-white font-bold py-2 px-4 rounded cursor-pointer float-right">Sign In</button>
               </div>
           </div> 
 
-          <div className="w-full text-right pr-7">
+          <div className="w-full text-right p-7">
             <a className="text-iso-link-blue">Forgot your password?</a>
           </div> 
  
