@@ -1,6 +1,6 @@
 import React from 'react';
 
-export function AuthBox() {
+export function AuthBox(props) {
   return (
     <div class="min-w-screen min-h-0 h-full flex justify-center items-center">
       <div class="relative bg-iso-offwhite w-2/5 h-2/3 shadow">
@@ -30,7 +30,7 @@ export function AuthBox() {
             </div>
 
               <div className = "inline-flex mt-5 pl-10 items-right">
-                <button className="bg-iso-light-slate hover:bg-iso-link-blue text-white font-semibold py-2 px-4 rounded cursor-pointer float-right">Sign In</button>
+                <button className="bg-iso-light-slate hover:bg-iso-link-blue text-white font-semibold py-2 px-4 rounded cursor-pointer float-right" onClick={props.authenticateFn}>Sign In</button>
               </div>
           </div> 
 
