@@ -1,5 +1,4 @@
 package com.example.sdmisoback.model;
-import java.time.LocalDateTime;
 import java.util.Date;
 import jakarta.persistence.*;
 
@@ -18,7 +17,6 @@ public class File {
     @Column(length = 255)
     private String filePath;
 
-    @Column
     private Date createDate;
 
     // constructor 
