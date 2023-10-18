@@ -13,6 +13,7 @@ public class User {
 
     private String emailAddress;
     private String password;
+    private String[] recentlyViewed;
 
     public User() {}
 
@@ -58,6 +59,14 @@ public class User {
 
     public String getPassword() {
         return password;
+    }
+
+    public String[] getRecentlyViewed() {
+        return recentlyViewed;
+    }
+
+    public void setRecentlyViewed(String[] filePaths) {
+        this.recentlyViewed = filePaths;
     }
 
     @Override
