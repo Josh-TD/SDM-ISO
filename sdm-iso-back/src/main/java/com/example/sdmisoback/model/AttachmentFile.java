@@ -2,11 +2,11 @@ package com.example.sdmisoback.model;
 import java.util.Date;
 import jakarta.persistence.*;
 
-
-public class File {
+@Entity
+public class AttachmentFile {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int fileId;
+    private int attachmentId;
 
     @Column(length = 255)
     private String description;
@@ -21,7 +21,7 @@ public class File {
     private Date createDate;
 
     // constructor 
-    public File(String description, String fileName, String filePath, Date createDate) {
+    public AttachmentFile(String description, String fileName, String filePath, Date createDate) {
         this.description = description;
         this.fileName = fileName;
         this.filePath = filePath;
@@ -30,7 +30,7 @@ public class File {
 
     // Getters and setters for all attributes
     public int getAttachmentId() {
-        return fileId;
+        return attachmentId;
     }
 
     public String getDescription() {
