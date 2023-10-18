@@ -15,14 +15,17 @@ public class AttachType {
     @Column(nullable = false, length = 20)
     private String applicationCategoryType;
 
-    // Constructor
+    // Constructors
+    public AttachType(){
+    }
+    
     public AttachType(String attachmentType, String description, String applicationCategoryType) {
         this.attachmentType = attachmentType;
         this.description = description;
         this.applicationCategoryType = applicationCategoryType;
     }
 
-    public String getAttachType(){
+    public String getAttachmentType(){
         return attachmentType;
     }
     

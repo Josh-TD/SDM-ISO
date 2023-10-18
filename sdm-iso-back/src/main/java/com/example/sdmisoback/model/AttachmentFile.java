@@ -1,5 +1,6 @@
 package com.example.sdmisoback.model;
 import java.util.Date;
+
 import jakarta.persistence.*;
 
 @Entity
@@ -20,7 +21,10 @@ public class AttachmentFile {
     @Column(nullable = false)
     private Date createDate;
 
-    // constructor 
+    // constructors
+    public AttachmentFile(){
+    }
+
     public AttachmentFile(String description, String fileName, String filePath, Date createDate) {
         this.description = description;
         this.fileName = fileName;
