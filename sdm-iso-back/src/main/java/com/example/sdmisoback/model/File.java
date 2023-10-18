@@ -17,6 +17,7 @@ public class File {
     @Column(length = 255)
     private String filePath;
 
+    @Column(nullable = false)
     private Date createDate;
 
     // constructor 
