@@ -24,15 +24,15 @@ public class AucInfo {
     @Column(name="auction_end_date")
     private Date auctionEndDate;
 
-    // TODO: see whats up with FK_AUC_TYPE in the diagram
-    @Column(name="auction_type", length = 20)
-    private String auctionType;
+    @ManyToOne
+    @JoinColumn(name="auction_type", foreignKey = @ForeignKey(name = "fk_auction_type"))
+    private AucType auctionType;
 
     // constructors
     public AucInfo() {}
 
     public AucInfo(PeriodInfo commitmentPeriodInfo, PeriodInfo auctionPeriodInfo, Date auctionBeginDate,
-            Date auctionEndDate, String auctionType) {
+            Date auctionEndDate, AucType auctionType) {
         this.commitmentPeriodInfo = commitmentPeriodInfo;
         this.auctionPeriodInfo = auctionPeriodInfo;
         this.auctionBeginDate = auctionBeginDate;
@@ -62,6 +62,6 @@ public class AucInfo {
     }
 
     public String getAuctionType() {
-        return auctionType;
+        return auctionType.getAuctionType();
     }
 }

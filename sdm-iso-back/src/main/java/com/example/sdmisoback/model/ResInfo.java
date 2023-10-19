@@ -12,14 +12,14 @@ public class ResInfo {
     @Column(name="resource_name", length = 100)
     private String resourceName;
 
-    // TODO: see whats up with FK_RES_TYPE in the diagram
-    @Column(name="resource_type", length = 20)
-    private String resourceType;
+    @ManyToOne
+    @JoinColumn(name="resource_type", foreignKey = @ForeignKey(name = "fk_resource_type"))
+    private ResType resourceType;
     
     // constructers
     public ResInfo() {}
 
-    public ResInfo(String resourceName, String resourceType) {
+    public ResInfo(String resourceName, ResType resourceType) {
         this.resourceName = resourceName;
         this.resourceType = resourceType;
     }
@@ -34,6 +34,8 @@ public class ResInfo {
     }
 
     public String getResourceType() {
-        return resourceType;
+        return resourceType.getResourceType();
     }
+
+
 }
