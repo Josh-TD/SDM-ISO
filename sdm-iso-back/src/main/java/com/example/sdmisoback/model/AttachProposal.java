@@ -33,6 +33,7 @@ public class AttachProposal implements Serializable{
         this.attachmentType = attachmentType;
     }
 
+    // gets and sets
     public int getProposalId() {
         return proposalId;
     }

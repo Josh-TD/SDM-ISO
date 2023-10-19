@@ -17,6 +17,10 @@ public class ProposalInfo {
     private ProjInfo projInfo;
 
     @ManyToOne
+    @JoinColumn(name = "project_type", foreignKey = @ForeignKey(name = "fk_proj_type"))
+    private ProjType projType;
+
+    @ManyToOne
     @JoinColumn(name = "auction_id", foreignKey = @ForeignKey(name = "fk_auc_info"))
     private AucInfo auctionInfo;
 

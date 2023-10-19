@@ -25,7 +25,7 @@ public class AttachmentFile {
     // constructors
     public AttachmentFile(){
     }
-    
+
     public AttachmentFile(String description, String fileName, String filePath, Date createDate) {
         this.description = description;
         this.fileName = fileName;
@@ -33,7 +33,7 @@ public class AttachmentFile {
         this.createDate = createDate;
     }
 
-    // Getters and setters for all attributes
+    // gets and sets
     public int getAttachmentId() {
         return attachmentId;
     }

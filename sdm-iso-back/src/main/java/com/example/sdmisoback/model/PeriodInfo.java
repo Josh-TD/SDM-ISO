@@ -36,6 +36,8 @@ public class PeriodInfo {
         this.parentPeriodId = parentPeriodId;
     }
 
+
+    // gets and set
     public int getPeriodId() {
         return periodId;
     }

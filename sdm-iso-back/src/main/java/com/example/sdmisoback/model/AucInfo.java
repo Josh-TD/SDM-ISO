@@ -40,6 +40,7 @@ public class AucInfo {
         this.auctionType = auctionType;
     }
 
+    // gets and sets
     public int getAuctionId() {
         return auctionId;
     }
