@@ -28,8 +28,7 @@ public class AttachProposal implements Serializable{
     public AttachProposal() {
     }
 
-    public AttachProposal(int proposalId, int attachmentFileId, AttachType attachmentType) {
-        this.proposalId = proposalId;
+    public AttachProposal( int attachmentFileId, AttachType attachmentType) {
         this.attachmentFileId = attachmentFileId;
         this.attachmentType = attachmentType;
     }

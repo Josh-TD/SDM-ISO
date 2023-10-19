@@ -16,7 +16,7 @@ public class AucInfo {
 
     @ManyToOne
     @JoinColumn(name = "auction_period_id", foreignKey = @ForeignKey(name = "fk_auc_period"))
-    private PeriodInfo AuctionPeriodInfo;
+    private PeriodInfo auctionPeriodInfo;
 
     @Column(name="auction_begin_date")
     private Date auctionBeginDate;
@@ -27,4 +27,40 @@ public class AucInfo {
     // TODO: see whats up with FK_AUC_TYPE in the diagram
     @Column(name="auction_type", length = 20)
     private String auctionType;
+
+    // constructors
+    public AucInfo() {}
+
+    public AucInfo(PeriodInfo commitmentPeriodInfo, PeriodInfo auctionPeriodInfo, Date auctionBeginDate,
+            Date auctionEndDate, String auctionType) {
+        this.commitmentPeriodInfo = commitmentPeriodInfo;
+        this.auctionPeriodInfo = auctionPeriodInfo;
+        this.auctionBeginDate = auctionBeginDate;
+        this.auctionEndDate = auctionEndDate;
+        this.auctionType = auctionType;
+    }
+
+    public int getAuctionId() {
+        return auctionId;
+    }
+
+    public PeriodInfo getCommitmentPeriodInfo() {
+        return commitmentPeriodInfo;
+    }
+
+    public PeriodInfo getAuctionPeriodInfo() {
+        return auctionPeriodInfo;
+    }
+
+    public Date getAuctionBeginDate() {
+        return auctionBeginDate;
+    }
+
+    public Date getAuctionEndDate() {
+        return auctionEndDate;
+    }
+
+    public String getAuctionType() {
+        return auctionType;
+    }
 }

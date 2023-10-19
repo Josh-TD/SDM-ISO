@@ -19,8 +19,7 @@ public class AttachType {
     public AttachType(){
     }
 
-    public AttachType(String attachmentType, String description, String applicationCategoryType) {
-        this.attachmentType = attachmentType;
+    public AttachType(String description, String applicationCategoryType) {
         this.description = description;
         this.applicationCategoryType = applicationCategoryType;
     }

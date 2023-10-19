@@ -24,4 +24,39 @@ public class PeriodInfo {
 
     @Column(name="parent_period_id")
     private int parentPeriodId;
+
+    // constructors
+    public PeriodInfo() {}
+
+    public PeriodInfo(String periodType, String description, Date beginDate, Date endDate, int parentPeriodId) {
+        this.periodType = periodType;
+        this.description = description;
+        this.beginDate = beginDate;
+        this.endDate = endDate;
+        this.parentPeriodId = parentPeriodId;
+    }
+
+    public int getPeriodId() {
+        return periodId;
+    }
+
+    public String getPeriodType() {
+        return periodType;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public Date getBeginDate() {
+        return beginDate;
+    }
+
+    public Date getEndDate() {
+        return endDate;
+    }
+
+    public int getParentPeriodId() {
+        return parentPeriodId;
+    }
 }
