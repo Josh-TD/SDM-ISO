@@ -11,12 +11,12 @@ public class AttachProposal implements Serializable{
 
     // Foreign key from ProposalInfo
     @Id
-    @Column(name = "proposal_id")
+    @Column(name="proposal_id")
     private int proposalId;
 
     // Foreign key from AttachmentFile
     @Id
-    @Column(name = "attachment_id")
+    @Column(name="attachment_id")
     private int attachmentFileId;
 
     // Foreign key from AttachType

@@ -7,18 +7,19 @@ import jakarta.persistence.*;
 public class AttachmentFile {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name="attachment_id")
     private int attachmentId;
 
-    @Column(length = 255)
+    @Column(name="description", length = 255)
     private String description;
     
-    @Column(length = 255)
+    @Column(name="file_name", length = 255)
     private String fileName;
 
-    @Column(length = 255)
+    @Column(name="file_path", length = 255)
     private String filePath;
 
-    @Column(nullable = false)
+    @Column(name="create_date", nullable = false)
     private Date createDate;
 
     // constructors

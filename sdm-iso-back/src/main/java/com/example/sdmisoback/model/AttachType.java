@@ -6,19 +6,19 @@ import jakarta.persistence.*;
 @Entity
 public class AttachType {
     @Id
-    @Column(length = 50)
+    @Column(name="attachment_type", length = 50)
     private String attachmentType;
 
-    @Column(nullable = false, length = 100)
+    @Column(name="description", nullable = false, length = 100)
     private String description;
     
-    @Column(nullable = false, length = 20)
+    @Column(name="accplitation_category_type", nullable = false, length = 20)
     private String applicationCategoryType;
 
     // Constructors
     public AttachType(){
     }
-    
+
     public AttachType(String attachmentType, String description, String applicationCategoryType) {
         this.attachmentType = attachmentType;
         this.description = description;
