@@ -1,6 +1,26 @@
-import React from 'react';
+import React, { useState } from 'react';
+import {Icon} from 'react-icons-kit';
+import {eyeOff} from 'react-icons-kit/feather/eyeOff';
+import {eye} from 'react-icons-kit/feather/eye'
+
 
 export function AuthBox(props) {
+
+  // State variables
+  const [password, setPassword] = useState('');
+  const [showPassword, setShowPassword] = useState(false);
+
+  // Function to toggle password visibility
+  const togglePasswordVisibility = () => {
+    setShowPassword(!showPassword);
+  };
+
+  // Function that will submit the email and password to backend
+  const submitLogin = () => {
+    console.log(password)
+  };
+
+
   return (
     <div class="min-w-screen min-h-0 h-full flex justify-center items-center">
       <div class="relative bg-iso-offwhite w-2/5 h-2/3 shadow">
@@ -15,10 +35,13 @@ export function AuthBox(props) {
 
           {/* Password*/}
           <div>
-            <label className="m-2 pl-9 text-iso-dim-gray justify-right font-regular" for="password">Password:</label>
-            <input className="placeholder-color-iso-light-gray pl-2 shadow cursor-text h-7 w-1/2" placeholder="Password">
+            <label className="m-2 pl-12 text-iso-dim-gray justify-right font-regular" for="password">Password:</label>
+            <input className="placeholder-color-iso-light-gray pl-2 shadow cursor-text h-7 w-1/2" placeholder="Password" type={showPassword ? 'text' : 'password'} 
+            >
             </input>
+            <Icon icon={showPassword ? eye : eyeOff} onClick={togglePasswordVisibility} className='ml-2 cursor-pointer'></Icon>
           </div>
+
 
           {/* container for the inline Keep Me Signed In and Sign In button */}
           <div className="display-block w-full m-5">
