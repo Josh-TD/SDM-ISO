@@ -1,7 +1,7 @@
 import React from "react";
 import { useMemo } from 'react';
 import mockData from "./mockData.json";
-import { useTable, usePagination } from "react-table";
+import { useTable, usePagination, useSortBy } from "react-table";
 
 const COLUMNS = [
     {
@@ -48,6 +48,7 @@ export const FileTable = () => {
         columns,
         data
         },
+        useSortBy,
         usePagination
     )
 
@@ -58,8 +59,23 @@ export const FileTable = () => {
                     {headerGroups.map((headerGroup) => (
                     <tr {...headerGroup.getHeaderGroupProps()}>
                         {headerGroup.headers.map((column) => (
-                            <th {...column.getHeaderProps()}>
+                            <th {...column.getHeaderProps(column.getSortByToggleProps())}>
                                 {column.render('Header')}
+                                <span className="display: inline-block">
+                                {column.isSorted ? (column.isSortedDesc ? 
+                                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
+                                        <path stroke-linecap="round" stroke-linejoin="round" d="M4.5 15.75l7.5-7.5 7.5 7.5" />
+                                    </svg>
+                                    : 
+                                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
+                                        <path stroke-linecap="round" stroke-linejoin="round" d="M19.5 8.25l-7.5 7.5-7.5-7.5" />
+                                    </svg>
+                                  ) : 
+                                  <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
+                                    <path stroke-linecap="round" stroke-linejoin="round" d="M8.25 15L12 18.75 15.75 15m-7.5-6L12 5.25 15.75 9" />
+                                    </svg>
+                                }
+                                </span>
                             </th>
                         ))}
                     </tr>
@@ -79,8 +95,8 @@ export const FileTable = () => {
                 </tbody>
             </table>
             <div>
-                <button onClick={() => previousPage()}>Previous</button>
-                <button onClick={() => nextPage()}>Next</button>
+                <button className="bg-iso-offwhite p-1 border-solid border-2" onClick={() => previousPage()}>Previous</button>
+                <button className="bg-iso-offwhite p-1 border-solid border-2" onClick={() => nextPage()}>Next</button>
             </div>
         </>
     )
