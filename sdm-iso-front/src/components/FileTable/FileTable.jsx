@@ -54,7 +54,7 @@ export const FileTable = () => {
 
     return (
         <>
-            <table className="bg-iso-offwhite border-solid rounded-md"{...getTableProps()}>
+            <table className="bg-iso-offwhite width: 100% height: 80%" {...getTableProps()}>
                 <thead className="bg-iso-light-gray">
                     {headerGroups.map((headerGroup) => (
                     <tr {...headerGroup.getHeaderGroupProps()}>
