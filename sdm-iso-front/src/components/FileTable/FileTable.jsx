@@ -1,7 +1,7 @@
 import React from "react";
 import { useMemo } from 'react';
 import mockData from "./mockData.json";
-import { useTable } from "react-table";
+import { useTable, usePagination } from "react-table";
 
 const COLUMNS = [
     {
@@ -35,38 +35,53 @@ export const FileTable = () => {
     const columns = useMemo(() => COLUMNS, [])
     const data = useMemo(() => mockData, [])
     
-    const tableInstance = useTable({
+    const { 
+        getTableProps, 
+        getTableBodyProps, 
+        headerGroups, 
+        page, 
+        previousPage, 
+        nextPage, 
+        prepareRow
+    } = useTable (
+        {
         columns,
         data
-    })
-
-    const { getTableProps, getTableBodyProps, headerGroups, rows, prepareRow} = tableInstance
+        },
+        usePagination
+    )
 
     return (
-        <table className="bg-iso-offwhite border-solid rounded-md"{...getTableProps()}>
-            <thead className="bg-iso-light-gray">
-                {headerGroups.map((headerGroup) => (
-                <tr {...headerGroup.getHeaderGroupProps()}>
-                    {headerGroup.headers.map((column) => (
-                        <th {...column.getHeaderProps()}>
-                            {column.render('Header')}
-                        </th>
+        <>
+            <table className="bg-iso-offwhite border-solid rounded-md"{...getTableProps()}>
+                <thead className="bg-iso-light-gray">
+                    {headerGroups.map((headerGroup) => (
+                    <tr {...headerGroup.getHeaderGroupProps()}>
+                        {headerGroup.headers.map((column) => (
+                            <th {...column.getHeaderProps()}>
+                                {column.render('Header')}
+                            </th>
+                        ))}
+                    </tr>
                     ))}
-                </tr>
-                ))}
-            </thead>
-            <tbody {...getTableBodyProps()}>
-                {rows.map((row) => {
-                    prepareRow(row)
-                    return (
-                        <tr {...row.getRowProps()}>
-                            {row.cells.map( cell => {
-                                return <td {...cell.getCellProps()}>{cell.render('Cell')}</td>
-                            })}
-                        </tr>
-                    )
-                })}
-            </tbody>
-        </table>
+                </thead>
+                <tbody {...getTableBodyProps()}>
+                    {page.map((row) => {
+                        prepareRow(row)
+                        return (
+                            <tr {...row.getRowProps()}>
+                                {row.cells.map( cell => {
+                                    return <td {...cell.getCellProps()}>{cell.render('Cell')}</td>
+                                })}
+                            </tr>
+                        )
+                    })}
+                </tbody>
+            </table>
+            <div>
+                <button onClick={() => previousPage()}>Previous</button>
+                <button onClick={() => nextPage()}>Next</button>
+            </div>
+        </>
     )
 }
