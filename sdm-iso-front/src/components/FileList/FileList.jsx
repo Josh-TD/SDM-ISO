@@ -100,6 +100,11 @@ export default function FileList() {
             <div className="grow text-base font-semibold text-iso-secondary-text pl-4 pr-6 my-4 cursor-pointer">FileType</div>
             <CheckBoxes array={fileTypesFilter} onChange={toggleFileTypes} />
           </div>
+
+          <div className="flex items-center justify-between border-y-4 border-iso-border-light">
+            <div className="grow text-base font-semibold text-iso-secondary-text pl-4 pr-6 my-4 cursor-pointer">AuctionType</div>
+            <CheckBoxes array={fileTypesFilter} onChange={toggleFileTypes} />
+          </div>
         </div>
       </div>
 
