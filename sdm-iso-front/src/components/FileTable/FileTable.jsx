@@ -54,14 +54,14 @@ export const FileTable = () => {
 
     return (
         <>
-            <table className="bg-iso-offwhite width: 100% height: 80%" {...getTableProps()}>
+            <table className="bg-iso-offwhite w-full h-4/5" {...getTableProps()}>
                 <thead className="bg-iso-light-gray">
                     {headerGroups.map((headerGroup) => (
                     <tr {...headerGroup.getHeaderGroupProps()}>
                         {headerGroup.headers.map((column) => (
                             <th {...column.getHeaderProps(column.getSortByToggleProps())}>
                                 {column.render('Header')}
-                                <span className="display: inline-block">
+                                <span className="inline-block">
                                 {column.isSorted ? (column.isSortedDesc ? 
                                     <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
                                         <path stroke-linecap="round" stroke-linejoin="round" d="M4.5 15.75l7.5-7.5 7.5 7.5" />
