@@ -79,6 +79,21 @@ export default function FileList() {
 
   const [selectedDateRange, setSelectedDateRange] = useState(defaultAll);
 
+    const auctionTypeFilter = [
+    {
+      id: 'fca',
+      label: "fca",
+      default: true,
+    },
+    {
+      id: "other",
+      label: "Other",
+      default: false,
+    }
+  ];
+
+
+
   return (
     <div className="grid grid-cols-[15%,85%] grid-rows-[7%,93%] h-full">
       <div className="col-start-1 row-span-2 pr-1">
@@ -103,6 +118,18 @@ export default function FileList() {
 
           <div className="flex items-center justify-between border-y-4 border-iso-border-light">
             <div className="grow text-base font-semibold text-iso-secondary-text pl-4 pr-6 my-4 cursor-pointer">AuctionType</div>
+            <CheckBoxes array={fileTypesFilter} onChange={auctionTypeFilter} />
+          </div>
+          <div className="flex items-center justify-between border-y-4 border-iso-border-light">
+            <div className="grow text-base font-semibold text-iso-secondary-text pl-4 pr-6 my-4 cursor-pointer">AuctionPeriod</div>
+            <CheckBoxes array={fileTypesFilter} onChange={toggleFileTypes} />
+          </div>
+          <div className="flex items-center justify-between border-y-4 border-iso-border-light">
+            <div className="grow text-base font-semibold text-iso-secondary-text pl-4 pr-6 my-4 cursor-pointer">CreateDate</div>
+            <CheckBoxes array={fileTypesFilter} onChange={toggleFileTypes} />
+          </div>
+          <div className="flex items-center justify-between border-y-4 border-iso-border-light">
+            <div className="grow text-base font-semibold text-iso-secondary-text pl-4 pr-6 my-4 cursor-pointer">ProjectType</div>
             <CheckBoxes array={fileTypesFilter} onChange={toggleFileTypes} />
           </div>
         </div>
