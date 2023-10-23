@@ -1,36 +1,105 @@
-import React from "react";
+import React, { useState } from "react";
 import { FileTable } from "../FileTable/FileTable";
+import { CheckBoxes } from "../Misc/CheckBoxes";
+import { DateRange, dateFilter } from "../Misc/DateRange";
 
 export default function FileList() {
+  const defaultAll = "all";
+  const checkBoxesToggling = (get, set) => {
+    return function (obj) {
+      const id = obj.target.id;
+
+      if (get.includes(id)) {
+        set(get.filter(curr => curr !== id));
+      } else {
+        set(get.concat(id));
+      }
+    };
+  }
+
+  const fileTypesFilter = [
+    {
+      id: defaultAll,
+      label: "All",
+      default: true,
+    },
+    {
+      id: "doc",
+      label: "DOC/DOCX",
+      default: false,
+    },
+    {
+      id: "pdf",
+      label: "PDF",
+      default: false,
+    },
+    {
+      id: "html",
+      label: "HTML",
+      default: false,
+    },
+    {
+      id: "xls",
+      label: "XLS/XLSX",
+      default: false,
+    },
+    {
+      id: "zip",
+      label: "ZIP",
+      default: false,
+    },
+  ];
+  const [selectedFileTypes, setSelectedFileTypes] = useState([defaultAll]);
+  const toggleFileTypes = (obj) => { return checkBoxesToggling(selectedFileTypes, setSelectedFileTypes)(obj) };
+
+  const resourceTypesFilter = [
+    {
+      id: defaultAll,
+      label: "All",
+      default: true,
+    },
+    {
+      id: "gen",
+      label: "Generator",
+      default: false,
+    },
+    {
+      id: "dr",
+      label: "Demand Resource",
+      default: false,
+    },
+    {
+      id: "import",
+      label: "Import",
+      default: false,
+    },
+  ];
+  const [selectedResourceTypes, setSelectedResourceTypes] = useState([defaultAll]);
+  const toggleResouceTypes = (obj) => { return checkBoxesToggling(selectedResourceTypes, setSelectedResourceTypes)(obj) };
+
+  const [selectedDateRange, setSelectedDateRange] = useState(defaultAll);
+
   return (
     <div className="grid grid-cols-[15%,85%] grid-rows-[7%,93%] h-full">
-      {/* Filters */}
       <div className="col-start-1 row-span-2 pr-1">
         <div className="bg-white container w-full flex flex-col shadow-[10px_0px_8px_-8px_#a0aec0]">
 
-          {/* header */}
           <div className="text-base font-semibold text-iso-secondary-text pl-4 pt-1 pb-16">Filtered by:</div>
 
-          {/* Filter item */}
+          <div className="flex items-center justify-between border-y-4 border-iso-border-light">
+            <div className="grow text-base font-semibold text-iso-secondary-text pl-4 pr-6 my-4 cursor-pointer">Date</div>
+            <DateRange id="hello" onChange={setSelectedDateRange} />
+          </div>
+
+          <div className="flex items-center justify-between border-y-4 border-iso-border-light">
+            <div className="grow text-base font-semibold text-iso-secondary-text pl-4 pr-6 my-4 cursor-pointer">Resource Type</div>
+            <CheckBoxes array={resourceTypesFilter} onChange={toggleResouceTypes} />
+          </div>
+
           <div className="flex items-center justify-between border-y-4 border-iso-border-light">
             <div className="grow text-base font-semibold text-iso-secondary-text pl-4 pr-6 my-4 cursor-pointer">FileType</div>
-            <svg 
-              className="w-6 h-6 mr-3 cursor-pointer"
-              xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor">
-              <path strokeLinecap="round" strokeLinejoin="round" d="M19.5 8.25l-7.5 7.5-7.5-7.5" />
-            </svg>
+            <CheckBoxes array={fileTypesFilter} onChange={toggleFileTypes} />
           </div>
-
-          {/* Filter item */}
-          <div className="flex items-center justify-between border-y-4 border-iso-border-light">
-            <div className="grow text-base font-semibold text-iso-secondary-text pl-4 pr-6 my-4 cursor-pointer">Project</div>
-            <svg 
-              className="w-6 h-6 mr-3 cursor-pointer"
-              xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor">
-              <path strokeLinecap="round" strokeLinejoin="round" d="M19.5 8.25l-7.5 7.5-7.5-7.5" />
-            </svg>
-          </div>
-
         </div>
       </div>
 
