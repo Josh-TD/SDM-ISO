@@ -25,8 +25,8 @@ const COLUMNS = [
         cell: (props) => <p>{props.getValue()}</p>
     },
     {
-        accessor: 'lViewed',
-        Header: 'Last Viewed',
+        accessor: 'fDescript',
+        Header: 'Description',
         cell: (props) => <p>{props.getValue()}</p>
     },
 ]
