@@ -4,69 +4,69 @@
         "pName": "Project 1",
         "cName": "Customer 1",
         "cDateTime": "1/01/1991 10:10:10 PM",
-        "lViewed": "1/01/1991 10:10:10 PM"
+        "fDescript": "Financial reports"
     },
     {
         "fName": "File 2",
         "pName": "Project 2",
         "cName": "Customer 2",
         "cDateTime": "1/01/1991 10:10:10 PM",
-        "lViewed": "1/01/1991 10:10:10 PM"
+        "fDescript": "Project documents"
     },
     {
         "fName": "File 3",
         "pName": "Project 3",
         "cName": "Customer 3",
         "cDateTime": "1/01/1991 10:10:10 PM",
-        "lViewed": "1/01/1991 10:10:10 PM"
+        "fDescript": "Meeting notes"
     },
     {
         "fName": "File 4",
         "pName": "Project 4",
         "cName": "Customer 4",
         "cDateTime": "1/01/1991 10:10:10 PM",
-        "lViewed": "1/01/1991 10:10:10 PM"
+        "fDescript": "System load and capacity projections"
     },
     {
         "fName": "File 5",
         "pName": "Project 5",
         "cName": "Customer 5",
         "cDateTime": "1/01/1991 10:10:10 PM",
-        "lViewed": "1/01/1991 10:10:10 PM"
+        "fDescript": "Resource info"
     },
     {
         "fName": "File 6",
         "pName": "Project 6",
         "cName": "Customer 6",
         "cDateTime": "1/01/1991 10:10:10 PM",
-        "lViewed": "1/01/1991 10:10:10 PM"
+        "fDescript": "Grid infrastructure maps"
     },
     {
         "fName": "File 7",
         "pName": "Project 7",
         "cName": "Customer 7",
         "cDateTime": "1/01/1991 10:10:10 PM",
-        "lViewed": "1/01/1991 10:10:10 PM"
+        "fDescript": "Maintenance and repair logs"
     },
     {
         "fName": "File 8",
         "pName": "Project 8",
         "cName": "Customer 8",
         "cDateTime": "1/01/1991 10:10:10 PM",
-        "lViewed": "1/01/1991 10:10:10 PM"
+        "fDescript": "Energy efficiency program"
     },
     {
         "fName": "File 9",
         "pName": "Project 9",
         "cName": "Customer 9",
         "cDateTime": "1/01/1991 10:10:10 PM",
-        "lViewed": "1/01/1991 10:10:10 PM"
+        "fDescript": "Customer satisfaction surveys"
     },
     {
         "fName": "File 10",
         "pName": "Project 10",
         "cName": "Customer 10",
         "cDateTime": "1/01/1991 10:10:10 PM",
-        "lViewed": "1/01/1991 10:10:10 PM"
+        "fDescript": "Supplier contracts and agreements"
     }
 ]
