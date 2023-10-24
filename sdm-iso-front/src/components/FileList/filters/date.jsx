@@ -1,8 +1,7 @@
 import React, { useState } from "react";
-import { Range } from "./Range";
 
 // not sure what to add for now
-export const dateFilter = [
+export const createdDateSliderFilters = [
     {
         id: "all",
         label: "All time"
@@ -37,24 +36,27 @@ export const dateFilter = [
     },
 ];
 
-export const DateRange = ({ id, onChange }) => {
-    const defaultDate = dateFilter.length - 1; // All time
+export const CreatedDateSlider = ({ id, onChange }) => {
+    const defaultDate = createdDateSliderFilters.length - 1; // All time
 
     const [selectedFilter, setSelectedFilter] = useState(defaultDate);
 
     // doing this so it looks better
     const reverseSlider = () => {
-        return dateFilter.length - 1 - selectedFilter;
+        return createdDateSliderFilters.length - 1 - selectedFilter;
     }
 
     const localOnChange = (obj) => {
         const value = obj.target.value;
         setSelectedFilter(value);
         // make sure to use reversed value here
-        onChange(dateFilter[reverseSlider()].id);
+        onChange(createdDateSliderFilters[reverseSlider()].id);
     };
 
     return (
-        <Range id={id} label={dateFilter[reverseSlider()].label} onChange={localOnChange} min={0} max={dateFilter.length - 1} defaultValue={defaultDate} />
+        <div>
+            <legend>{createdDateSliderFilters[reverseSlider()].label}</legend>
+            <input className="w-full" id={id} type="range" onChange={localOnChange} min={0} max={createdDateSliderFilters.length - 1} defaultValue={defaultDate} dir="rtl" />
+        </div>
     )
 };
