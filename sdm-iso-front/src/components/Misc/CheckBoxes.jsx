@@ -5,10 +5,10 @@ export const CheckBoxes = ({ array, onChange }) => {
     return (
         <fieldset>
             {array.map(obj => {
-                return <>
+                return <div key={obj.id}>
                     <CheckBox id={obj.id} label={obj.label} defaultChecked={obj.default} onChange={onChange} />
                     <br />
-                </>
+                </div>
             })}
         </fieldset>
     )

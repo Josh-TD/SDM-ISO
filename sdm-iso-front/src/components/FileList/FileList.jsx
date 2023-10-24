@@ -1,10 +1,21 @@
 import React, { useState } from "react";
+import DatePicker from "react-datepicker";
+
 import { FileTable } from "../FileTable/FileTable";
+import { CheckBox } from "../Misc/CheckBox";
 import { CheckBoxes } from "../Misc/CheckBoxes";
-import { DateRange, dateFilter } from "../Misc/DateRange";
+import { DropDown } from "../Misc/DropDown";
+
+import { defaultAll } from "./filters/common";
+import { fileTypesFilter } from "./filters/fileTypes";
+import { resourceTypesFilter } from "./filters/resourceTypes";
+import { auctionTypesFilter } from "./filters/auctionTypes";
+import { projectTypesFilter } from "./filters/projectTypes";
+import { CreatedDateSlider } from "./filters/date";
 
 export default function FileList() {
-  const defaultAll = "all";
+
+  // doing this so if we want we can do this inline instead of making it a new function
   const checkBoxesToggling = (get, set) => {
     return function (obj) {
       const id = obj.target.id;
@@ -17,82 +28,23 @@ export default function FileList() {
     };
   }
 
-  const fileTypesFilter = [
-    {
-      id: defaultAll,
-      label: "All",
-      default: true,
-    },
-    {
-      id: "doc",
-      label: "DOC/DOCX",
-      default: false,
-    },
-    {
-      id: "pdf",
-      label: "PDF",
-      default: false,
-    },
-    {
-      id: "html",
-      label: "HTML",
-      default: false,
-    },
-    {
-      id: "xls",
-      label: "XLS/XLSX",
-      default: false,
-    },
-    {
-      id: "zip",
-      label: "ZIP",
-      default: false,
-    },
-  ];
   const [selectedFileTypes, setSelectedFileTypes] = useState([defaultAll]);
   const toggleFileTypes = (obj) => { return checkBoxesToggling(selectedFileTypes, setSelectedFileTypes)(obj) };
 
-  const resourceTypesFilter = [
-    {
-      id: defaultAll,
-      label: "All",
-      default: true,
-    },
-    {
-      id: "gen",
-      label: "Generator",
-      default: false,
-    },
-    {
-      id: "dr",
-      label: "Demand Resource",
-      default: false,
-    },
-    {
-      id: "import",
-      label: "Import",
-      default: false,
-    },
-  ];
   const [selectedResourceTypes, setSelectedResourceTypes] = useState([defaultAll]);
   const toggleResouceTypes = (obj) => { return checkBoxesToggling(selectedResourceTypes, setSelectedResourceTypes)(obj) };
 
   const [selectedDateRange, setSelectedDateRange] = useState(defaultAll);
 
-    const auctionTypeFilter = [
-    {
-      id: 'fca',
-      label: "fca",
-      default: true,
-    },
-    {
-      id: "other",
-      label: "Other",
-      default: false,
-    }
-  ];
+  const [selectedAuctionTypes, setSelectedAuctionTypes] = useState([defaultAll]);
+  const toggleAuctionTypes = (obj) => { return checkBoxesToggling(selectedAuctionTypes, setSelectedAuctionTypes)(obj) };
 
+  const [selectedProjectTypes, setSelectedProjectTypes] = useState([defaultAll]);
+  const toggleProjectTypes = (obj) => { return checkBoxesToggling(selectedProjectTypes, setSelectedProjectTypes)(obj) };
 
+  const [auctionDateStart, setAuctionDateStart] = useState(new Date());
+  const [auctionDateEnd, setAuctionDateEnd] = useState(new Date());
+  const [auctionDateAny, setAuctionDateAny] = useState(true);
 
   return (
     <div className="grid grid-cols-[15%,85%] grid-rows-[7%,93%] h-full">
@@ -101,37 +53,34 @@ export default function FileList() {
 
           <div className="text-base font-semibold text-iso-secondary-text pl-4 pt-1 pb-16">Filtered by:</div>
 
-          <div className="flex items-center justify-between border-y-4 border-iso-border-light">
-            <div className="grow text-base font-semibold text-iso-secondary-text pl-4 pr-6 my-4 cursor-pointer">Date</div>
-            <DateRange id="hello" onChange={setSelectedDateRange} />
-          </div>
+          <DropDown label="Project Type" defaultHidden={true}>
+            <CheckBoxes array={projectTypesFilter} onChange={toggleProjectTypes} />
+          </DropDown>
 
-          <div className="flex items-center justify-between border-y-4 border-iso-border-light">
-            <div className="grow text-base font-semibold text-iso-secondary-text pl-4 pr-6 my-4 cursor-pointer">Resource Type</div>
+          <DropDown label="Resource Type" defaultHidden={true}>
             <CheckBoxes array={resourceTypesFilter} onChange={toggleResouceTypes} />
-          </div>
+          </DropDown>
 
-          <div className="flex items-center justify-between border-y-4 border-iso-border-light">
-            <div className="grow text-base font-semibold text-iso-secondary-text pl-4 pr-6 my-4 cursor-pointer">FileType</div>
-            <CheckBoxes array={fileTypesFilter} onChange={toggleFileTypes} />
-          </div>
+          <DropDown label="Auction Type" defaultHidden={true}>
+            <CheckBoxes array={auctionTypesFilter} onChange={toggleAuctionTypes} />
+          </DropDown>
 
-          <div className="flex items-center justify-between border-y-4 border-iso-border-light">
-            <div className="grow text-base font-semibold text-iso-secondary-text pl-4 pr-6 my-4 cursor-pointer">AuctionType</div>
-            <CheckBoxes array={fileTypesFilter} onChange={auctionTypeFilter} />
-          </div>
-          <div className="flex items-center justify-between border-y-4 border-iso-border-light">
-            <div className="grow text-base font-semibold text-iso-secondary-text pl-4 pr-6 my-4 cursor-pointer">AuctionPeriod</div>
+          <DropDown label="Auction Period" defaultHidden={true}>
+            <CheckBox label="Any date" checked={auctionDateAny} onChange={(e) => setAuctionDateAny(!auctionDateAny)} />
+            <legend>Start date:</legend>
+            <DatePicker selected={auctionDateStart} onChange={(date) => { setAuctionDateStart(date); setAuctionDateAny(false) }} />
+            <legend>End date:</legend>
+            <DatePicker selected={auctionDateEnd} onChange={(date) => { setAuctionDateEnd(date); setAuctionDateAny(false) }} />
+          </DropDown>
+
+          <DropDown label="Created Date" defaultHidden={true}>
+            <CreatedDateSlider id="hello" onChange={setSelectedDateRange} />
+          </DropDown>
+
+          <DropDown label="File Type" defaultHidden={true}>
             <CheckBoxes array={fileTypesFilter} onChange={toggleFileTypes} />
-          </div>
-          <div className="flex items-center justify-between border-y-4 border-iso-border-light">
-            <div className="grow text-base font-semibold text-iso-secondary-text pl-4 pr-6 my-4 cursor-pointer">CreateDate</div>
-            <CheckBoxes array={fileTypesFilter} onChange={toggleFileTypes} />
-          </div>
-          <div className="flex items-center justify-between border-y-4 border-iso-border-light">
-            <div className="grow text-base font-semibold text-iso-secondary-text pl-4 pr-6 my-4 cursor-pointer">ProjectType</div>
-            <CheckBoxes array={fileTypesFilter} onChange={toggleFileTypes} />
-          </div>
+          </DropDown>
+
         </div>
       </div>
 
