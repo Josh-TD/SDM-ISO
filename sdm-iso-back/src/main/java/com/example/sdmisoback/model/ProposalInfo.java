@@ -13,7 +13,7 @@ public class ProposalInfo {
     private String proposalLabel;
     
     @ManyToOne
-    @JoinColumn(name = "project_id", foreignKey = @ForeignKey(name = "fk_proj_info"))
+    @JoinColumn(name = "project_id", nullable = false, foreignKey = @ForeignKey(name = "fk_proj_info"))
     private ProjInfo projInfo;
 
     @ManyToOne
@@ -21,19 +21,19 @@ public class ProposalInfo {
     private ProjType projType;
 
     @ManyToOne
-    @JoinColumn(name = "resource_id", foreignKey = @ForeignKey(name = "fk_res_info"))
+    @JoinColumn(name = "resource_id", nullable = false, foreignKey = @ForeignKey(name = "fk_res_info"))
     private ResInfo resInfo;
 
     @ManyToOne
-    @JoinColumn(name = "customer_id", foreignKey = @ForeignKey(name = "fk_cust_info"))
+    @JoinColumn(name = "customer_id", nullable = false, foreignKey = @ForeignKey(name = "fk_cust_info"))
     private CustInfo custInfo; 
 
     @ManyToOne
-    @JoinColumn(name = "auction_id", foreignKey = @ForeignKey(name = "fk_auc_info"))
+    @JoinColumn(name = "auction_id", nullable = false, foreignKey = @ForeignKey(name = "fk_auc_info"))
     private AucInfo auctionInfo;
 
     @ManyToOne
-    @JoinColumn(name = "period_id", foreignKey = @ForeignKey(name = "fk_period_info"))
+    @JoinColumn(name = "period_id", nullable = false, foreignKey = @ForeignKey(name = "fk_period_info"))
     private PeriodInfo periodInfo;
 
     // constructors

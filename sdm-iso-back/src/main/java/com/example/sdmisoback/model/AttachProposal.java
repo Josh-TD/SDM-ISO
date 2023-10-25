@@ -21,7 +21,7 @@ public class AttachProposal implements Serializable{
 
     // Foreign key from AttachType
     @ManyToOne
-    @JoinColumn(name="attachment_type", foreignKey = @ForeignKey(name = "fk_attach_type"))
+    @JoinColumn(name="attachment_type", nullable = false, foreignKey = @ForeignKey(name = "fk_attach_type"))
     private AttachType attachmentType;
 
     // constructors 

@@ -11,21 +11,21 @@ public class AucInfo {
     private int auctionId;
 
     @ManyToOne
-    @JoinColumn(name = "commitment_period_id", foreignKey = @ForeignKey(name = "fk_cp_info"))
+    @JoinColumn(name = "commitment_period_id", nullable = false, foreignKey = @ForeignKey(name = "fk_cp_info"))
     private PeriodInfo commitmentPeriodInfo;
 
     @ManyToOne
-    @JoinColumn(name = "auction_period_id", foreignKey = @ForeignKey(name = "fk_auc_period"))
+    @JoinColumn(name = "auction_period_id", nullable = false, foreignKey = @ForeignKey(name = "fk_auc_period"))
     private PeriodInfo auctionPeriodInfo;
 
-    @Column(name="auction_begin_date")
+    @Column(name="auction_begin_date", nullable = false)
     private Date auctionBeginDate;
 
-    @Column(name="auction_end_date")
+    @Column(name="auction_end_date", nullable = false)
     private Date auctionEndDate;
 
     @ManyToOne
-    @JoinColumn(name="auction_type", foreignKey = @ForeignKey(name = "fk_auction_type"))
+    @JoinColumn(name="auction_type", nullable = false, foreignKey = @ForeignKey(name = "fk_auction_type"))
     private AucType auctionType;
 
     // constructors

@@ -9,7 +9,7 @@ public class CustInfo {
     @Column(name="customer_id")
     private int customerId;
 
-    @Column(name="customer_name", length = 30)
+    @Column(name="customer_name", length = 30, nullable = false)
     private String customerName;
     
     // constructers
