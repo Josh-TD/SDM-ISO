@@ -9,7 +9,7 @@ public class ProjInfo {
     @Column(name="project_id")
     private int projectId;
 
-    @Column(name="proj_name", length = 100)
+    @Column(name="project_name", length = 100)
     private String projectName;
 
     // constructors 
