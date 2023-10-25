@@ -70,3 +70,6 @@ public class User {
                 '}';
     }
 }
+
+// likely to be conflict in a merge, 
+// please contact Niya to discuss the User model 
