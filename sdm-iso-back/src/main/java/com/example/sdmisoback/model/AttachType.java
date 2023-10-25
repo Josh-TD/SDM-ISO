@@ -12,7 +12,7 @@ public class AttachType {
     @Column(name="description", nullable = false, length = 100)
     private String description;
     
-    @Column(name="accplitation_category_type", nullable = false, length = 20)
+    @Column(name="application_category_type", nullable = false, length = 20)
     private String applicationCategoryType;
 
     // Constructors
