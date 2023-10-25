@@ -8,7 +8,7 @@ public class ResType {
     @Column(name="resource_type", length = 20)
     private String resourceType;
 
-    @Column(name="description", nullable = false, length = 50)
+    @Column(name="resource_type_desc", nullable = false, length = 50)
     private String description;
 
     // constructors 

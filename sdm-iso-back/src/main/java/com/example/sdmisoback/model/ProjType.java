@@ -8,7 +8,7 @@ public class ProjType {
     @Column(name="project_type", length = 50)
     private String projectType;
 
-    @Column(name="proj_type_desc", nullable = false, length = 100)
+    @Column(name="project_type_desc", nullable = false, length = 100)
     private String projTypeDesc;
 
     // constructors
