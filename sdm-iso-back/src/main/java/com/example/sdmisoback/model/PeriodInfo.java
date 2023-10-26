@@ -1,8 +1,11 @@
 package com.example.sdmisoback.model;
 import java.util.Date;
 
+import com.fasterxml.jackson.annotation.JsonInclude;
+
 import jakarta.persistence.*;
 
+@JsonInclude(JsonInclude.Include.ALWAYS)
 @Entity
 public class PeriodInfo {
     @Id
@@ -28,7 +31,7 @@ public class PeriodInfo {
     // constructors
     public PeriodInfo() {}
 
-    public PeriodInfo(String periodType, String description, Date beginDate, Date endDate, int parentPeriodId) {
+    public PeriodInfo(String periodType, String description, Date beginDate, Date endDate, Integer parentPeriodId) {
         this.periodType = periodType;
         this.description = description;
         this.beginDate = beginDate;
@@ -58,7 +61,7 @@ public class PeriodInfo {
         return endDate;
     }
 
-    public int getParentPeriodId() {
+    public Integer getParentPeriodId() {
         return parentPeriodId;
     }
 }
