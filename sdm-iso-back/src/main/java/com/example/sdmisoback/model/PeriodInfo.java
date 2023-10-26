@@ -23,7 +23,7 @@ public class PeriodInfo {
     private Date endDate;
 
     @Column(name="parent_period_id")
-    private int parentPeriodId;
+    private Integer parentPeriodId;
 
     // constructors
     public PeriodInfo() {}
