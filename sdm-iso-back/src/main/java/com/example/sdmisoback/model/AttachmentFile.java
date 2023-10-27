@@ -1,5 +1,5 @@
 package com.example.sdmisoback.model;
-import java.util.Date;
+import java.time.LocalDateTime;
 
 import jakarta.persistence.*;
 
@@ -20,13 +20,13 @@ public class AttachmentFile {
     private String filePath;
 
     @Column(name="create_date", nullable = false)
-    private Date createDate;
+    private LocalDateTime createDate;
 
     // constructors
     public AttachmentFile(){
     }
 
-    public AttachmentFile(String description, String fileName, String filePath, Date createDate) {
+    public AttachmentFile(String description, String fileName, String filePath, LocalDateTime createDate) {
         this.description = description;
         this.fileName = fileName;
         this.filePath = filePath;
@@ -55,7 +55,7 @@ public class AttachmentFile {
         return filePath;
     }
 
-    public Date getCreateDate() {
+    public LocalDateTime getCreateDate() {
         return createDate;
     }
 }

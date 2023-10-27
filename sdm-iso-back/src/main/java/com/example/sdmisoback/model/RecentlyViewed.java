@@ -1,16 +1,16 @@
 package com.example.sdmisoback.model;
-import java.util.Date;
+import java.time.LocalDateTime;
 
 public class RecentlyViewed {
     private AttachmentFile file;
-    private Date timestamp;
+    private LocalDateTime timestamp;
 
 
     //constructors
     public RecentlyViewed(){
     }
 
-    public RecentlyViewed(AttachmentFile file, Date timestamp){
+    public RecentlyViewed(AttachmentFile file, LocalDateTime timestamp){
         this.file = file;
         this.timestamp = timestamp;
     }
@@ -21,7 +21,7 @@ public class RecentlyViewed {
         return this.file;
     }
 
-    public Date getTimestamp(){
+    public LocalDateTime getTimestamp(){
         return this.timestamp;
     }
 
@@ -29,7 +29,7 @@ public class RecentlyViewed {
         this.file = file;
     }
 
-    public void setTimestamp(Date timestamp){
+    public void setTimestamp(LocalDateTime timestamp){
         this.timestamp = timestamp;
     }
 

@@ -1,5 +1,6 @@
 package com.example.sdmisoback.model;
-import java.util.Date;
+
+import java.time.LocalDateTime;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
 
@@ -20,10 +21,10 @@ public class PeriodInfo {
     private String description;
 
     @Column(name="begin_date", nullable = false)
-    private Date beginDate;
+    private LocalDateTime beginDate;
 
     @Column(name="end_date", nullable = false)
-    private Date endDate;
+    private LocalDateTime endDate;
 
     @Column(name="parent_period_id")
     private Integer parentPeriodId;
@@ -31,7 +32,7 @@ public class PeriodInfo {
     // constructors
     public PeriodInfo() {}
 
-    public PeriodInfo(String periodType, String description, Date beginDate, Date endDate, Integer parentPeriodId) {
+    public PeriodInfo(String periodType, String description, LocalDateTime beginDate, LocalDateTime endDate, Integer parentPeriodId) {
         this.periodType = periodType;
         this.description = description;
         this.beginDate = beginDate;
@@ -53,11 +54,11 @@ public class PeriodInfo {
         return description;
     }
 
-    public Date getBeginDate() {
+    public LocalDateTime getBeginDate() {
         return beginDate;
     }
 
-    public Date getEndDate() {
+    public LocalDateTime getEndDate() {
         return endDate;
     }
 

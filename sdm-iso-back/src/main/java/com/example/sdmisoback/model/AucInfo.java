@@ -1,5 +1,5 @@
 package com.example.sdmisoback.model;
-import java.util.Date;
+import java.time.LocalDateTime;
 
 import jakarta.persistence.*;
 
@@ -19,10 +19,10 @@ public class AucInfo {
     private PeriodInfo auctionPeriodInfo;
 
     @Column(name="auction_begin_date", nullable = false)
-    private Date auctionBeginDate;
+    private LocalDateTime auctionBeginDate;
 
     @Column(name="auction_end_date", nullable = false)
-    private Date auctionEndDate;
+    private LocalDateTime auctionEndDate;
 
     @ManyToOne
     @JoinColumn(name="auction_type", nullable = false, foreignKey = @ForeignKey(name = "fk_auction_type"))
@@ -31,8 +31,8 @@ public class AucInfo {
     // constructors
     public AucInfo() {}
 
-    public AucInfo(PeriodInfo commitmentPeriodInfo, PeriodInfo auctionPeriodInfo, Date auctionBeginDate,
-            Date auctionEndDate, AucType auctionType) {
+    public AucInfo(PeriodInfo commitmentPeriodInfo, PeriodInfo auctionPeriodInfo, LocalDateTime auctionBeginDate,
+            LocalDateTime auctionEndDate, AucType auctionType) {
         this.commitmentPeriodInfo = commitmentPeriodInfo;
         this.auctionPeriodInfo = auctionPeriodInfo;
         this.auctionBeginDate = auctionBeginDate;
@@ -53,11 +53,11 @@ public class AucInfo {
         return auctionPeriodInfo;
     }
 
-    public Date getAuctionBeginDate() {
+    public LocalDateTime getAuctionBeginDate() {
         return auctionBeginDate;
     }
 
-    public Date getAuctionEndDate() {
+    public LocalDateTime getAuctionEndDate() {
         return auctionEndDate;
     }
 
