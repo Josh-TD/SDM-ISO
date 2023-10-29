@@ -9,10 +9,6 @@ function App() {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
   const [rootPage, setRootPage] = useState(undefined);
 
-  // Testing Axios Call
-  const users = APIService();
-  console.log(users);
-
   useEffect(() => {
     const authenticate = () => { setIsAuthenticated(!isAuthenticated) };
 
@@ -22,6 +18,11 @@ function App() {
       setRootPage(<LoginPage authenticateFn={authenticate} />)
     }
   }, [isAuthenticated])
+
+  // Testing Axios Calls to Backend
+  APIService("http://localhost:8080/users");
+  APIService("http://localhost:8080/files");
+  APIService("http://localhost:8080/proposals");
 
   return (
     <BrowserRouter>

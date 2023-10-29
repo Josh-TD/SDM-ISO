@@ -1,36 +1,41 @@
 package com.example.sdmisoback.model;
-import java.util.Date;
+import java.time.LocalDateTime;
+
 import jakarta.persistence.*;
 
-
-public class File {
+@Entity
+public class AttachmentFile {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int fileId;
+    @Column(name="attachment_id")
+    private int attachmentId;
 
-    @Column(length = 255)
+    @Column(name="description", length = 255)
     private String description;
     
-    @Column(length = 255)
+    @Column(name="file_name", length = 255)
     private String fileName;
 
-    @Column(length = 255)
+    @Column(name="file_path", length = 255)
     private String filePath;
 
-    @Column(nullable = false)
-    private Date createDate;
+    @Column(name="create_date", nullable = false)
+    private LocalDateTime createDate;
 
-    // constructor 
-    public File(String description, String fileName, String filePath, Date createDate) {
+    // constructors
+    public AttachmentFile(){
+    }
+
+    public AttachmentFile(String description, String fileName, String filePath, LocalDateTime createDate) {
         this.description = description;
         this.fileName = fileName;
         this.filePath = filePath;
         this.createDate = createDate;
     }
 
-    // Getters and setters for all attributes
+    // gets and sets
     public int getAttachmentId() {
-        return fileId;
+        return attachmentId;
     }
 
     public String getDescription() {
@@ -50,7 +55,7 @@ public class File {
         return filePath;
     }
 
-    public Date getCreateDate() {
+    public LocalDateTime getCreateDate() {
         return createDate;
     }
 }

@@ -1,9 +1,8 @@
 import axios from 'axios';
 import React from 'react';
-const USERS_API_URL = "http://localhost:8080/users";
-function APIService() {
+function APIService(url) {
     let users = [];
-    axios.get(USERS_API_URL)
+    axios.get(url)
         .then((response) => {
             users = response.data;
             console.log(response.data)

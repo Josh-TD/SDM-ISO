@@ -5,6 +5,7 @@ import jakarta.persistence.*;
 import java.util.Objects;
 
 @Entity
+@Table(name= "users")
 public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -69,3 +70,6 @@ public class User {
                 '}';
     }
 }
+
+// likely to be conflict in a merge, 
+// please contact Niya to discuss the User model 
