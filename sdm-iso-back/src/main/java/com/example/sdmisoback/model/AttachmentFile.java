@@ -2,8 +2,10 @@ package com.example.sdmisoback.model;
 import java.time.LocalDateTime;
 
 import jakarta.persistence.*;
+import lombok.Data;
 
 @Entity
+@Data
 public class AttachmentFile {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -21,41 +23,4 @@ public class AttachmentFile {
 
     @Column(name="create_date", nullable = false)
     private LocalDateTime createDate;
-
-    // constructors
-    public AttachmentFile(){
-    }
-
-    public AttachmentFile(String description, String fileName, String filePath, LocalDateTime createDate) {
-        this.description = description;
-        this.fileName = fileName;
-        this.filePath = filePath;
-        this.createDate = createDate;
-    }
-
-    // gets and sets
-    public int getAttachmentId() {
-        return attachmentId;
-    }
-
-    public String getDescription() {
-        return description;
-    }
-
-    // description is allowed to be set because its meant for internal use
-    public void setDescription(String description) {
-        this.description = description;
-    }
-
-    public String getFileName() {
-        return fileName;
-    }
-
-    public String getFilePath() {
-        return filePath;
-    }
-
-    public LocalDateTime getCreateDate() {
-        return createDate;
-    }
 }
