@@ -1,5 +1,6 @@
 package com.example.sdmisoback.model;
 import java.time.LocalDateTime;
+import java.util.Set;
 
 import jakarta.persistence.*;
 import lombok.Data;
@@ -23,4 +24,7 @@ public class AttachmentFile {
 
     @Column(name="create_date", nullable = false)
     private LocalDateTime createDate;
+
+    @ManyToMany
+    private Set<ProposalInfo> proposals;
 }

@@ -1,5 +1,7 @@
 package com.example.sdmisoback.model;
 
+import java.util.Set;
+
 import jakarta.persistence.*;
 
 import lombok.Data;
@@ -14,6 +16,9 @@ public class ProposalInfo {
 
     @Column(name="proposal_label", length = 104)
     private String proposalLabel;
+
+    @ManyToMany(mappedBy = "proposals")
+    private Set<AttachmentFile> attachmentFiles;
     
     @ManyToOne
     @JoinColumn(name = "project_id", nullable = false, foreignKey = @ForeignKey(name = "fk_proj_info"))
