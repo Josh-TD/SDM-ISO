@@ -2,7 +2,6 @@ import { React, useEffect, useState } from 'react';
 import { BrowserRouter, Route, Routes, Navigate } from 'react-router-dom'
 import MainPage from './components/MainPage/MainPage'
 import LoginPage from './components/LoginPage/LoginPage'
-import APIService from "./APIService";
 import './index.css';
 
 function App() {
@@ -18,11 +17,6 @@ function App() {
       setRootPage(<LoginPage authenticateFn={authenticate} />)
     }
   }, [isAuthenticated])
-
-  // Testing Axios Calls to Backend
-  APIService("http://localhost:8080/users");
-  APIService("http://localhost:8080/files");
-  APIService("http://localhost:8080/proposals");
 
   return (
     <BrowserRouter>

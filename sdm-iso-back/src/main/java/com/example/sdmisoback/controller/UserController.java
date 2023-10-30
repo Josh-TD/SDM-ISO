@@ -19,5 +19,3 @@ public class UserController {
         return Arrays.asList(userOne, userTwo, userThree);
     }
 }
-
-// temporary, can override if needed for merge
