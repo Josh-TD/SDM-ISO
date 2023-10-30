@@ -2,9 +2,7 @@ import { React, useEffect, useState } from 'react';
 import { BrowserRouter, Route, Routes, Navigate } from 'react-router-dom'
 import MainPage from './components/MainPage/MainPage'
 import LoginPage from './components/LoginPage/LoginPage'
-import APIService from "./APIService";
 import './index.css';
-import AttachmentFileList from "./components/AttachmentFileList";
 
 function App() {
   const [isAuthenticated, setIsAuthenticated] = useState(false);

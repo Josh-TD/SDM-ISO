@@ -14,6 +14,7 @@ import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("/api/files")
+@CrossOrigin(origins = "http://localhost:3000")
 public class AttachmentFileController {
 
     @Autowired
@@ -23,6 +24,7 @@ public class AttachmentFileController {
     private String S3_BUCKET_NAME;
 
     @GetMapping("/list")
+    @CrossOrigin(origins = "http://localhost:3000")
     public ResponseEntity<List<String>> listFiles() {
         List<String> fileNames = amazonS3.listObjects(S3_BUCKET_NAME)
                 .getObjectSummaries().stream()
@@ -32,6 +34,7 @@ public class AttachmentFileController {
     }
 
     @GetMapping("/download/{fileName}")
+    @CrossOrigin(origins = "http://localhost:3000")
     public ResponseEntity<byte[]> downloadFile(@PathVariable String fileName) throws IOException {
         S3Object s3Object = amazonS3.getObject(S3_BUCKET_NAME, fileName);
         byte[] content = s3Object.getObjectContent().readAllBytes();

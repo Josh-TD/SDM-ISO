@@ -1,11 +1,10 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
-
 const AttachmentFileList = () => {
     const [files, setFiles] = useState([]);
 
     useEffect(() => {
-        axios.get('/api/files/list')
+        axios.get('http://localhost:8080/api/files/list')
             .then(response => {
                 setFiles(response.data);
             })
@@ -15,7 +14,7 @@ const AttachmentFileList = () => {
     }, []);
 
     const downloadFile = (fileName) => {
-        axios.get(`/api/files/download/${fileName}`, {
+        axios.get(`http://localhost:8080/api/files/download/${fileName}`, {
             responseType: 'blob'
         })
             .then(response => {
