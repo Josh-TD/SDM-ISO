@@ -1,25 +1,47 @@
 package com.example.sdmisoback.controller;
 
-import com.example.sdmisoback.model.AttachmentFile;
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RestController;
-
-import java.time.LocalDateTime;
-import java.util.Arrays;
+import com.amazonaws.services.s3.AmazonS3;
+import com.amazonaws.services.s3.model.S3Object;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
+import java.io.IOException;
 import java.util.List;
+import java.util.stream.Collectors;
 
-// @RestController
-// public class AttachmentFileController {
-//     @CrossOrigin(origins = "http://localhost:3000")
-//     @GetMapping("/files")
-//     public List<AttachmentFile> getFiles() {
-//         LocalDateTime testDate = now();
-//         AttachmentFile fileOne = new AttachmentFile("nice file 1", "File One", "s3://p1/fileone.png", testDate);
-//         AttachmentFile fileTwo = new AttachmentFile("nice file 2", "File Two", "s3://p1/filetwo.pdf", testDate);
-//         AttachmentFile fileThree = new AttachmentFile("nice file 3", "File Three", "s3://p1/filethree.msg", testDate);
-//         return Arrays.asList(fileOne, fileTwo, fileThree);
-//     }
-// }
+@RestController
+@RequestMapping("/api/files")
+public class AttachmentFileController {
 
-// temporary, can override if needed for merge
+    @Autowired
+    private AmazonS3 amazonS3;
+
+    @Value("${aws.s3.bucketName}")
+    private String S3_BUCKET_NAME;
+
+    @GetMapping("/list")
+    public ResponseEntity<List<String>> listFiles() {
+        List<String> fileNames = amazonS3.listObjects(S3_BUCKET_NAME)
+                .getObjectSummaries().stream()
+                .map(s3ObjectSummary -> s3ObjectSummary.getKey())
+                .collect(Collectors.toList());
+        return ResponseEntity.ok(fileNames);
+    }
+
+    @GetMapping("/download/{fileName}")
+    public ResponseEntity<byte[]> downloadFile(@PathVariable String fileName) throws IOException {
+        S3Object s3Object = amazonS3.getObject(S3_BUCKET_NAME, fileName);
+        byte[] content = s3Object.getObjectContent().readAllBytes();
+
+        HttpHeaders headers = new HttpHeaders();
+        headers.setContentType(MediaType.APPLICATION_OCTET_STREAM);
+        headers.setContentDispositionFormData("attachment", fileName);
+
+        return ResponseEntity.ok()
+                .headers(headers)
+                .body(content);
+    }
+}

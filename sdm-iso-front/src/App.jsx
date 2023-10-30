@@ -4,6 +4,7 @@ import MainPage from './components/MainPage/MainPage'
 import LoginPage from './components/LoginPage/LoginPage'
 import APIService from "./APIService";
 import './index.css';
+import AttachmentFileList from "./components/AttachmentFileList";
 
 function App() {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
@@ -18,11 +19,6 @@ function App() {
       setRootPage(<LoginPage authenticateFn={authenticate} />)
     }
   }, [isAuthenticated])
-
-  // Testing Axios Calls to Backend
-  APIService("http://localhost:8080/users");
-  APIService("http://localhost:8080/files");
-  APIService("http://localhost:8080/proposals");
 
   return (
     <BrowserRouter>

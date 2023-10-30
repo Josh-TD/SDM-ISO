@@ -2,7 +2,8 @@ import React from 'react';
 import Header from '../Header/Header';
 import { PageTitleWithSearchBar } from '../PageTitle/PageTitle';
 import FileList, { FileListLayout } from '../FileList/FileList';
-
+import AttachmentFileList from '../AttachmentFileList';
+import AttachmentFileViewer from '../AttachmentFileViewer';
 
 export default function MainPage() {
   return (
@@ -12,6 +13,8 @@ export default function MainPage() {
       <main className="flex-grow overflow-visible">
         <FileList />
       </main>
+        <AttachmentFileList> This is the list of files </AttachmentFileList>
+        <AttachmentFileViewer> This is the File Viewer </AttachmentFileViewer>
     </div>
   )
 };
