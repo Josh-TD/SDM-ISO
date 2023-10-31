@@ -29,15 +29,15 @@ public class PagingRepository {
 
         // select * FROM ProposalInfo
         CriteriaQuery<ProposalInfo> cq = cb.createQuery(ProposalInfo.class);
-        Root<ProposalInfo> from = cq.from(ProposalInfo.class);
-        CriteriaQuery<ProposalInfo> select = cq.select(from);
+        Root<ProposalInfo> root = cq.from(ProposalInfo.class);
+        CriteriaQuery<ProposalInfo> select = cq.select(root);
 
         // Apply Pagination to query
-        TypedQuery<ProposalInfo> typedQuery = em.createQuery(select);
-        typedQuery.setFirstResult(pageRequest.getPageNumber() * pageRequest.getPageSize());
-        typedQuery.setMaxResults(pageRequest.getPageSize());
+        TypedQuery<ProposalInfo> typedQuery = em.createQuery(select)
+                                                .setFirstResult(pageRequest.getPageNumber() * pageRequest.getPageSize())
+                                                .setMaxResults(pageRequest.getPageSize());
 
-        // execute query and return
+        // execute query 
         List<ProposalInfo> resultList = typedQuery.getResultList();
 
         // Create a subquery to count the total number of results
