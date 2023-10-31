@@ -7,6 +7,8 @@ import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Repository;
 
+import com.example.sdmisoback.model.AttachProposal;
+import com.example.sdmisoback.model.AttachmentFile;
 import com.example.sdmisoback.model.ProposalInfo;
 
 import jakarta.persistence.EntityManager;
@@ -14,6 +16,7 @@ import jakarta.persistence.PersistenceContext;
 import jakarta.persistence.TypedQuery;
 import jakarta.persistence.criteria.CriteriaBuilder;
 import jakarta.persistence.criteria.CriteriaQuery;
+import jakarta.persistence.criteria.Join;
 import jakarta.persistence.criteria.Root;
 
 
@@ -46,5 +49,18 @@ public class PagingRepository {
         Long count = em.createQuery(countQuery).getSingleResult();
 
         return new PageImpl<>(resultList, pageRequest, count); 
+    }
+
+    public List<AttachmentFile> findAllFilesByProposalId(int id){
+        // init query root AttachmentFile
+        CriteriaBuilder cb = em.getCriteriaBuilder();
+        CriteriaQuery<AttachmentFile> cq = cb.createQuery(AttachmentFile.class);
+        Root<AttachmentFile> root = cq.from(AttachmentFile.class);
+
+        Join<AttachmentFile, AttachProposal> attachProposalsJoin = root.join("attachProposals");
+        cq.select(root);
+        cq.where(cb.equal(attachProposalsJoin.get("proposalInfo").get("proposalId"), id));
+
+        return em.createQuery(cq).getResultList();
     }
 }
