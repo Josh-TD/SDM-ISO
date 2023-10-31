@@ -25,10 +25,6 @@ public class AttachmentFile {
     @Column(name="create_date", nullable = false)
     private LocalDateTime createDate;
 
-    @ManyToMany
-    @JoinTable(
-        name = "attach_proposal",
-        joinColumns = @JoinColumn(name = "attachment_id"),
-        inverseJoinColumns = @JoinColumn(name = "proposal_id"))
-    private Set<ProposalInfo> proposals;
+    @OneToMany(mappedBy = "attachmentFile")
+    private Set<AttachProposal> attachProposals;
 }
