@@ -23,7 +23,7 @@ public class PagingService {
         return repository.findAll(pr);
     }
 
-    public List<AttachmentFile> getAllFileByProposalId(int id){
-        return repository.findAllFilesByProposalId(id);
+    public Page<AttachmentFile> getAllFileByProposalId(PageRequest pr, int id){
+        return repository.findAllFilesByProposalId(pr, id);
     }
 }

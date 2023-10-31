@@ -31,7 +31,8 @@ public class PagingController {
     }
 
     @GetMapping("/list-files")
-    public List<AttachmentFile> getAllFileByProposalId(@RequestParam int id){
-        return service.getAllFileByProposalId(id);
+    public Page<AttachmentFile> getAllFileByProposalId(@RequestParam int page, @RequestParam int size, @RequestParam int id){
+        PageRequest pr = PageRequest.of(page, size);
+        return service.getAllFileByProposalId(pr, id);
     }
 }
