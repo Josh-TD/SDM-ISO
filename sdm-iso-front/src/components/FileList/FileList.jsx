@@ -105,9 +105,9 @@ export default function FileList() {
         {/* Top bar item */}
         <div className="inline-flex items-center justify-between mx-3">
           <div className="pr-1">
-            <input type="checkbox" id="selectMultiple" name="selectMultiple" value="selectMultiple"></input>
+            <input type="checkbox" id="selectAll" name="selectAll" value="selectAll"></input>
           </div>
-          <label for="html" className="text-base font-semibold text-iso-secondary-text">Select Multiple</label>
+          <label for="html" className="text-base font-semibold text-iso-secondary-text">Select All</label>
         </div>
 
         {/* Top bar item */}
