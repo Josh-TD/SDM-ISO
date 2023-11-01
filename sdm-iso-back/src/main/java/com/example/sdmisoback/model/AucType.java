@@ -2,7 +2,10 @@ package com.example.sdmisoback.model;
 
 import jakarta.persistence.*;
 
+import lombok.Data;
+
 @Entity
+@Data
 public class AucType {
     @Id
     @Column(name="auction_type", length = 20)
@@ -10,23 +13,4 @@ public class AucType {
 
     @Column(name="description", nullable = false, length = 50)
     private String description;
-
-    // constructors
-    public AucType() {
-    }
-    
-    // TODO: might have to put protection fpr auctionType since it is a PK
-    public AucType(String auctionType, String description) {
-        this.auctionType = auctionType;
-        this.description = description;
-    }
-
-    // gets and sets
-    public String getAuctionType() {
-        return auctionType;
-    }
-
-    public String getDescription() {
-        return description;
-    }
 }

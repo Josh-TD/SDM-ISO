@@ -1,8 +1,13 @@
 package com.example.sdmisoback.model;
 
+import java.util.Set;
+
 import jakarta.persistence.*;
 
+import lombok.Data;
+
 @Entity
+@Data
 public class ProposalInfo {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -11,6 +16,9 @@ public class ProposalInfo {
 
     @Column(name="proposal_label", length = 104)
     private String proposalLabel;
+
+    @OneToMany(mappedBy = "proposalInfo")
+    private Set<AttachProposal> attachProposals;
     
     @ManyToOne
     @JoinColumn(name = "project_id", nullable = false, foreignKey = @ForeignKey(name = "fk_proj_info"))
@@ -35,53 +43,4 @@ public class ProposalInfo {
     @ManyToOne
     @JoinColumn(name = "period_id", nullable = false, foreignKey = @ForeignKey(name = "fk_period_info"))
     private PeriodInfo periodInfo;
-
-    // constructors
-    public ProposalInfo() {}
-
-    public ProposalInfo(String proposalLabel, ProjInfo projInfo, ProjType projType, ResInfo resInfo, CustInfo custInfo,
-            AucInfo auctionInfo, PeriodInfo periodInfo) {
-        this.proposalLabel = proposalLabel;
-        this.projInfo = projInfo;
-        this.projType = projType;
-        this.resInfo = resInfo;
-        this.custInfo = custInfo;
-        this.auctionInfo = auctionInfo;
-        this.periodInfo = periodInfo;
-    }
-
-    // gets and sets
-    public int getProposalId() {
-        return proposalId;
-    }
-
-    public String getProposalLabel() {
-        return proposalLabel;
-    }
-
-    public ProjInfo getProjInfo() {
-        return projInfo;
-    }
-
-    public ProjType getProjType() {
-        return projType;
-    }
-
-    public ResInfo getResInfo() {
-        return resInfo;
-    }
-
-    public CustInfo getCustInfo() {
-        return custInfo;
-    }
-
-    public AucInfo getAuctionInfo() {
-        return auctionInfo;
-    }
-
-    public PeriodInfo getPeriodInfo() {
-        return periodInfo;
-    }
-    
-
 }

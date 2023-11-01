@@ -2,7 +2,10 @@ package com.example.sdmisoback.model;
 
 import jakarta.persistence.*;
 
+import lombok.Data;
+
 @Entity
+@Data
 public class ResInfo {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -15,27 +18,4 @@ public class ResInfo {
     @ManyToOne
     @JoinColumn(name="resource_type", foreignKey = @ForeignKey(name = "fk_resource_type"))
     private ResType resourceType;
-    
-    // constructers
-    public ResInfo() {}
-
-    public ResInfo(String resourceName, ResType resourceType) {
-        this.resourceName = resourceName;
-        this.resourceType = resourceType;
-    }
-
-    // gets and sets
-    public int getResourceId() {
-        return resourceId;
-    }
-
-    public String getResourceName() {
-        return resourceName;
-    }
-
-    public String getResourceType() {
-        return resourceType.getResourceType();
-    }
-
-
 }

@@ -6,8 +6,12 @@ import com.fasterxml.jackson.annotation.JsonInclude;
 
 import jakarta.persistence.*;
 
-@JsonInclude(JsonInclude.Include.ALWAYS)
+
+import lombok.Data;
+
 @Entity
+@Data
+@JsonInclude(JsonInclude.Include.ALWAYS)
 public class PeriodInfo {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -28,41 +32,4 @@ public class PeriodInfo {
 
     @Column(name="parent_period_id")
     private Integer parentPeriodId;
-
-    // constructors
-    public PeriodInfo() {}
-
-    public PeriodInfo(String periodType, String description, LocalDateTime beginDate, LocalDateTime endDate, Integer parentPeriodId) {
-        this.periodType = periodType;
-        this.description = description;
-        this.beginDate = beginDate;
-        this.endDate = endDate;
-        this.parentPeriodId = parentPeriodId;
-    }
-
-
-    // gets and set
-    public int getPeriodId() {
-        return periodId;
-    }
-
-    public String getPeriodType() {
-        return periodType;
-    }
-
-    public String getDescription() {
-        return description;
-    }
-
-    public LocalDateTime getBeginDate() {
-        return beginDate;
-    }
-
-    public LocalDateTime getEndDate() {
-        return endDate;
-    }
-
-    public Integer getParentPeriodId() {
-        return parentPeriodId;
-    }
 }
