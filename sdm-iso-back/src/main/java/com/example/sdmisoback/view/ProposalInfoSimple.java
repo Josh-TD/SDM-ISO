@@ -3,6 +3,9 @@ package com.example.sdmisoback.view;
 import com.blazebit.persistence.view.*;
 import com.example.sdmisoback.model.*;
 
+// Acts like a Data-transfer-object(DTO) so that we only send the 
+// most necessary information over to the front end
+// class is temporary and the real FileDTO will include more info
 @EntityView(ProposalInfo.class)
 public interface ProposalInfoSimple {
     
