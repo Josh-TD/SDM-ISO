@@ -33,9 +33,9 @@ public class CustomProposalRepoImpl implements CustomProposalRepo{
 
     @Override
     public Page<ProposalInfoSimple> findProposalSimpleById(PageRequest pr, Integer proposalId){
-        // create base query here
+        // create base query here (create = from)
         CriteriaBuilder<ProposalInfo> cb = cbf.create(em, ProposalInfo.class)
-                                              .orderByAsc("proposalId");
+                                              .orderByAsc("proposalId"); // can apply sort by here 
 
         // add predicates here
         if(proposalId != null){
