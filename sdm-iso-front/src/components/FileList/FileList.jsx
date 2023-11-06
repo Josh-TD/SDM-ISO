@@ -1,10 +1,12 @@
 import React, { useState } from "react";
 import DatePicker from "react-datepicker";
+import Modal from "react-modal";
 
 import { FileTable } from "../FileTable/FileTable";
 import { CheckBox } from "../Misc/CheckBox";
 import { CheckBoxes } from "../Misc/CheckBoxes";
 import { DropDown } from "../Misc/DropDown";
+import { FileViewer } from "../FileViewer/FileViewer";
 
 import { defaultAll } from "./filters/common";
 import { fileTypesFilter } from "./filters/fileTypes";
@@ -46,8 +48,30 @@ export default function FileList() {
   const [auctionDateEnd, setAuctionDateEnd] = useState(new Date());
   const [auctionDateAny, setAuctionDateAny] = useState(true);
 
+  const [modalIsOpen, setIsOpen] = useState(false);
+  const modalStyles = {
+    content: {
+      top: '50%',
+      left: '50%',
+      right: 'auto',
+      bottom: 'auto',
+      marginRight: '-50%',
+      transform: 'translate(-50%, -50%)',
+    },
+  };
+
   return (
     <div className="grid grid-cols-[15%,85%] grid-rows-[7%,93%] h-full">
+      <Modal
+        isOpen={modalIsOpen}
+        onAfterOpen={() => setIsOpen(true)}
+        onRequestClose={() => setIsOpen(false)}
+        style={modalStyles}
+        contentLabel="Example Modal"
+      >
+        <FileViewer filename="dummy" />
+
+      </Modal>
       <div className="col-start-1 row-span-2 pr-1">
         <div className="bg-white container w-full flex flex-col shadow-[10px_0px_8px_-8px_#a0aec0]">
 
@@ -81,7 +105,7 @@ export default function FileList() {
             <CheckBoxes array={fileTypesFilter} onChange={toggleFileTypes} />
           </DropDown>
 
-          <div className = "inline-flex mt-5 pl-10 items-left">
+          <div className="inline-flex mt-5 pl-10 items-left">
             <button className="bg-iso-light-slate hover:bg-iso-link-blue text-white text-sm font-semibold py-2 px-4 rounded cursor-pointer float-right">Apply Filters</button>
           </div>
 
@@ -116,6 +140,9 @@ export default function FileList() {
           <div className="text-base font-semibold text-iso-secondary-text">&nbsp;|&nbsp;</div>
           <div className="text-base font-semibold text-iso-secondary-text cursor-pointer">View</div>
         </div>
+
+
+        <input type="button" id="modal-button" value="modal button" onClick={() => setIsOpen(true)} />
 
       </div>
 
