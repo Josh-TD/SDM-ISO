@@ -2,6 +2,9 @@ import React from "react";
 import { useMemo } from 'react';
 import mockData from "./mockData.json";
 import { useTable, usePagination, useSortBy } from "react-table";
+import Modal from "react-modal";
+import "./FileTable.css"
+import {FileViewer} from "../FileViewer/FileViewer";
 
 const COLUMNS = [
     {
@@ -31,6 +34,8 @@ const COLUMNS = [
     },
 ]
 
+Modal.setAppElement("#root");
+
 export const FileTable = () => {
     const columns = useMemo(() => COLUMNS, [])
     const data = useMemo(() => mockData, [])
@@ -39,7 +44,7 @@ export const FileTable = () => {
         getTableProps, 
         getTableBodyProps, 
         headerGroups, 
-        page, 
+        rows,
         previousPage, 
         nextPage, 
         prepareRow
@@ -51,6 +56,14 @@ export const FileTable = () => {
         useSortBy,
         usePagination
     )
+
+    const [modalIsOpen, setIsOpen] = React.useState(false);
+    const [selectedFileName, setSelectedFileName] = React.useState("");
+
+    const openModal = (fileName) => {
+        setSelectedFileName(fileName);
+        setIsOpen(true);
+    };
 
     return (
         <>
@@ -82,10 +95,14 @@ export const FileTable = () => {
                     ))}
                 </thead>
                 <tbody {...getTableBodyProps()}>
-                    {page.map((row) => {
+                    {rows.map((row, index) => {
                         prepareRow(row)
+                        const rowClassName = index % 2 === 0 ? "table-row-even" : "table-row-odd";
                         return (
-                            <tr {...row.getRowProps()}>
+                            <tr {...row.getRowProps()}
+                                onClick={() => openModal(row.original.fName)}
+                                className={`cursor-pointer hover:bg-gray-200 ${rowClassName}`}
+                            >
                                 {row.cells.map( cell => {
                                     return <td {...cell.getCellProps()}>{cell.render('Cell')}</td>
                                 })}
@@ -94,6 +111,14 @@ export const FileTable = () => {
                     })}
                 </tbody>
             </table>
+            <Modal
+                isOpen={modalIsOpen}
+                onRequestClose={() => setIsOpen(false)}
+                contentLabel="File Modal"
+            >
+                <h2>File Name: {selectedFileName}</h2>
+                <FileViewer filename="dummy" />
+            </Modal>
             <div>
                 <button className="bg-iso-offwhite p-1 border-solid border-2" onClick={() => previousPage()}>Previous</button>
                 <button className="bg-iso-offwhite p-1 border-solid border-2" onClick={() => nextPage()}>Next</button>
