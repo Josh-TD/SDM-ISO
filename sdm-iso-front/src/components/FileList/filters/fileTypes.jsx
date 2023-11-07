@@ -7,28 +7,8 @@ export const fileTypesFilter = [
       default: true,
     },
     {
-      id: "bmp",
-      label: "BMP",
-      default: false,
-    },
-    {
       id: "doc",
       label: "DOC/DOCX",
-      default: false,
-    },
-    {
-      id: "htm",
-      label: "HTM/HTML",
-      default: false,
-    },
-    {
-      id: "jpg",
-      label: "JPG",
-      default: false,
-    },
-    {
-      id: "msg",
-      label: "MSG",
       default: false,
     },
     {
@@ -37,18 +17,18 @@ export const fileTypesFilter = [
       default: false,
     },
     {
-      id: "txt",
-      label: "TXT",
+      id: "html",
+      label: "HTML",
       default: false,
     },
     {
       id: "xls",
-      label: "XLSM/XLSX",
+      label: "XLS/XLSX",
       default: false,
     },
     {
       id: "zip",
       label: "ZIP",
       default: false,
-    }
+    },
   ];
