@@ -7,28 +7,13 @@ export const auctionTypesFilter = [
       default: true,
     },
     {
-      id: "rca2",
-      label: "RCA2",
+      id: "fca",
+      label: "FCA",
       default: false,
     },
     {
-      id: "ara",
-      label: "ARA1/2/3",
+      id: "other",
+      label: "Other",
       default: false,
-    },
-    {
-      id: "mra",
-      label: "MRA",
-      default: false,
-    },
-    {
-      id: "annual",
-      label: "Annual",
-      default: false,
-    },
-    {
-      id: "monthly",
-      label: "Monthly",
-      default: false,
-    },
+    }
   ];
