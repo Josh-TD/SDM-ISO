@@ -24,9 +24,14 @@ public class AttachmentDTOController {
         this.service = service;
     }
 
-    // api endpoint at http://localhost:8080/api/v3/files/list?pageNum={int}&pageSize={int}&proposalId={int}
-    // recommended pageNum=0&pageSize=3  proposalId optional but recommended = 333 
-    // copy paste: http://localhost:8080/api/v3/files/list?pageNum=0&pageSize=3&proposalId=333
+    // set baseurl variable to http://localhost:8080/api
+    // set filteringURL variable to http://localhost:8080/api/v3/files/list
+    // then onto the end of that filtering URL: add on parameters
+    // {{filteringURL}}?pageNum=0&pageSize=3&sortBy=attachmentId&sortAsc=true
+    // ^ this is the url with only the required parameters
+
+    // visit this link for details on the optional filters
+    // https://imgur.com/a/JGFkbXR
     @GetMapping("/files/list")
     public Page<AttachmentFileView> filterAttachments(
         // required parameters
