@@ -32,4 +32,7 @@ public interface ProposalInfoSimple {
 
     @Mapping("attachProposals.attachmentFile.fileName")
     public String getFileName();
+
+    @Mapping("attachProposals.attachmentFile.description")
+    public String getFileDescription();
 }
