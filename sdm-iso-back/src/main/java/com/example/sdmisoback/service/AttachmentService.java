@@ -18,7 +18,15 @@ public class AttachmentService {
         this.repo = repo;
     }
 
-    public Page<AttachmentFileView> filterAttachments(PageRequest pr, Integer proposalId){
-        return repo.filterAttachments(pr, proposalId);
+    public Page<AttachmentFileView> filterAttachments(
+        PageRequest pr, String sortBy, boolean sortAsc,
+        String fileName, Integer fileId, String fileDescription,
+        Integer proposalId, String proposalLabel
+    ){
+        return repo.filterAttachments(
+            pr, sortBy, sortAsc, 
+            fileName, fileId, fileDescription,
+            proposalId, proposalLabel
+        );
     }
 }

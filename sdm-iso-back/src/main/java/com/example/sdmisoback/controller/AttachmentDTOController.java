@@ -1,5 +1,7 @@
 package com.example.sdmisoback.controller;
 
+import java.io.FileDescriptor;
+
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -27,12 +29,32 @@ public class AttachmentDTOController {
     // copy paste: http://localhost:8080/api/v3/files/list?pageNum=0&pageSize=3&proposalId=333
     @GetMapping("/files/list")
     public Page<AttachmentFileView> filterAttachments(
-        @RequestParam(name = "pageNum") int page, 
-        @RequestParam(name = "pageSize") int size, 
-        @RequestParam(name = "proposalId", required = false) Integer id) {
-        
-        PageRequest pr = PageRequest.of(page, size);
-        return service.filterAttachments(pr, id);
+        // required parameters
+        @RequestParam(name = "pageNum") int pageNum, 
+        @RequestParam(name = "pageSize") int pageSize,
+        @RequestParam(name = "sortBy") String sortBy,
+        @RequestParam(name = "sortAsc") boolean sortAsc,
+
+        // attachmentFile filters
+        @RequestParam(name = "fileName", required = false) String fileName,
+        @RequestParam(name = "fileId", required = false) Integer fileId,
+        @RequestParam(name = "fileDescription", required = false) String fileDescription,
+
+        // attachProposal filters
+        // @RequestParam(name = "fileType", required = false) String fileType,
+
+        // proposal filters
+        @RequestParam(name = "proposalId", required = false) Integer proposalId,
+        @RequestParam(name = "proposalLabel", required = false) String proposalLabel
+        // @RequestParam(name = "proposalPeriodId", required = false) Integer proposalPeriodId
+
+        ) { //end parameters
+        PageRequest pr = PageRequest.of(pageNum, pageSize);
+        return service.filterAttachments(
+            pr, sortBy, sortAsc,
+            fileName, fileId, fileDescription,
+            proposalId, proposalLabel
+        );
     }
 }
 

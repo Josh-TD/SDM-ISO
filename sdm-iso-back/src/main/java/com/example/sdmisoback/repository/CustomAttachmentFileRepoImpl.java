@@ -33,15 +33,34 @@ public class CustomAttachmentFileRepoImpl implements CustomAttachmentFileRepo{
     }
 
     @Override
-    public Page<AttachmentFileView> filterAttachments(PageRequest pr, Integer proposalId){
+    public Page<AttachmentFileView> filterAttachments(
+            PageRequest pr, String sortBy, boolean sortAsc,
+            String fileName, Integer fileId, String fileDescription,
+            Integer proposalId, String proposalLabel
+    ){
         // create base query here (create = from)
         CriteriaBuilder<AttachmentFile> cb = cbf.create(em, AttachmentFile.class)
-                                                .orderByAsc("attachmentId"); // can apply sort by here
+                                                .orderBy(sortBy, sortAsc);
 
         // add predicates here
-        if(proposalId != null){
+
+        // attachmentFile predicates
+        if(fileName != null)
+            cb.where("fileName").eq(fileName);
+        
+        if(fileId != null)
+            cb.where("attachmentId").eq(fileId);
+
+        if(fileDescription != null)
+            cb.where("description").eq(fileDescription);
+
+        // proposal predicates
+        if(proposalId != null)
             cb.where("attachProposals.proposalInfo.proposalId").eq(proposalId);
-        }
+
+        if(proposalLabel != null)
+            cb.where("attachProposals.proposalInfo.proposalLabel").eq(proposalLabel);
+        
 
         // add pagination here
         // first is creating the "setting" to apply pagination
