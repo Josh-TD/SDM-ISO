@@ -13,11 +13,12 @@ import com.blazebit.persistence.PagedList;
 import com.blazebit.persistence.PaginatedCriteriaBuilder;
 import com.blazebit.persistence.view.EntityViewManager;
 import com.blazebit.persistence.view.EntityViewSetting;
-import com.example.sdmisoback.model.ProposalInfo;
-import com.example.sdmisoback.view.ProposalInfoSimple;
+
+import com.example.sdmisoback.model.*;
+import com.example.sdmisoback.view.AttachmentFileView;
 
 
-public class CustomProposalRepoImpl implements CustomProposalRepo{
+public class CustomAttachmentFileRepoImpl implements CustomAttachmentFileRepo{
 
     private final EntityManager em;
  
@@ -25,34 +26,34 @@ public class CustomProposalRepoImpl implements CustomProposalRepo{
  
     private final EntityViewManager evm;
 
-    public CustomProposalRepoImpl(EntityManager em, CriteriaBuilderFactory cbf, EntityViewManager evm) {
+    public CustomAttachmentFileRepoImpl(EntityManager em, CriteriaBuilderFactory cbf, EntityViewManager evm) {
         this.em = em;
         this.cbf = cbf;
         this.evm = evm;
     }
 
     @Override
-    public Page<ProposalInfoSimple> findProposalSimpleById(PageRequest pr, Integer proposalId){
+    public Page<AttachmentFileView> filterAttachments(PageRequest pr, Integer proposalId){
         // create base query here (create = from)
-        CriteriaBuilder<ProposalInfo> cb = cbf.create(em, ProposalInfo.class)
-                                              .orderByAsc("proposalId"); // can apply sort by here 
+        CriteriaBuilder<AttachmentFile> cb = cbf.create(em, AttachmentFile.class)
+                                                .orderByAsc("attachmentId"); // can apply sort by here
 
         // add predicates here
         if(proposalId != null){
-            cb.where("proposalId").eq(proposalId);
+            cb.where("attachProposals.proposalInfo.proposalId").eq(proposalId);
         }
 
         // add pagination here
         // first is creating the "setting" to apply pagination
-        EntityViewSetting<ProposalInfoSimple, PaginatedCriteriaBuilder<ProposalInfoSimple>> setting = 
-            EntityViewSetting.create(ProposalInfoSimple.class, pr.getPageNumber() * pr.getPageSize(), pr.getPageSize());
+        EntityViewSetting<AttachmentFileView, PaginatedCriteriaBuilder<AttachmentFileView>> setting = 
+            EntityViewSetting.create(AttachmentFileView.class, pr.getPageNumber() * pr.getPageSize(), pr.getPageSize());
 
         // then apply the setting and execute the query
-        PagedList<ProposalInfoSimple> pagedProposals = evm.applySetting(setting, cb)
+        PagedList<AttachmentFileView> pagedAttachments = evm.applySetting(setting, cb)
             .getResultList();
         
         // finally get the total count of the query and return
-        int count = (int) pagedProposals.getTotalSize();
-        return new PageImpl<>(pagedProposals, pr, count);
+        int count = (int) pagedAttachments.getTotalSize();
+        return new PageImpl<>(pagedAttachments, pr, count);
     }
 }
