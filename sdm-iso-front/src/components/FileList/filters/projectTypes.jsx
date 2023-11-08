@@ -2,11 +2,6 @@ import { defaultAll } from "./common";
 
 export const projectTypesFilter = [
     {
-        id: defaultAll,
-        label: "All",
-        default: true,
-    },
-    {
         id: 'new_gen',
         label: "New Generation",
         default: false,

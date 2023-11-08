@@ -2,11 +2,6 @@ import { defaultAll } from "./common";
 
 export const fileTypesFilter = [
     {
-      id: defaultAll,
-      label: "All",
-      default: true,
-    },
-    {
       id: "bmp",
       label: "BMP",
       default: false,

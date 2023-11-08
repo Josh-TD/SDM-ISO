@@ -2,11 +2,6 @@ import { defaultAll } from "./common";
 
 export const resourceTypesFilter = [
     {
-        id: defaultAll,
-        label: "All",
-        default: true,
-    },
-    {
         id: "gen",
         label: "Generator",
         default: false,
