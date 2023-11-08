@@ -22,9 +22,9 @@ public class AttachmentDTOController {
         this.service = service;
     }
 
-    // api endpoint at http://localhost:8080/api/v3/paged-proposals?pageNum={int}&pageSize={int}&proposalId={int}
+    // api endpoint at http://localhost:8080/api/v3/files/list?pageNum={int}&pageSize={int}&proposalId={int}
     // recommended pageNum=0&pageSize=3  proposalId optional but recommended = 333
-    @GetMapping("/paged-proposals")
+    @GetMapping("/files/list")
     public Page<AttachmentFileView> filterAttachments(
         @RequestParam(name = "pageNum") int page, 
         @RequestParam(name = "pageSize") int size, 
