@@ -90,7 +90,6 @@ export default function FileList() {
           </DropDown>
 
           <DropDown label="Auction Period" defaultHidden={true}>
-            <CheckBox label="Any date" checked={auctionDateAny} onChange={(e) => setAuctionDateAny(!auctionDateAny)} />
             <legend>Start date:</legend>
             <DatePicker selected={auctionDateStart} onChange={(date) => { setAuctionDateStart(date); setAuctionDateAny(false) }} />
             <legend>End date:</legend>
