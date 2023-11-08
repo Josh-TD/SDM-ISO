@@ -143,7 +143,7 @@ export default function FileList() {
       </div>
 
       {/* File List */}
-      <div className="bg-iso-slate col-start-2 row-start-2 p-4">
+      <div className="bg-white col-start-2 row-start-2 p-4">
         {/* File list */}
         <div className="width: 100% height: 100%">
           <FileTable />
