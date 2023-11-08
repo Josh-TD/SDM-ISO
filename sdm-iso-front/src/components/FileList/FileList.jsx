@@ -141,9 +141,6 @@ export default function FileList() {
           <div className="text-base font-semibold text-iso-secondary-text cursor-pointer">View</div>
         </div>
 
-
-        <input type="button" id="modal-button" value="modal button" onClick={() => setIsOpen(true)} />
-
       </div>
 
       {/* File List */}

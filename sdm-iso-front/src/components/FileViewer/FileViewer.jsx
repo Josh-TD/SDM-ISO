@@ -3,17 +3,9 @@ import React from 'react';
 
 // for displaying functions, we should display from storage if possible
 // so we have to save it into storage first, not sure how to do for now
-
-// they all should have alt text just to look nice
-const displayImage = (path) => {
+const displayIFrame = (path) => {
     return (
-        <img src={path} />
-    )
-};
-
-const displayPDF = (path) => {
-    return (
-        <iframe src={path} />
+        <iframe className="h-full w-full" src={path} />
     )
 }
 
@@ -23,7 +15,7 @@ const displayPDF = (path) => {
 // let's hope that we don't need to do it
 const fileCategory = {
     "image": {
-        fn: displayImage,
+        fn: displayIFrame,
         ext: ["png", "jpeg", "jpg", "bmp", "tiff"]
     },
     "document": {
@@ -32,15 +24,23 @@ const fileCategory = {
     },
     "spreadsheet": {
         fn: null,
-        ext: ["xls", "xlsx"],
+        ext: ["xls", "xlsx", "xlsm"],
     },
     "pdf": {
-        fn: displayPDF,
+        fn: displayIFrame,
         ext: ["pdf"],
     },
     "text": {
         fn: null,
-        ext: ["txt", "md"],
+        ext: ["txt"],
+    },
+    "markup": {
+        fn: null,
+        ext: ["htm", "html", "md"],
+    },
+    "archive": {
+        fn: null,
+        ext: ["zip", "rar", "7z"],
     }
 };
 
@@ -69,10 +69,15 @@ export const FileViewer = ({ filename }) => {
 
     const _filename = Math.random() > 0.5 ? sample_img : sample_pdf;
 
+    // path to download, preferrable we have it in localstorage
+    const filepath = "";
+
     let [_type, fn] = categorizeFile(_filename);
 
+    // TODO fix hyperlink style because it is not underlined and not blue
     return (
-        <div>
+        <div className='flex flex-col h-full w-full'>
+            <u><a href={filepath}>{filename}</a></u>
             {fn(_filename)}
         </div>
     )
