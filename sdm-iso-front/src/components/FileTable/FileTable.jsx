@@ -8,6 +8,11 @@ import {FileViewer} from "../FileViewer/FileViewer";
 
 const COLUMNS = [
     {
+        accessor: 'select',
+        Header: 'Select',
+        cell: (props) => <p>{props.getValue()}</p>
+    },
+    {
         accessor: 'fName',
         Header: 'File Name',
         cell: (props) => <p>{props.getValue()}</p>
@@ -72,7 +77,10 @@ export const FileTable = () => {
                     {headerGroups.map((headerGroup) => (
                     <tr {...headerGroup.getHeaderGroupProps()}>
                         {headerGroup.headers.map((column) => (
-                            <th {...column.getHeaderProps(column.getSortByToggleProps())}>
+                            <th {...column.getHeaderProps(
+                                // if column id is equal to select then don't have sort by for that column
+                                column.id !== 'select' ? column.getSortByToggleProps() : {}
+                                )}>
                                 {column.render('Header')}
                                 <span className="inline-block">
                                 {column.isSorted ? (column.isSortedDesc ? 
@@ -83,7 +91,9 @@ export const FileTable = () => {
                                     <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
                                         <path stroke-linecap="round" stroke-linejoin="round" d="M19.5 8.25l-7.5 7.5-7.5-7.5" />
                                     </svg>
-                                  ) : 
+                                  ) :
+                                    // removes icon for select row
+                                    column.id == 'select' ? <></> : 
                                   <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
                                     <path stroke-linecap="round" stroke-linejoin="round" d="M8.25 15L12 18.75 15.75 15m-7.5-6L12 5.25 15.75 9" />
                                     </svg>
