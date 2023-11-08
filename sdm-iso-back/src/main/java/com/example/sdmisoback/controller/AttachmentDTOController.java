@@ -23,7 +23,8 @@ public class AttachmentDTOController {
     }
 
     // api endpoint at http://localhost:8080/api/v3/files/list?pageNum={int}&pageSize={int}&proposalId={int}
-    // recommended pageNum=0&pageSize=3  proposalId optional but recommended = 333
+    // recommended pageNum=0&pageSize=3  proposalId optional but recommended = 333 
+    // copy paste: http://localhost:8080/api/v3/files/list?pageNum=0&pageSize=3&proposalId=333
     @GetMapping("/files/list")
     public Page<AttachmentFileView> filterAttachments(
         @RequestParam(name = "pageNum") int page, 
