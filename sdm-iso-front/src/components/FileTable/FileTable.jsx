@@ -115,9 +115,9 @@ export const FileTable = () => {
                 isOpen={modalIsOpen}
                 onRequestClose={() => setIsOpen(false)}
                 contentLabel="File Modal"
+                preventScroll={true}
             >
-                <h2>File Name: {selectedFileName}</h2>
-                <FileViewer filename="dummy" />
+                <FileViewer filename={selectedFileName} />
             </Modal>
             <div>
                 <button className="bg-iso-offwhite p-1 border-solid border-2" onClick={() => previousPage()}>Previous</button>
