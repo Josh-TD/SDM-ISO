@@ -1,5 +1,8 @@
 package com.example.sdmisoback.view;
 
+
+import java.util.Set;
+
 import com.blazebit.persistence.view.*;
 import com.example.sdmisoback.model.*;
 
@@ -23,4 +26,10 @@ public interface ProposalInfoSimple {
 
     @Mapping("custInfo.customerName")
     public String getCustomerName();
+
+    @Mapping("attachProposals.attachmentFile.attachmentId")
+    public int getAttachmentFile();
+
+    @Mapping("attachProposals.attachmentFile.fileName")
+    public String getFileName();
 }
