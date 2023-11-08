@@ -68,7 +68,7 @@ export const FileTable = () => {
     return (
         <>
             <table className="bg-iso-offwhite w-full h-4/5" {...getTableProps()}>
-                <thead className="bg-iso-light-gray">
+                <thead className="bg-iso-offwhite h-12">
                     {headerGroups.map((headerGroup) => (
                     <tr {...headerGroup.getHeaderGroupProps()}>
                         {headerGroup.headers.map((column) => (
@@ -120,8 +120,8 @@ export const FileTable = () => {
                 <FileViewer filename={selectedFileName} />
             </Modal>
             <div>
-                <button className="bg-iso-offwhite p-1 border-solid border-2" onClick={() => previousPage()}>Previous</button>
-                <button className="bg-iso-offwhite p-1 border-solid border-2" onClick={() => nextPage()}>Next</button>
+                <button className="bg-iso-offwhite p-1 border-solid border-1" onClick={() => previousPage()}>Previous</button>
+                <button className="bg-iso-offwhite p-1 border-solid border-1" onClick={() => nextPage()}>Next</button>
             </div>
         </>
     )
