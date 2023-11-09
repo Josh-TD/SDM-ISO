@@ -5,6 +5,7 @@ import { useTable, usePagination, useSortBy } from "react-table";
 import Modal from "react-modal";
 import "./FileTable.css"
 import {FileViewer} from "../FileViewer/FileViewer";
+import FileFetcher from "../FileViewer/FileFetcher";
 
 const COLUMNS = [
     {

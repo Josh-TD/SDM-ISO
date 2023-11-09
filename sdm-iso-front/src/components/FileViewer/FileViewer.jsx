@@ -1,4 +1,5 @@
 import React from 'react';
+import FileFetcher from "./FileFetcher";
 
 
 // for displaying functions, we should display from storage if possible
@@ -64,21 +65,25 @@ const categorizeFile = (filename) => {
 const getFile = (filename) => { };
 
 export const FileViewer = ({ filename }) => {
-    const sample_pdf = "https://www.africau.edu/images/default/sample.pdf";
-    const sample_img = "https://t4.ftcdn.net/jpg/00/97/58/97/360_F_97589769_t45CqXyzjz0KXwoBZT9PRaWGHRk5hQqQ.jpg";
-
-    const _filename = Math.random() > 0.5 ? sample_img : sample_pdf;
-
-    // path to download, preferrable we have it in localstorage
-    const filepath = "";
-
-    let [_type, fn] = categorizeFile(_filename);
+    // const sample_pdf = "https://www.africau.edu/images/default/sample.pdf";
+    // const sample_img = "https://t4.ftcdn.net/jpg/00/97/58/97/360_F_97589769_t45CqXyzjz0KXwoBZT9PRaWGHRk5hQqQ.jpg";
+    //
+    // const _filename = Math.random() > 0.5 ? sample_img : sample_pdf;
+    //
+    // // path to download, preferrable we have it in localstorage
+    // const filepath = "";
+    //
+    // let [_type, fn] = categorizeFile(_filename);
 
     // TODO fix hyperlink style because it is not underlined and not blue
     return (
         <div className='flex flex-col h-full w-full'>
-            <u><a href={filepath}>{filename}</a></u>
-            {fn(_filename)}
+            <button onClick={console.log("User wants to download")}> Download File </button>
+            <h2>{filename}</h2>
+            {/*<u><a href={filepath}>{filename}</a></u>*/}
+            {/*{fn(_filename)}*/}
+            <FileFetcher fileName={filename} />
         </div>
+
     )
 }

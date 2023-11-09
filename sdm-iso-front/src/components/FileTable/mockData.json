@@ -1,212 +1,247 @@
 [
     {
-        "fName": "gravityworks_propos...",
+        "fName": "a_gravityworks_proposal.bmp",
         "pName": "Gravity Works",
         "cName": "Lightening Power",
         "cDateTime": "2/25/2008  3:16:00 PM",
         "fDescript": "Project documents"
     },
     {
-        "fName": "NLR_proposal_doc.pdf",
+        "fName": "b_NLR_proposal_doc.bmp",
         "pName": "Nice Load Response",
         "cName": "Constant Energy",
         "cDateTime": "10/29/2008  8:10:01 PM",
         "fDescript": "meeting notes"
     },
     {
-        "fName": "NLR_proposal_doc2.pdf",
-        "pName": "Nice Load Response",
-        "cName": "Constant Energy",
-        "cDateTime": "11/26/2008  8:41:06 PM",
-        "fDescript": "Resource_info"
-    },
-    {
-        "fName": "NLR_proposal_doc3.pdf",
-        "pName": "Nice Load Response",
-        "cName": "Constant Energy",
-        "cDateTime": "11/26/2008  8:41:27 PM",
-        "fDescript": "Resource QDN"
-    },
-    {
-        "fName": "newcontractyear_prop...",
-        "pName": "New Contract Year",
-        "cName": "Energy Importer",
-        "cDateTime": "4/28/2018  3:18:45 AM",
-        "fDescript": ""
-    },
-    {
-        "fName": "newcontractyear_prop...",
-        "pName": "New Contract Year",
-        "cName": "Energy Importer",
-        "cDateTime": "6/6/2018  8:49:21 PM",
-        "fDescript": "DR Project Description"
-    },
-    {
-        "fName": "newcontractyear_prop...",
-        "pName": "New Contract Year",
-        "cName": "Energy Importer",
-        "cDateTime": "6/20/2018  10:00:54 PM",
-        "fDescript": "Sponsored Policy Resource Certification"
-    },
-    {
-        "fName": "addlLRproposal_file.do...",
-        "pName": "Additional LR",
-        "cName": "Sun Rise Power",
-        "cDateTime": "6/22/2018  2:19:26 AM",
-        "fDescript": "Funding plan"
-    },
-    {
-        "fName": "addlLRproposal_file.do...",
-        "pName": "Additional LR",
-        "cName": "Sun Rise Power",
-        "cDateTime": "6/22/2018  3:54:36 AM",
-        "fDescript": "customer acquisition aggregate"
-    },
-    {
-        "fName": "addlLRproposal_file.do...",
+        "fName": "c_addlLRproposal_file.bmp",
         "pName": "Additional LR",
         "cName": "Sun Rise Power",
         "cDateTime": "6/22/2018  5:19:23 AM",
         "fDescript": "ISO-NE Offer Resource Trigger Price Challenge Document"
     },
     {
-        "fName": "File 11",
-        "pName": "Project 11",
-        "cName": "Customer 11",
-        "cDateTime": "1/01/1991 10:10:10 PM",
-        "lViewed": "1/01/1991 10:10:10 PM"
+        "fName": "d_gravityworks_proposal.doc",
+        "pName": "Gravity Works",
+        "cName": "Lightening Power",
+        "cDateTime": "2/25/2008  3:16:00 PM",
+        "fDescript": "Project documents"
     },
     {
-        "fName": "File 12",
-        "pName": "Project 12",
-        "cName": "Customer 12",
-        "cDateTime": "1/01/1991 10:10:10 PM",
-        "lViewed": "1/01/1991 10:10:10 PM"
+        "fName": "e_NLR_proposal_doc.doc",
+        "pName": "Nice Load Response",
+        "cName": "Constant Energy",
+        "cDateTime": "10/29/2008  8:10:01 PM",
+        "fDescript": "meeting notes"
     },
     {
-        "fName": "File 13",
-        "pName": "Project 13",
-        "cName": "Customer 13",
-        "cDateTime": "1/01/1991 10:10:10 PM",
-        "lViewed": "1/01/1991 10:10:10 PM"
+        "fName": "f_addlLRproposal_file.doc",
+        "pName": "Additional LR",
+        "cName": "Sun Rise Power",
+        "cDateTime": "6/22/2018  5:19:23 AM",
+        "fDescript": "ISO-NE Offer Resource Trigger Price Challenge Document"
     },
     {
-        "fName": "File 14",
-        "pName": "Project 14",
-        "cName": "Customer 14",
-        "cDateTime": "1/01/1991 10:10:10 PM",
-        "lViewed": "1/01/1991 10:10:10 PM"
+        "fName": "g_gravityworks_proposal.docx",
+        "pName": "Gravity Works",
+        "cName": "Lightening Power",
+        "cDateTime": "2/25/2008  3:16:00 PM",
+        "fDescript": "Project documents"
     },
     {
-        "fName": "File 15",
-        "pName": "Project 15",
-        "cName": "Customer 15",
-        "cDateTime": "1/01/1991 10:10:10 PM",
-        "lViewed": "1/01/1991 10:10:10 PM"
+        "fName": "h_NLR_proposal_doc.docx",
+        "pName": "Nice Load Response",
+        "cName": "Constant Energy",
+        "cDateTime": "10/29/2008  8:10:01 PM",
+        "fDescript": "meeting notes"
     },
     {
-        "fName": "File 16",
-        "pName": "Project 16",
-        "cName": "Customer 16",
-        "cDateTime": "1/01/1991 10:10:10 PM",
-        "lViewed": "1/01/1991 10:10:10 PM"
+        "fName": "i_addlLRproposal_file.docx",
+        "pName": "Additional LR",
+        "cName": "Sun Rise Power",
+        "cDateTime": "6/22/2018  5:19:23 AM",
+        "fDescript": "ISO-NE Offer Resource Trigger Price Challenge Document"
     },
     {
-        "fName": "File 17",
-        "pName": "Project 17",
-        "cName": "Customer 17",
-        "cDateTime": "1/01/1991 10:10:10 PM",
-        "lViewed": "1/01/1991 10:10:10 PM"
+        "fName": "j_gravityworks_proposal.htm",
+        "pName": "Gravity Works",
+        "cName": "Lightening Power",
+        "cDateTime": "2/25/2008  3:16:00 PM",
+        "fDescript": "Project documents"
     },
     {
-        "fName": "File 18",
-        "pName": "Project 18",
-        "cName": "Customer 18",
-        "cDateTime": "1/01/1991 10:10:10 PM",
-        "lViewed": "1/01/1991 10:10:10 PM"
+        "fName": "k_NLR_proposal_doc.htm",
+        "pName": "Nice Load Response",
+        "cName": "Constant Energy",
+        "cDateTime": "10/29/2008  8:10:01 PM",
+        "fDescript": "meeting notes"
     },
     {
-        "fName": "File 19",
-        "pName": "Project 19",
-        "cName": "Customer 19",
-        "cDateTime": "1/01/1991 10:10:10 PM",
-        "lViewed": "1/01/1991 10:10:10 PM"
+        "fName": "l_addlLRproposal_file.htm",
+        "pName": "Additional LR",
+        "cName": "Sun Rise Power",
+        "cDateTime": "6/22/2018  5:19:23 AM",
+        "fDescript": "ISO-NE Offer Resource Trigger Price Challenge Document"
     },
     {
-        "fName": "File 20",
-        "pName": "Project 20",
-        "cName": "Customer 20",
-        "cDateTime": "1/01/1991 10:10:10 PM",
-        "lViewed": "1/01/1991 10:10:10 PM"
+        "fName": "m_gravityworks_proposal.html",
+        "pName": "Gravity Works",
+        "cName": "Lightening Power",
+        "cDateTime": "2/25/2008  3:16:00 PM",
+        "fDescript": "Project documents"
     },
     {
-        "fName": "File 21",
-        "pName": "Project 21",
-        "cName": "Customer 21",
-        "cDateTime": "1/01/1991 10:10:10 PM",
-        "lViewed": "1/01/1991 10:10:10 PM"
+        "fName": "n_NLR_proposal_doc.html",
+        "pName": "Nice Load Response",
+        "cName": "Constant Energy",
+        "cDateTime": "10/29/2008  8:10:01 PM",
+        "fDescript": "meeting notes"
     },
     {
-        "fName": "File 22",
-        "pName": "Project 22",
-        "cName": "Customer 22",
-        "cDateTime": "1/01/1991 10:10:10 PM",
-        "lViewed": "1/01/1991 10:10:10 PM"
+        "fName": "o_addlLRproposal_file.html",
+        "pName": "Additional LR",
+        "cName": "Sun Rise Power",
+        "cDateTime": "6/22/2018  5:19:23 AM",
+        "fDescript": "ISO-NE Offer Resource Trigger Price Challenge Document"
     },
     {
-        "fName": "File 23",
-        "pName": "Project 23",
-        "cName": "Customer 23",
-        "cDateTime": "1/01/1991 10:10:10 PM",
-        "lViewed": "1/01/1991 10:10:10 PM"
+        "fName": "p_gravityworks_proposal.jpg",
+        "pName": "Gravity Works",
+        "cName": "Lightening Power",
+        "cDateTime": "2/25/2008  3:16:00 PM",
+        "fDescript": "Project documents"
     },
     {
-        "fName": "File 24",
-        "pName": "Project 24",
-        "cName": "Customer 24",
-        "cDateTime": "1/01/1991 10:10:10 PM",
-        "lViewed": "1/01/1991 10:10:10 PM"
+        "fName": "q_NLR_proposal_doc.jpg",
+        "pName": "Nice Load Response",
+        "cName": "Constant Energy",
+        "cDateTime": "10/29/2008  8:10:01 PM",
+        "fDescript": "meeting notes"
     },
     {
-        "fName": "File 25",
-        "pName": "Project 25",
-        "cName": "Customer 25",
-        "cDateTime": "1/01/1991 10:10:10 PM",
-        "lViewed": "1/01/1991 10:10:10 PM"
+        "fName": "r_addlLRproposal_file.jpg",
+        "pName": "Additional LR",
+        "cName": "Sun Rise Power",
+        "cDateTime": "6/22/2018  5:19:23 AM",
+        "fDescript": "ISO-NE Offer Resource Trigger Price Challenge Document"
     },
     {
-        "fName": "File 26",
-        "pName": "Project 26",
-        "cName": "Customer 26",
-        "cDateTime": "1/01/1991 10:10:10 PM",
-        "lViewed": "1/01/1991 10:10:10 PM"
+        "fName": "s_gravityworks_proposal.msg",
+        "pName": "Gravity Works",
+        "cName": "Lightening Power",
+        "cDateTime": "2/25/2008  3:16:00 PM",
+        "fDescript": "Project documents"
     },
     {
-        "fName": "File 27",
-        "pName": "Project 27",
-        "cName": "Customer 27",
-        "cDateTime": "1/01/1991 10:10:10 PM",
-        "lViewed": "1/01/1991 10:10:10 PM"
+        "fName": "t_NLR_proposal_doc.msg",
+        "pName": "Nice Load Response",
+        "cName": "Constant Energy",
+        "cDateTime": "10/29/2008  8:10:01 PM",
+        "fDescript": "meeting notes"
     },
     {
-        "fName": "File 28",
-        "pName": "Project 28",
-        "cName": "Customer 28",
-        "cDateTime": "1/01/1991 10:10:10 PM",
-        "lViewed": "1/01/1991 10:10:10 PM"
+        "fName": "u_addlLRproposal_file.msg",
+        "pName": "Additional LR",
+        "cName": "Sun Rise Power",
+        "cDateTime": "6/22/2018  5:19:23 AM",
+        "fDescript": "ISO-NE Offer Resource Trigger Price Challenge Document"
     },
     {
-        "fName": "File 29",
-        "pName": "Project 29",
-        "cName": "Customer 29",
-        "cDateTime": "1/01/1991 10:10:10 PM",
-        "lViewed": "1/01/1991 10:10:10 PM"
+        "fName": "v_gravityworks_proposal.pdf",
+        "pName": "Gravity Works",
+        "cName": "Lightening Power",
+        "cDateTime": "2/25/2008  3:16:00 PM",
+        "fDescript": "Project documents"
     },
     {
-        "fName": "File 30",
-        "pName": "Project 30",
-        "cName": "Customer 30",
-        "cDateTime": "1/01/1991 10:10:10 PM",
-        "lViewed": "1/01/1991 10:10:10 PM"
+        "fName": "w_NLR_proposal_doc.pdf",
+        "pName": "Nice Load Response",
+        "cName": "Constant Energy",
+        "cDateTime": "10/29/2008  8:10:01 PM",
+        "fDescript": "meeting notes"
+    },
+    {
+        "fName": "x_addlLRproposal_file.pdf",
+        "pName": "Additional LR",
+        "cName": "Sun Rise Power",
+        "cDateTime": "6/22/2018  5:19:23 AM",
+        "fDescript": "ISO-NE Offer Resource Trigger Price Challenge Document"
+    },
+    {
+        "fName": "y_gravityworks_proposal.txt",
+        "pName": "Gravity Works",
+        "cName": "Lightening Power",
+        "cDateTime": "2/25/2008  3:16:00 PM",
+        "fDescript": "Project documents"
+    },
+    {
+        "fName": "z_NLR_proposal_doc.txt",
+        "pName": "Nice Load Response",
+        "cName": "Constant Energy",
+        "cDateTime": "10/29/2008  8:10:01 PM",
+        "fDescript": "meeting notes"
+    },
+    {
+        "fName": "a_addlLRproposal_file.txt",
+        "pName": "Additional LR",
+        "cName": "Sun Rise Power",
+        "cDateTime": "6/22/2018  5:19:23 AM",
+        "fDescript": "ISO-NE Offer Resource Trigger Price Challenge Document"
+    },
+    {
+        "fName": "b_gravityworks_proposal.xlsm",
+        "pName": "Gravity Works",
+        "cName": "Lightening Power",
+        "cDateTime": "2/25/2008  3:16:00 PM",
+        "fDescript": "Project documents"
+    },
+    {
+        "fName": "c_NLR_proposal_doc.xlsm",
+        "pName": "Nice Load Response",
+        "cName": "Constant Energy",
+        "cDateTime": "10/29/2008  8:10:01 PM",
+        "fDescript": "meeting notes"
+    },
+    {
+        "fName": "d_addlLRproposal_file.xlsm",
+        "pName": "Additional LR",
+        "cName": "Sun Rise Power",
+        "cDateTime": "6/22/2018  5:19:23 AM",
+        "fDescript": "ISO-NE Offer Resource Trigger Price Challenge Document"
+    },
+    {
+        "fName": "e_gravityworks_proposal.xlsx",
+        "pName": "Gravity Works",
+        "cName": "Lightening Power",
+        "cDateTime": "2/25/2008  3:16:00 PM",
+        "fDescript": "Project documents"
+    },
+    {
+        "fName": "f_NLR_proposal_doc.xlsx",
+        "pName": "Nice Load Response",
+        "cName": "Constant Energy",
+        "cDateTime": "10/29/2008  8:10:01 PM",
+        "fDescript": "meeting notes"
+    },
+    {
+        "fName": "g_addlLRproposal_file.xlsx",
+        "pName": "Additional LR",
+        "cName": "Sun Rise Power",
+        "cDateTime": "6/22/2018  5:19:23 AM",
+        "fDescript": "ISO-NE Offer Resource Trigger Price Challenge Document"
+    },
+    {
+        "fName": "h_gravityworks_proposal.zip",
+        "pName": "Gravity Works",
+        "cName": "Lightening Power",
+        "cDateTime": "2/25/2008  3:16:00 PM",
+        "fDescript": "Project documents"
+    },
+    {
+        "fName": "i_NLR_proposal_doc.zip",
+        "pName": "Nice Load Response",
+        "cName": "Constant Energy",
+        "cDateTime": "10/29/2008  8:10:01 PM",
+        "fDescript": "meeting notes"
     }
 ]
