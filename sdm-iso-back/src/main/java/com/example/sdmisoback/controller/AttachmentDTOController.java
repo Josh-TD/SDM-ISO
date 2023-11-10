@@ -78,6 +78,8 @@ public class AttachmentDTOController {
 
         ) { //end parameters
         PageRequest pr = PageRequest.of(pageNum, pageSize);
+
+        // TODO: Get rid of this parameter bullshit and just make an object for it
         return service.filterAttachments(
             pr, sortBy, sortAsc,
             fileId, fileName, fileDescription, createdSince, fileType,
