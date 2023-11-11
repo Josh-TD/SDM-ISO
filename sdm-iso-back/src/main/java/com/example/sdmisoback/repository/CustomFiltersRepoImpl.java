@@ -16,7 +16,7 @@ import com.example.sdmisoback.dto.FiltersDTO;
 import com.example.sdmisoback.model.*;
 
 
-public class CustomAttachmentFileRepoImpl implements CustomAttachmentFileRepo{
+public class CustomFiltersRepoImpl implements CustomFiltersRepo{
 
     private final EntityManager em;
  
@@ -24,7 +24,7 @@ public class CustomAttachmentFileRepoImpl implements CustomAttachmentFileRepo{
  
     private final EntityViewManager evm;
 
-    public CustomAttachmentFileRepoImpl(EntityManager em, CriteriaBuilderFactory cbf, EntityViewManager evm) {
+    public CustomFiltersRepoImpl(EntityManager em, CriteriaBuilderFactory cbf, EntityViewManager evm) {
         this.em = em;
         this.cbf = cbf;
         this.evm = evm;

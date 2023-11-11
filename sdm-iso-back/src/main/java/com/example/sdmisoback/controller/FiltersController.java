@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.example.sdmisoback.dto.AttachmentFileView;
 import com.example.sdmisoback.dto.FiltersDTO;
-import com.example.sdmisoback.service.AttachmentService;
+import com.example.sdmisoback.service.FiltersService;
 
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
@@ -21,11 +21,11 @@ import io.swagger.v3.oas.annotations.responses.ApiResponses;
 
 @RestController
 @RequestMapping("/api/v3")
-public class AttachmentDTOController {
+public class FiltersController {
 
-    private AttachmentService service;
+    private FiltersService service;
 
-    public AttachmentDTOController(AttachmentService service){
+    public FiltersController(FiltersService service){
         this.service = service;
     }
 

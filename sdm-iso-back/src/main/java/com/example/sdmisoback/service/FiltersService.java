@@ -6,15 +6,15 @@ import org.springframework.stereotype.Service;
 
 import com.example.sdmisoback.dto.AttachmentFileView;
 import com.example.sdmisoback.dto.FiltersDTO;
-import com.example.sdmisoback.repository.AttachmentFileRepo;
+import com.example.sdmisoback.repository.FiltersRepo;
 
 
 @Service
-public class AttachmentService {
+public class FiltersService {
     
-    private final AttachmentFileRepo repo;
+    private final FiltersRepo repo;
 
-    public AttachmentService(@Qualifier("attachmentFileRepo") AttachmentFileRepo repo){
+    public FiltersService(@Qualifier("attachmentFileRepo") FiltersRepo repo){
         this.repo = repo;
     }
 
