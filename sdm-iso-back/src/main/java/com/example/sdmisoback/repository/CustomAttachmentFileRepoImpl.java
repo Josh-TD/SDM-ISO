@@ -34,43 +34,76 @@ public class CustomAttachmentFileRepoImpl implements CustomAttachmentFileRepo{
     }
 
     @Override
-    public Page<AttachmentFileView> filterAttachments(
-            PageRequest pr, String sortBy, boolean sortAsc,
-            Integer fileId, String fileName, String fileDescription, LocalDateTime createdSince, String fileType,
-            Integer projectId, String projectName, String projectType,
-            Integer customerId, String customerName,
-            Integer resourceId, String resourceName, String resourceType,
-            Integer auctionId,
-            Integer proposalId, String proposalLabel
-    ){
+    public Page<AttachmentFileView> filterAttachments(FiltersDTO f){
+        // shortcut for finding proposalInfo
+        String proposal = "attachProposals.proposalInfo";
+        
         // create base query here (create = from)
         CriteriaBuilder<AttachmentFile> cb = cbf.create(em, AttachmentFile.class)
-                                                .orderBy(sortBy, sortAsc);
+                                                .orderBy(f.sortBy, f.sortAsc);
 
         // add predicates here
 
-        // attachmentFile predicates
-        if(fileName != null)
-            cb.where("fileName").eq(fileName);
+        // attachmentFile filters
+        if(f.fileName != null)
+            cb.where("fileName").like().value(f.fileName+'%').noEscape();
         
-        if(fileId != null)
-            cb.where("attachmentId").eq(fileId);
+        if(f.fileId != null)
+            cb.where("attachmentId").eq(f.fileId);
 
-        if(fileDescription != null)
-            cb.where("description").eq(fileDescription);
+        if(f.fileDescription != null)
+            cb.where("description").like().value('%'+ f.fileDescription + '%').noEscape();
 
-        // proposal predicates
-        if(proposalId != null)
-            cb.where("attachProposals.proposalInfo.proposalId").eq(proposalId);
+        if(f.createdSince != null)
+            cb.where("createDate").le(f.createdSince);
 
-        if(proposalLabel != null)
-            cb.where("attachProposals.proposalInfo.proposalLabel").eq(proposalLabel);
+        if(f.fileType != null)
+            cb.where("fileName").like().value('%'+f.fileType).noEscape();
+
+        // attach proposal filters
         
+        // proposal filters
+        if(f.proposalId != null)
+            cb.where(proposal + ".proposalId").eq(f.proposalId);
 
+        if(f.proposalLabel != null)
+            cb.where(proposal + ".proposalLabel").like().value('%'+f.proposalLabel + '%').noEscape();
+
+        // project filters
+        if(f.projectId != null)
+            cb.where(proposal + ".projInfo.projectId").eq(f.projectId);
+        
+        if(f.projectName != null)
+            cb.where(proposal + ".projInfo.projectName").like().value(f.projectName+'%').noEscape();
+        
+        if(f.projectType != null)
+            cb.where(proposal + ".projType.projectType").eq(f.projectType);
+
+        // customer filters
+        if(f.customerId != null)
+            cb.where(proposal + ".custInfo.customerId").eq(f.customerId);
+
+        if(f.customerName != null)
+            cb.where(proposal + ".custInfo.customerName").like().value(f.customerName+'%').noEscape();
+
+        // resource filters
+        if(f.resourceId != null)
+            cb.where(proposal + ".resInfo.resourceId").eq(f.resourceId);
+        
+        if(f.resourceName != null)
+            cb.where(proposal + ".resInfo.resourceName").like().value(f.resourceName+'%').noEscape();
+
+        if(f.resourceType != null)
+            cb.where(proposal + ".resInfo.resourceType.resourceType").eq(f.resourceType);
+
+        // auction filters
+        if(f.auctionId != null)
+            cb.where(proposal + ".auctionInfo.auctionId").eq(f.auctionId);
+        
         // add pagination here
         // first is creating the "setting" to apply pagination
         EntityViewSetting<AttachmentFileView, PaginatedCriteriaBuilder<AttachmentFileView>> setting = 
-            EntityViewSetting.create(AttachmentFileView.class, pr.getPageNumber() * pr.getPageSize(), pr.getPageSize());
+            EntityViewSetting.create(AttachmentFileView.class, f.pr.getPageNumber() * f.pr.getPageSize(), f.pr.getPageSize());
 
         // then apply the setting and execute the query
         PagedList<AttachmentFileView> pagedAttachments = evm.applySetting(setting, cb)
@@ -78,6 +111,6 @@ public class CustomAttachmentFileRepoImpl implements CustomAttachmentFileRepo{
         
         // finally get the total count of the query and return
         int count = (int) pagedAttachments.getTotalSize();
-        return new PageImpl<>(pagedAttachments, pr, count);
+        return new PageImpl<>(pagedAttachments, f.pr, count);
     }
 }

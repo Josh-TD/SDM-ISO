@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-
+import com.example.sdmisoback.model.FiltersDTO;
 import com.example.sdmisoback.service.AttachmentService;
 import com.example.sdmisoback.view.AttachmentFileView;
 
@@ -46,6 +46,7 @@ public class AttachmentDTOController {
         @RequestParam(name = "fileDescription", required = false) String fileDescription,
 
         // TODO: figure out how to use this date?
+        // for now: anything less than this date
         @RequestParam(name = "createdSince", required = false) LocalDateTime createdSince, 
 
         // attachProposal filters
@@ -78,9 +79,7 @@ public class AttachmentDTOController {
 
         ) { //end parameters
         PageRequest pr = PageRequest.of(pageNum, pageSize);
-
-        // TODO: Get rid of this parameter bullshit and just make an object for it
-        return service.filterAttachments(
+        FiltersDTO filters = new FiltersDTO(
             pr, sortBy, sortAsc,
             fileId, fileName, fileDescription, createdSince, fileType,
             projectId, projectName, projectType,
@@ -88,7 +87,10 @@ public class AttachmentDTOController {
             resourceId, resourceName, resourceType,
             auctionId,
             proposalId, proposalLabel
-        );
+    );
+
+        // TODO: Get rid of this parameter bullshit and just make an object for it
+        return service.filterAttachments(filters);
     }
 }
 
