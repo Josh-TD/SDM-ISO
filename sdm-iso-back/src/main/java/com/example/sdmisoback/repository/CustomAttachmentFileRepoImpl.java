@@ -2,11 +2,8 @@ package com.example.sdmisoback.repository;
 
 import jakarta.persistence.EntityManager;
 
-import java.time.LocalDateTime;
-
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
-import org.springframework.data.domain.PageRequest;
 
 import com.blazebit.persistence.CriteriaBuilder;
 import com.blazebit.persistence.CriteriaBuilderFactory;
