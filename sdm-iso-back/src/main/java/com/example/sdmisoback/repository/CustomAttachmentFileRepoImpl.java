@@ -52,7 +52,7 @@ public class CustomAttachmentFileRepoImpl implements CustomAttachmentFileRepo{
             cb.where("description").like().value('%'+ f.fileDescription + '%').noEscape();
 
         if(f.createdSince != null)
-            cb.where("createDate").le(f.createdSince);
+            cb.where("createDate").ge(f.createdSince);
 
         if(f.fileType != null)
             cb.where("fileName").like().value('%'+f.fileType).noEscape();
