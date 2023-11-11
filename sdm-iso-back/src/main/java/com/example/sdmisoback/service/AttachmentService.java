@@ -4,9 +4,9 @@ import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Service;
 
-import com.example.sdmisoback.model.FiltersDTO;
+import com.example.sdmisoback.dto.AttachmentFileView;
+import com.example.sdmisoback.dto.FiltersDTO;
 import com.example.sdmisoback.repository.AttachmentFileRepo;
-import com.example.sdmisoback.view.AttachmentFileView;
 
 
 @Service

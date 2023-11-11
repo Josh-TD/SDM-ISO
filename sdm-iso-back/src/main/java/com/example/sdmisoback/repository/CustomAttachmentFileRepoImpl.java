@@ -11,9 +11,9 @@ import com.blazebit.persistence.PagedList;
 import com.blazebit.persistence.PaginatedCriteriaBuilder;
 import com.blazebit.persistence.view.EntityViewManager;
 import com.blazebit.persistence.view.EntityViewSetting;
-
+import com.example.sdmisoback.dto.AttachmentFileView;
+import com.example.sdmisoback.dto.FiltersDTO;
 import com.example.sdmisoback.model.*;
-import com.example.sdmisoback.view.AttachmentFileView;
 
 
 public class CustomAttachmentFileRepoImpl implements CustomAttachmentFileRepo{

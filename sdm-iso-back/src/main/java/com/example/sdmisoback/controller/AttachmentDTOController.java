@@ -9,9 +9,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.example.sdmisoback.model.FiltersDTO;
+import com.example.sdmisoback.dto.AttachmentFileView;
+import com.example.sdmisoback.dto.FiltersDTO;
 import com.example.sdmisoback.service.AttachmentService;
-import com.example.sdmisoback.view.AttachmentFileView;
 
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;

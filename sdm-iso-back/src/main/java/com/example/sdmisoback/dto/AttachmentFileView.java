@@ -1,4 +1,4 @@
-package com.example.sdmisoback.view;
+package com.example.sdmisoback.dto;
 
 import java.time.LocalDateTime;
 
