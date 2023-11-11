@@ -23,6 +23,7 @@ public interface AttachmentFileView {
     @Mapping("createDate")
     public LocalDateTime getFileCreateDate();
 
+    // TODO: probably do not need proposalId, was using it previously for testing
     @Mapping("attachProposals.proposalInfo.proposalId")
     public int getProposalId();
 
