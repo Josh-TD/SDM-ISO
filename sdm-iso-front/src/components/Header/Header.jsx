@@ -11,7 +11,7 @@ export default function Header() {
       </div>
 
       {/* slate line across screen */}
-      <div className="h-16 bg-iso-slate flex items-center justify-center w-full">
+      <div className="h-12 bg-iso-slate flex items-center justify-center w-full">
         {/* We can put elements in here if we want, for example a logout button */}
       </div>
     </div>
