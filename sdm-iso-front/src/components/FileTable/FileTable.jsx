@@ -5,13 +5,23 @@ import { useTable, usePagination, useSortBy } from "react-table";
 import Modal from "react-modal";
 import "./FileTable.css"
 import {FileViewer} from "../FileViewer/FileViewer";
+import {CheckBox} from "../Misc/CheckBox"
 
 const COLUMNS = [
+
+    // Select is different than the rest as it contains checkboxes in its cells rather than data
     {
-        accessor: 'select',
+        id: 'select',
         Header: 'Select',
-        cell: (props) => <p>{props.getValue()}</p>
-    },
+        cell: ({ row }) => (
+            <CheckBox 
+            id = {id}
+            onChange={() => row.toggleRowSelected()}
+            checked={row.isSelected}
+            
+            />
+        ),
+      },
     {
         accessor: 'fName',
         Header: 'File Name',
@@ -104,7 +114,7 @@ export const FileTable = () => {
                     </tr>
                     ))}
                 </thead>
-                <tbody {...getTableBodyProps()}>
+                <tbody {...getTableBodyProps()} className="text-center">
                     {rows.map((row, index) => {
                         prepareRow(row)
                         const rowClassName = index % 2 === 0 ? "table-row-even" : "table-row-odd";
