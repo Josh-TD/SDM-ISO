@@ -84,14 +84,14 @@ export const FileTable = () => {
             <table className="bg-iso-offwhite w-full h-4/5" {...getTableProps()}>
                 <thead className="bg-iso-light-gray">
                     {headerGroups.map((headerGroup) => (
-                    <tr {...headerGroup.getHeaderGroupProps()}>
+                    <tr {...headerGroup.getHeaderGroupProps()} className="items-center p-3">
                         {headerGroup.headers.map((column) => (
                             <th {...column.getHeaderProps(
                                 // if column id is equal to select then don't have sort by for that column
                                 column.id !== 'select' ? column.getSortByToggleProps() : {}
-                                )}>
+                                )} className="p-2 place-items-center">
                                 {column.render('Header')}
-                                <span className="inline-block">
+                                <span className="inline-block relative top-1.5">
                                 {column.isSorted ? (column.isSortedDesc ? 
                                     <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
                                         <path stroke-linecap="round" stroke-linejoin="round" d="M4.5 15.75l7.5-7.5 7.5 7.5" />
@@ -103,8 +103,8 @@ export const FileTable = () => {
                                   ) :
                                     // removes icon for select row
                                     column.id == 'select' ? <></> : 
-                                  <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
-                                    <path stroke-linecap="round" stroke-linejoin="round" d="M8.25 15L12 18.75 15.75 15m-7.5-6L12 5.25 15.75 9" />
+                                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
+                                        <path stroke-linecap="round" stroke-linejoin="round" d="M8.25 15L12 18.75 15.75 15m-7.5-6L12 5.25 15.75 9" />
                                     </svg>
                                 }
                                 </span>
@@ -128,7 +128,7 @@ export const FileTable = () => {
                                 className={`cursor-pointer hover:bg-gray-200 ${rowClassName}`}
                             >
                                 {row.cells.map( cell => {
-                                    return <td {...cell.getCellProps()}>{cell.render('Cell')}</td>
+                                    return <td {...cell.getCellProps()} className="p-2">{cell.render('Cell')}</td>
                                 })}
                             </tr>
                         )
@@ -143,21 +143,21 @@ export const FileTable = () => {
                 <h2>File Name: {selectedFileName}</h2>
                 <FileViewer filename="dummy" />
             </Modal>
-            <pre>
-        <code>
-          {JSON.stringify(
-            {
-              selectedRows: selectedFlatRows.map(row => row.original)
-            },
-            null,
-            2
-          )}
-        </code>
-      </pre>
             <div>
                 <button className="bg-iso-offwhite p-1 border-solid border-2">Previous</button>
                 <button className="bg-iso-offwhite p-1 border-solid border-2">Next</button>
             </div>
+            <pre>
+                <code>
+                {JSON.stringify(
+                    {
+                    selectedRows: selectedFlatRows.map(row => row.original)
+                    },
+                    null,
+                    2
+                )}
+                </code>
+            </pre>
         </>
     )
 }
