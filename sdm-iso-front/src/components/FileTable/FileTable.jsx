@@ -54,7 +54,6 @@ export const FileTable = () => {
         data
         },
         useSortBy,
-        usePagination
     )
 
     const [modalIsOpen, setIsOpen] = React.useState(false);
@@ -120,8 +119,8 @@ export const FileTable = () => {
                 <FileViewer filename="dummy" />
             </Modal>
             <div>
-                <button className="bg-iso-offwhite p-1 border-solid border-2" onClick={() => previousPage()}>Previous</button>
-                <button className="bg-iso-offwhite p-1 border-solid border-2" onClick={() => nextPage()}>Next</button>
+                <button className="bg-iso-offwhite p-1 border-solid border-2">Previous</button>
+                <button className="bg-iso-offwhite p-1 border-solid border-2">Next</button>
             </div>
         </>
     )
