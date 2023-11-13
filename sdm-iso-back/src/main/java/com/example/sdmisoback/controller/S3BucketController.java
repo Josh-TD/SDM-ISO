@@ -39,36 +39,10 @@ public class S3BucketController {
     }
 
     // Endpoint to view a single file
-    // Testing: "http://localhost:8080/api/sdmisofiles/view?fileName=thingy.png"
+    // Testing: "http://localhost:8080/api/sdmisofiles/viewordownload?fileName=thingy.png"
     // Testing: The file displayed on the frontend after calling that endpoint should be thingy.png
-    @GetMapping("/view")
-    public ResponseEntity<byte[]> viewFile(@RequestParam(name = "fileName") String fileName) throws IOException {
-        S3Object s3Object = amazonS3.getObject(S3_BUCKET_NAME, fileName);
-        byte[] content = s3Object.getObjectContent().readAllBytes();
-
-        HttpHeaders headers = new HttpHeaders();
-        headers.setContentType(MediaType.APPLICATION_OCTET_STREAM);
-        headers.setContentDispositionFormData("attachment", fileName);
-
-        return ResponseEntity.ok()
-                .headers(headers)
-                .body(content);
-    }
-
-    // Endpoint to get the URL of a single file hosted in S3
-    // Testing: "http://localhost:8080/api/sdmisofiles/view/URL?fileName=thingy.png"
-    // Testing: The URL returned should be for thingy.png which is: https://sdmisofiles.s3.us-west-1.amazonaws.com/thingy.png
-    @GetMapping("/view/URL")
-    public ResponseEntity<String> viewFileUrl(@RequestParam(name = "fileName") String fileName) {
-        String objectUrl = "https://" + S3_BUCKET_NAME + ".s3.us-west-1.amazonaws.com/" + fileName;
-        return ResponseEntity.ok(objectUrl);
-    }
-
-    // Endpoint to download a single file
-    // Testing: "http://localhost:8080/api/sdmisofiles/download?fileName=thingy.png"
-    // Testing: The downloaded file after calling that endpoint should be thingy.png
-    @GetMapping("/download")
-    public ResponseEntity<byte[]> downloadSingleFile(@RequestParam(name = "fileName") String fileName) throws IOException {
+    @GetMapping("/viewordownload")
+    public ResponseEntity<byte[]> viewOrDownloadFile(@RequestParam(name = "fileName") String fileName) throws IOException {
         S3Object s3Object = amazonS3.getObject(S3_BUCKET_NAME, fileName);
         byte[] content = s3Object.getObjectContent().readAllBytes();
 
