@@ -2,6 +2,7 @@ package com.example.sdmisoback.controller;
 
 import java.time.LocalDateTime;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -23,10 +24,11 @@ import io.swagger.v3.oas.annotations.responses.ApiResponses;
 @RequestMapping("/api/v3")
 public class FiltersController {
 
-    private FiltersService service;
+    private FiltersService filtersService;
 
-    public FiltersController(FiltersService service){
-        this.service = service;
+    @Autowired
+    public FiltersController(FiltersService filtersService){
+        this.filtersService = filtersService;
     }
 
 
@@ -146,7 +148,7 @@ public class FiltersController {
             proposalId, proposalLabel
         );
 
-        return service.filterAttachments(filters);
+        return filtersService.filterAttachments(filters);
     }
 }
 

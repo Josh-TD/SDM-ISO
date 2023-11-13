@@ -1,5 +1,6 @@
 package com.example.sdmisoback.service;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Service;
@@ -12,13 +13,14 @@ import com.example.sdmisoback.repository.FiltersRepo;
 @Service
 public class FiltersService {
     
-    private final FiltersRepo repo;
+    private final FiltersRepo filtersRepo;
 
-    public FiltersService(@Qualifier("attachmentFileRepo") FiltersRepo repo){
-        this.repo = repo;
+    @Autowired
+    public FiltersService(FiltersRepo filtersRepo){
+        this.filtersRepo = filtersRepo;
     }
 
     public Page<AttachmentFileView> filterAttachments(FiltersDTO filters){
-        return repo.filterAttachments(filters);
+        return filtersRepo.filterAttachments(filters);
     }
 }
