@@ -59,7 +59,7 @@ public class FiltersController {
         String sortBy,
 
         @RequestParam(name = "sortAsc") 
-        @Parameter(description = "Which direction the table is sorted in, true=ASC false=DESC", example = "true") 
+        @Parameter(description = "Which direction the table is sorted in, true=ASC false=DESC", example = "false") 
         boolean sortAsc,
 
         // attachmentFile filters
