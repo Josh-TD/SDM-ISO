@@ -139,7 +139,6 @@ export default function FileList() {
           <div className="text-base font-semibold text-iso-secondary-text">&nbsp;|&nbsp;</div>
           <div className="text-base font-semibold text-iso-secondary-text cursor-pointer">View</div>
         </div>
-
       </div>
 
       {/* File List */}
