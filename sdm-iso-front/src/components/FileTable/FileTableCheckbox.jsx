@@ -7,11 +7,6 @@ export const FileTableCheckbox = React.forwardRef(({ indeterminate, ...rest }, r
     React.useEffect(() => {
     resolvedRef.current.indeterminate = indeterminate;
     }, [resolvedRef, indeterminate]);
-
-    const handleClick = (e) => {
-        e.stopPropogation();
-        props.onClick(e);
-    };
     return (
         <>
             <input type="checkbox" ref={resolvedRef} {...rest} />

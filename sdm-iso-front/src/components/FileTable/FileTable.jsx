@@ -81,6 +81,19 @@ export const FileTable = () => {
 
     return (
         <>
+            <div className="bg-white col-start-2 row-start-1 flex items-center justify-start">
+                <div className="inline-flex items-center justify-between mx-3">
+                    <div className="pr-1">
+                        <input type="checkbox" id="selectAll" name="selectAll" onClick={() => {handleSelectAll}}></input>
+                    </div>
+                    <label for="html" className="text-base font-semibold text-iso-secondary-text">Select All</label>
+                </div>
+                <div className="flex items-center justify-between mx-3">
+                    <div className="text-base font-semibold text-iso-secondary-text cursor-pointer">Download</div>
+                    <div className="text-base font-semibold text-iso-secondary-text">&nbsp;|&nbsp;</div>
+                    <div className="text-base font-semibold text-iso-secondary-text cursor-pointer">View</div>
+                </div>
+            </div>
             <table className="bg-iso-offwhite w-full h-4/5" {...getTableProps()}>
                 <thead className="bg-iso-offwhite h-12">
                     {headerGroups.map((headerGroup) => (
