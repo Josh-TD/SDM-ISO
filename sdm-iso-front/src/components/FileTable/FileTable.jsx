@@ -60,7 +60,7 @@ export const FileTable = () => {
         (hooks) => {
             hooks.visibleColumns.push(columns => [
                 {
-                id: 'selection',
+                id: 'select',
                 Header: ({ getToggleAllRowsSelectedProps }) => (
                     <FileTableCheckbox {...getToggleAllRowsSelectedProps()} />
                 ),
