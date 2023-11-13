@@ -37,9 +37,10 @@ public class CustomFiltersRepoImpl implements CustomFiltersRepo{
         
         // create base query here (create = from)
         CriteriaBuilder<AttachmentFile> cb = cbf.create(em, AttachmentFile.class)
-                                                .orderBy(f.sortBy, f.sortAsc);
+                                                .orderBy(f.sortBy, f.sortAsc)
+                                                .orderBy("attachmentId", true); 
 
-        // add predicates here
+        // add predicates/WHERE clauses below
 
         // attachmentFile filters
         if(f.fileName != null)
