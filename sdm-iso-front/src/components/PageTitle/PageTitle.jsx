@@ -15,7 +15,7 @@ export function PageTitle() {
 export function PageTitleWithSearchBar() {
   return (
     <div className="bg-iso-offwhite w-full">
-      <div className="container pl-10 flex items-center justify-between w-full font-light text-iso-slate">
+      <div className="pr-10 pl-10 flex items-center justify-between w-full font-light text-iso-slate">
         <div className="grow py-4 text-5xl">SDM File Manager</div>
         <SearchDropdown />
         <SearchBar />
