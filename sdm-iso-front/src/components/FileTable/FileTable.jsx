@@ -84,7 +84,7 @@ export const FileTable = () => {
             <table className="bg-iso-offwhite w-full h-4/5" {...getTableProps()}>
                 <thead className="bg-iso-light-gray">
                     {headerGroups.map((headerGroup) => (
-                    <tr {...headerGroup.getHeaderGroupProps()} className="items-center p-3">
+                    <tr {...headerGroup.getHeaderGroupProps()} className="items-center">
                         {headerGroup.headers.map((column) => (
                             <th {...column.getHeaderProps(
                                 // if column id is equal to select then don't have sort by for that column
