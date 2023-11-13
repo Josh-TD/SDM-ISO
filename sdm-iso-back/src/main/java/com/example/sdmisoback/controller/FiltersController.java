@@ -80,11 +80,15 @@ public class FiltersController {
         @Parameter(description = "Searches for files created after the date. Type java.time LocalDateTime, format 'yyyy-MM-ddTHH:mm:ss' ex '2018-04-01T04:00:00'")
         LocalDateTime createdSince, 
 
-        // attachProposal filters
         // TODO: zip files can be zip or zipf or 7zip etc, make it possible for multiple parameters to be passed onto zip
         @RequestParam(name = "fileType", required = false) 
         @Parameter(description = "Searches for fileName with suffix '{fileType}'")
         String fileType,
+
+        // attachProposal filters
+        @RequestParam(name = "attachType", required = false) 
+        @Parameter(description = "Must be exact")
+        String attachType,
 
         // proposal filters
         @RequestParam(name = "proposalId", required = false) 
@@ -130,22 +134,33 @@ public class FiltersController {
         @Parameter(description = "Must be exact")
         String resourceType,
 
-        // auction filter (??????)
+        // auction filters
         // TODO: figure out how to use dates
         @RequestParam(name = "auctionId", required = false) 
         @Parameter(description = "Must be exact")
-        Integer auctionId
+        Integer auctionId,
+
+        // period filters
+        @RequestParam(name = "periodId", required = false) 
+        @Parameter(description = "Must be exact")
+        Integer periodId,
+
+        @RequestParam(name = "periodDesc", required = false) 
+        @Parameter(description = "Searches for case sensitive prefix: '2011' can return file with period description '2011-12'")
+        String periodDesc
 
         ) { //end parameters
         PageRequest pr = PageRequest.of(pageNum, pageSize);
         FiltersDTO filters = new FiltersDTO(
             pr, sortBy, sortAsc,
             fileId, fileName, fileDescription, createdSince, fileType,
+            attachType,
+            proposalId, proposalLabel,
             projectId, projectName, projectType,
             customerId, customerName,
             resourceId, resourceName, resourceType,
             auctionId,
-            proposalId, proposalLabel
+            periodId, periodDesc
         );
 
         return filtersService.filterAttachments(filters);

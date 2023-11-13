@@ -58,6 +58,8 @@ public class CustomFiltersRepoImpl implements CustomFiltersRepo{
             cb.where("fileName").like().value('%'+f.fileType).noEscape();
 
         // attach proposal filters
+        if(f.attachType != null)
+            cb.where("attachProposals.attachmentType.attachmentType").eq(f.attachType);
         
         // proposal filters
         if(f.proposalId != null)
@@ -96,6 +98,13 @@ public class CustomFiltersRepoImpl implements CustomFiltersRepo{
         // auction filters
         if(f.auctionId != null)
             cb.where(proposal + ".auctionInfo.auctionId").eq(f.auctionId);
+
+        // period filters
+        if(f.periodId != null)
+            cb.where(proposal + ".periodInfo.periodId").eq(f.periodId);
+        
+        if(f.periodDesc != null)
+            cb.where(proposal + ".periodInfo.description").like().value(f.periodDesc+'%').noEscape();
         
         // add pagination here
         // first is creating the "setting" to apply pagination

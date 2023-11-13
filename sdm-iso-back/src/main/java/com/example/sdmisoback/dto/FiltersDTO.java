@@ -20,6 +20,13 @@ public class FiltersDTO {
     public LocalDateTime createdSince;
     public String fileType;
 
+    // attach proposal
+    public String attachType;
+
+    // proposal
+    public Integer proposalId;
+    public String proposalLabel;
+
     // project
     public Integer projectId;
     public String projectName;
@@ -37,18 +44,14 @@ public class FiltersDTO {
     // auction
     public Integer auctionId;
 
-    // proposal
-    public Integer proposalId;
-    public String proposalLabel;
-    public FiltersDTO(
-            PageRequest pr, String sortBy, boolean sortAsc, 
-            Integer fileId, String fileName, String fileDescription, LocalDateTime createdSince, String fileType, 
-            Integer projectId, String projectName, String projectType, 
-            Integer customerId, String customerName, 
-            Integer resourceId, String resourceName, String resourceType, 
-            Integer auctionId, 
-            Integer proposalId, String proposalLabel
-            ) {
+    // period
+    public Integer periodId;
+    public String periodDesc;
+    public FiltersDTO(PageRequest pr, String sortBy, boolean sortAsc, Integer fileId, String fileName,
+            String fileDescription, LocalDateTime createdSince, String fileType, String attachType, Integer proposalId,
+            String proposalLabel, Integer projectId, String projectName, String projectType, Integer customerId,
+            String customerName, Integer resourceId, String resourceName, String resourceType, Integer auctionId,
+            Integer periodId, String periodDesc) {
         this.pr = pr;
         this.sortBy = sortBy;
         this.sortAsc = sortAsc;
@@ -57,6 +60,9 @@ public class FiltersDTO {
         this.fileDescription = fileDescription;
         this.createdSince = createdSince;
         this.fileType = fileType;
+        this.attachType = attachType;
+        this.proposalId = proposalId;
+        this.proposalLabel = proposalLabel;
         this.projectId = projectId;
         this.projectName = projectName;
         this.projectType = projectType;
@@ -66,7 +72,7 @@ public class FiltersDTO {
         this.resourceName = resourceName;
         this.resourceType = resourceType;
         this.auctionId = auctionId;
-        this.proposalId = proposalId;
-        this.proposalLabel = proposalLabel;
+        this.periodId = periodId;
+        this.periodDesc = periodDesc;
     }
 }
