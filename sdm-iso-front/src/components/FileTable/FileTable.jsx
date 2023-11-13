@@ -1,27 +1,15 @@
 import React from "react";
 import { useMemo } from 'react';
 import mockData from "./mockData.json";
-import { useTable, usePagination, useSortBy } from "react-table";
+import { useTable, usePagination, useSortBy, useRowSelect } from "react-table";
 import Modal from "react-modal";
 import "./FileTable.css"
 import {FileViewer} from "../FileViewer/FileViewer";
-import {CheckBox} from "../Misc/CheckBox"
+import {FileTableCheckbox} from "./FileTableCheckbox"
 
 const COLUMNS = [
 
     // Select is different than the rest as it contains checkboxes in its cells rather than data
-    {
-        id: 'select',
-        Header: 'Select',
-        cell: ({ row }) => (
-            <CheckBox 
-            id = {id}
-            onChange={() => row.toggleRowSelected()}
-            checked={row.isSelected}
-            
-            />
-        ),
-      },
     {
         accessor: 'fName',
         Header: 'File Name',
@@ -60,15 +48,27 @@ export const FileTable = () => {
         getTableBodyProps, 
         headerGroups, 
         rows,
-        previousPage, 
-        nextPage, 
-        prepareRow
+        prepareRow,
+        selectedFlatRows
     } = useTable (
         {
         columns,
         data
         },
         useSortBy,
+        useRowSelect,
+        (hooks) => {
+            hooks.visibleColumns.push(columns => [
+                {
+                id: 'selection',
+                Header: ({ getToggleAllRowsSelectedProps }) => (
+                    <FileTableCheckbox {...getToggleAllRowsSelectedProps()} />
+                ),
+                Cell: ({ row }) => <FileTableCheckbox {...row.getToggleRowSelectedProps()} />
+                },
+                ...columns
+            ])
+        }
     )
 
     const [modalIsOpen, setIsOpen] = React.useState(false);
@@ -119,7 +119,12 @@ export const FileTable = () => {
                         const rowClassName = index % 2 === 0 ? "table-row-even" : "table-row-odd";
                         return (
                             <tr {...row.getRowProps()}
-                                onClick={() => openModal(row.original.fName)}
+                                onClick={(e) => {
+                                        if (!e.target.closest('input[type="checkbox"]')) {
+                                            openModal(row.original.fName)
+                                        }
+                                    }    
+                                }
                                 className={`cursor-pointer hover:bg-gray-200 ${rowClassName}`}
                             >
                                 {row.cells.map( cell => {
@@ -138,6 +143,17 @@ export const FileTable = () => {
                 <h2>File Name: {selectedFileName}</h2>
                 <FileViewer filename="dummy" />
             </Modal>
+            <pre>
+        <code>
+          {JSON.stringify(
+            {
+              selectedRows: selectedFlatRows.map(row => row.original)
+            },
+            null,
+            2
+          )}
+        </code>
+      </pre>
             <div>
                 <button className="bg-iso-offwhite p-1 border-solid border-2">Previous</button>
                 <button className="bg-iso-offwhite p-1 border-solid border-2">Next</button>
