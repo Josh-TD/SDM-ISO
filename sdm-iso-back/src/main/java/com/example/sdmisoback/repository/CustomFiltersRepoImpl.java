@@ -44,13 +44,13 @@ public class CustomFiltersRepoImpl implements CustomFiltersRepo{
 
         // attachmentFile filters
         if(f.fileName != null)
-            cb.where("fileName").like().value(f.fileName+'%').noEscape();
+            cb.where("fileName").like(false).value(f.fileName+'%').noEscape();
         
         if(f.fileId != null)
             cb.where("attachmentId").eq(f.fileId);
 
         if(f.fileDescription != null)
-            cb.where("description").like().value('%'+ f.fileDescription + '%').noEscape();
+            cb.where("description").like(false).value('%'+ f.fileDescription + '%').noEscape();
 
         if(f.createdSince != null)
             cb.where("createDate").ge(f.createdSince);
@@ -74,14 +74,14 @@ public class CustomFiltersRepoImpl implements CustomFiltersRepo{
             cb.where(proposal + ".proposalId").eq(f.proposalId);
 
         if(f.proposalLabel != null)
-            cb.where(proposal + ".proposalLabel").like().value('%'+f.proposalLabel + '%').noEscape();
+            cb.where(proposal + ".proposalLabel").like(false).value('%'+f.proposalLabel + '%').noEscape();
 
         // project filters
         if(f.projectId != null)
             cb.where(proposal + ".projInfo.projectId").eq(f.projectId);
         
         if(f.projectName != null)
-            cb.where(proposal + ".projInfo.projectName").like().value(f.projectName+'%').noEscape();
+            cb.where(proposal + ".projInfo.projectName").like(false).value(f.projectName+'%').noEscape();
         
         if(f.projectTypes != null)
             cb.where(proposal + ".projType.projectType").in(f.projectTypes);
@@ -91,14 +91,14 @@ public class CustomFiltersRepoImpl implements CustomFiltersRepo{
             cb.where(proposal + ".custInfo.customerId").eq(f.customerId);
 
         if(f.customerName != null)
-            cb.where(proposal + ".custInfo.customerName").like().value(f.customerName+'%').noEscape();
+            cb.where(proposal + ".custInfo.customerName").like(false).value(f.customerName+'%').noEscape();
 
         // resource filters
         if(f.resourceId != null)
             cb.where(proposal + ".resInfo.resourceId").eq(f.resourceId);
         
         if(f.resourceName != null)
-            cb.where(proposal + ".resInfo.resourceName").like().value(f.resourceName+'%').noEscape();
+            cb.where(proposal + ".resInfo.resourceName").like(false).value(f.resourceName+'%').noEscape();
 
         if(f.resourceTypes != null)
             cb.where(proposal + ".resInfo.resourceType.resourceType").in(f.resourceTypes);
@@ -112,7 +112,7 @@ public class CustomFiltersRepoImpl implements CustomFiltersRepo{
             cb.where(proposal + ".periodInfo.periodId").eq(f.periodId);
         
         if(f.periodDesc != null)
-            cb.where(proposal + ".periodInfo.description").like().value(f.periodDesc+'%').noEscape();
+            cb.where(proposal + ".periodInfo.description").like(false).value(f.periodDesc+'%').noEscape();
         
         // add pagination here
         // first is creating the "setting" to apply pagination
