@@ -69,7 +69,7 @@ public class FiltersController {
         Integer fileId,
 
         @RequestParam(name = "fileName", required = false) 
-        @Parameter(description = "Searches for case sensitive prefix: 'Ener' can return file with name 'EnergyConverter.pdf'")
+        @Parameter(description = "Searches for prefix: 'ener' can return file with name 'EnergyConverter.pdf'")
         String fileName,
 
         @RequestParam(name = "fileDescription", required = false) 
@@ -81,7 +81,7 @@ public class FiltersController {
         LocalDateTime createdSince, 
 
         @RequestParam(name = "fileTypes", required = false) 
-        @Parameter(description = "Searches for fileNames with any suffix in {fileTypes}")
+        @Parameter(description = "Searches for fileNames with any suffix in {fileTypes}. Swagger: each line is 'pdf' 'docx'. URL: 'pdf, docx'")
         List<String> fileTypes,
 
         // attachProposal filters
@@ -104,7 +104,7 @@ public class FiltersController {
         Integer projectId,
 
         @RequestParam(name = "projectName", required = false) 
-        @Parameter(description = "Searches for case sensitive prefix: 'Ener' can return file with project name 'Energy Works'")
+        @Parameter(description = "Searches for prefix: 'ener' can return file with project name 'Energy Works'")
         String projectName,
 
         @RequestParam(name = "projectTypes", required = false) 
@@ -117,7 +117,7 @@ public class FiltersController {
         Integer customerId,
 
         @RequestParam(name = "customerName", required = false) 
-        @Parameter(description = "Searches for case sensitive prefix: 'Ener' can return file with customer name 'Energy Importer'")
+        @Parameter(description = "Searches for prefix: 'ener' can return file with customer name 'Energy Importer'")
         String customerName,
 
         // resource filters
@@ -126,7 +126,7 @@ public class FiltersController {
         Integer resourceId,
 
         @RequestParam(name = "resourceName", required = false) 
-        @Parameter(description = "Searches for case sensitive prefix: 'Ener' can return file with name 'Energy Generator'")
+        @Parameter(description = "Searches for prefix: 'ener' can return file with name 'Energy Generator'")
         String resourceName,
 
         @RequestParam(name = "resourceTypes", required = false) 
@@ -144,13 +144,13 @@ public class FiltersController {
         Integer periodId,
 
         @RequestParam(name = "periodDesc", required = false) 
-        @Parameter(description = "Searches for case sensitive prefix: '2011' can return file with period description '2011-12'")
+        @Parameter(description = "Searches for prefix: '2011' can return file with period description '2011-12'")
         String periodDesc
 
         ) { //end parameters
 
         List<String> validSortBy = Arrays.asList(
-            "fileName", "customerName", "createDate", "projectName"
+            "fileName", "createDate", "customerName", "projectName"
         );
 
         List<String> validFileTypes = Arrays.asList(
@@ -168,6 +168,12 @@ public class FiltersController {
         PageRequest pr = PageRequest.of(pageNum, pageSize);
         if (!validSortBy.contains(sortBy))
             throw new IllegalArgumentException("Invalid sortBy value: " + sortBy);
+        
+        if(sortBy.equals("customerName")) {
+            sortBy = "attachProposals.proposalInfo.custInfo.customerName";
+        } else if(sortBy.equals("projectName")){
+            sortBy = "attachProposals.proposalInfo.projInfo.projectName";
+        }
         
         if (fileTypes != null && !fileTypes.stream().allMatch(validFileTypes::contains))
             throw new IllegalArgumentException("Invalid fileType value: " + fileTypes);
