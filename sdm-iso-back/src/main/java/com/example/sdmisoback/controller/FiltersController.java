@@ -1,6 +1,8 @@
 package com.example.sdmisoback.controller;
 
 import java.time.LocalDateTime;
+import java.util.Arrays;
+import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -38,7 +40,7 @@ public class FiltersController {
     // if you want to use Postman for API testing instead: use SDM email, details in the google doc
     @GetMapping("/files/list")
     @Operation(summary = "Get a single page of FileViews sorted, with many optional filters", 
-               description = "returns a JPA Page object with content AttachmentFileView based on the filters and sorting applied")
+               description = "returns a Spring Page object with content AttachmentFileView based on the filters and sorting applied")
     @ApiResponses(value = {
         @ApiResponse(responseCode = "200", description = "Successfully retrieved page of FileViews")
         //TODO: add error response class and respond back with proper codes 401, 400, 404
@@ -50,10 +52,9 @@ public class FiltersController {
         int pageNum, 
 
         @RequestParam(name = "pageSize") 
-        @Parameter(description = "Number of items to be displayed per page", example = "3") 
+        @Parameter(description = "Number of items to be displayed per page", example = "10") 
         int pageSize,
 
-        // TODO: limit sortBy to set of attributes, as of now you can sort by anything
         @RequestParam(name = "sortBy") 
         @Parameter(description = "Attribute that the table should be sorted by. Valid entries are fileName, customerName, createDate, projectName", example = "createDate") 
         String sortBy,
@@ -75,20 +76,18 @@ public class FiltersController {
         @Parameter(description = "Searches for description containing input: 'word' can return file with desc 'old wordle doc'")
         String fileDescription,
 
-        // TODO: figure out how to use this date? for now: anything greater than input date
         @RequestParam(name = "createdSince", required = false) 
         @Parameter(description = "Searches for files created after the date. Type java.time LocalDateTime, format 'yyyy-MM-ddTHH:mm:ss' ex '2018-04-01T04:00:00'")
         LocalDateTime createdSince, 
 
-        // TODO: zip files can be zip or zipf or 7zip etc, make it possible for multiple parameters to be passed onto zip
-        @RequestParam(name = "fileType", required = false) 
-        @Parameter(description = "Searches for fileName with suffix '{fileType}'")
-        String fileType,
+        @RequestParam(name = "fileTypes", required = false) 
+        @Parameter(description = "Searches for fileNames with any suffix in {fileTypes}")
+        List<String> fileTypes,
 
         // attachProposal filters
-        @RequestParam(name = "attachType", required = false) 
-        @Parameter(description = "Must be exact")
-        String attachType,
+        @RequestParam(name = "attachTypes", required = false) 
+        @Parameter(description = "Must be exact, searches for any match for {attachTypes}")
+        List<String> attachTypes,
 
         // proposal filters
         @RequestParam(name = "proposalId", required = false) 
@@ -108,9 +107,9 @@ public class FiltersController {
         @Parameter(description = "Searches for case sensitive prefix: 'Ener' can return file with project name 'Energy Works'")
         String projectName,
 
-        @RequestParam(name = "projectType", required = false) 
-        @Parameter(description = "Must be exact")
-        String projectType,
+        @RequestParam(name = "projectTypes", required = false) 
+        @Parameter(description = "Must be exact, searches for any match for {projectTypes}")
+        List<String> projectTypes,
 
         // customer filters
         @RequestParam(name = "customerId", required = false) 
@@ -130,12 +129,11 @@ public class FiltersController {
         @Parameter(description = "Searches for case sensitive prefix: 'Ener' can return file with name 'Energy Generator'")
         String resourceName,
 
-        @RequestParam(name = "resourceType", required = false) 
-        @Parameter(description = "Must be exact")
-        String resourceType,
+        @RequestParam(name = "resourceTypes", required = false) 
+        @Parameter(description = "Must be exact, searches for any match for {resourceTypes}")
+        List<String> resourceTypes,
 
         // auction filters
-        // TODO: figure out how to use dates
         @RequestParam(name = "auctionId", required = false) 
         @Parameter(description = "Must be exact")
         Integer auctionId,
@@ -150,15 +148,38 @@ public class FiltersController {
         String periodDesc
 
         ) { //end parameters
+
+        List<String> validSortBy = Arrays.asList(
+            "fileName", "customerName", "createDate", "projectName"
+        );
+
+        List<String> validFileTypes = Arrays.asList(
+            "bmp", "jpg",
+            "doc", "docx",
+            "htm", "html",
+            "msg",
+            "pdf",
+            "txt",
+            "xlsm", "xlsx",
+            "zip", "zipx"
+        );
+        
+        // process parameters
         PageRequest pr = PageRequest.of(pageNum, pageSize);
+        if (!validSortBy.contains(sortBy))
+            throw new IllegalArgumentException("Invalid sortBy value: " + sortBy);
+        
+        if (fileTypes != null && !fileTypes.stream().allMatch(validFileTypes::contains))
+            throw new IllegalArgumentException("Invalid fileType value: " + fileTypes);
+
         FiltersDTO filters = new FiltersDTO(
             pr, sortBy, sortAsc,
-            fileId, fileName, fileDescription, createdSince, fileType,
-            attachType,
+            fileId, fileName, fileDescription, createdSince, fileTypes,
+            attachTypes,
             proposalId, proposalLabel,
-            projectId, projectName, projectType,
+            projectId, projectName, projectTypes,
             customerId, customerName,
-            resourceId, resourceName, resourceType,
+            resourceId, resourceName, resourceTypes,
             auctionId,
             periodId, periodDesc
         );

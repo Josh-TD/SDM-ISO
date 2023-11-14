@@ -38,7 +38,7 @@ public class CustomFiltersRepoImpl implements CustomFiltersRepo{
         // create base query here (create = from)
         CriteriaBuilder<AttachmentFile> cb = cbf.create(em, AttachmentFile.class)
                                                 .orderBy(f.sortBy, f.sortAsc)
-                                                .orderBy("attachmentId", true); 
+                                                .orderByAsc("attachmentId"); 
 
         // add predicates/WHERE clauses below
 
@@ -55,12 +55,19 @@ public class CustomFiltersRepoImpl implements CustomFiltersRepo{
         if(f.createdSince != null)
             cb.where("createDate").ge(f.createdSince);
 
-        if(f.fileType != null)
-            cb.where("fileName").like().value('%'+f.fileType).noEscape();
+        if(f.fileTypes != null){
+            StringBuilder sb = new StringBuilder();
+            int size = f.fileTypes.size();
+            for (int i = 0; i < size - 1; i++) {
+                sb.append("fileName LIKE '%." + f.fileTypes.get(i) + "' OR ");
+            }
+            sb.append("fileName LIKE '%." + f.fileTypes.get(size-1) + "'");
+            cb.whereExpression(sb.toString());
+        }
 
         // attach proposal filters
-        if(f.attachType != null)
-            cb.where("attachProposals.attachmentType.attachmentType").eq(f.attachType);
+        if(f.attachTypes != null)
+            cb.where("attachProposals.attachmentType.attachmentType").in(f.attachTypes);
         
         // proposal filters
         if(f.proposalId != null)
@@ -76,8 +83,8 @@ public class CustomFiltersRepoImpl implements CustomFiltersRepo{
         if(f.projectName != null)
             cb.where(proposal + ".projInfo.projectName").like().value(f.projectName+'%').noEscape();
         
-        if(f.projectType != null)
-            cb.where(proposal + ".projType.projectType").eq(f.projectType);
+        if(f.projectTypes != null)
+            cb.where(proposal + ".projType.projectType").in(f.projectTypes);
 
         // customer filters
         if(f.customerId != null)
@@ -93,8 +100,8 @@ public class CustomFiltersRepoImpl implements CustomFiltersRepo{
         if(f.resourceName != null)
             cb.where(proposal + ".resInfo.resourceName").like().value(f.resourceName+'%').noEscape();
 
-        if(f.resourceType != null)
-            cb.where(proposal + ".resInfo.resourceType.resourceType").eq(f.resourceType);
+        if(f.resourceTypes != null)
+            cb.where(proposal + ".resInfo.resourceType.resourceType").in(f.resourceTypes);
 
         // auction filters
         if(f.auctionId != null)
