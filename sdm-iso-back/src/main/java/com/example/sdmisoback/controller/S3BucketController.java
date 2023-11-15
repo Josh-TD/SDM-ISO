@@ -28,6 +28,7 @@ public class S3BucketController {
     private String S3_BUCKET_NAME;
 
     // Endpoint to get a list of all files in the S3 bucket
+    // To be deleted when in production since we will not need this
     // Testing: Copy and paste "http://localhost:8080/api/sdmisofiles/list"
     @GetMapping("/list")
     public ResponseEntity<List<String>> listFiles() {
