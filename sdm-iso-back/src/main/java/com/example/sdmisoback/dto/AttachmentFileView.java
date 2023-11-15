@@ -1,4 +1,4 @@
-package com.example.sdmisoback.view;
+package com.example.sdmisoback.dto;
 
 import java.time.LocalDateTime;
 
@@ -22,9 +22,6 @@ public interface AttachmentFileView {
 
     @Mapping("createDate")
     public LocalDateTime getFileCreateDate();
-
-    @Mapping("attachProposals.proposalInfo.proposalId")
-    public int getProposalId();
 
     @Mapping("attachProposals.proposalInfo.projInfo.projectId")
     public int getProjectId();

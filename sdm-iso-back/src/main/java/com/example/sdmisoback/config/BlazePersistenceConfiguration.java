@@ -16,7 +16,7 @@ import org.springframework.context.annotation.Scope;
 import jakarta.persistence.EntityManagerFactory;
 
 @Configuration
-@EnableEntityViews(basePackages = { "com.example.sdmisoback.view"})
+@EnableEntityViews(basePackages = { "com.example.sdmisoback.dto"})
 @EnableBlazeRepositories(basePackages = "com.example.sdmisoback.repository")
 public class BlazePersistenceConfiguration {
 
