@@ -15,7 +15,12 @@ import { auctionTypesFilter } from "./filters/auctionTypes";
 import { projectTypesFilter } from "./filters/projectTypes";
 import { CreatedDateSlider } from "./filters/date";
 
+import mockData from "./mockData.json";
+
 export default function FileList() {
+  // hardcoded endpoints, use .env file?
+  const _endpoint = "http://localhost:8080/api";
+  const endpoint = _endpoint + "v3/files/list";
 
   // doing this so if we want we can do this inline instead of making it a new function
   const checkBoxesToggling = (get, set) => {
@@ -114,7 +119,7 @@ export default function FileList() {
       <div className="bg-white col-start-2 row-start-1 p-4">
         {/* File list */}
         <div className="width: 100% height: 100%">
-          <FileTable />
+          <FileTable data={mockData} />
         </div>
       </div>
     </div>
