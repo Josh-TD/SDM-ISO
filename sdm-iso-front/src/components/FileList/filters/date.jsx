@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 
 // not sure what to add for now
 export const createdDateSliderFilters = [
@@ -36,6 +36,36 @@ export const createdDateSliderFilters = [
     },
 ];
 
+export const getFilterDateFormat = (date_id) => {
+    const days_to_msec = (days) => days * 24 * 60 * 60 * 1000;
+
+    if (date_id === "all") {
+        const d = new Date(0);
+        return d.toISOString();
+    } else if (date_id === "2y") {
+        const d = new Date(new Date().getTime() - days_to_msec(365 * 2));
+        return d.toISOString();
+    } else if (date_id === "1y") {
+        const d = new Date(new Date().getTime() - days_to_msec(365));
+        return d.toISOString();
+    } else if (date_id === "6m") {
+        const d = new Date(new Date().getTime() - days_to_msec(30 * 6));
+        return d.toISOString();
+    } else if (date_id === "3m") {
+        const d = new Date(new Date().getTime() - days_to_msec(30 * 3));
+        return d.toISOString();
+    } else if (date_id === "1m") {
+        const d = new Date(new Date().getTime() - days_to_msec(30));
+        return d.toISOString();
+    } else if (date_id === "1w") {
+        const d = new Date(new Date().getTime() - days_to_msec(7));
+        return d.toISOString();
+    } else if (date_id === "1d") {
+        const d = new Date(new Date().getTime() - days_to_msec(1));
+        return d.toISOString();
+    }
+}
+
 export const CreatedDateSlider = ({ id, onChange }) => {
     const defaultDate = createdDateSliderFilters.length - 1; // All time
 
@@ -47,11 +77,13 @@ export const CreatedDateSlider = ({ id, onChange }) => {
     }
 
     const localOnChange = (obj) => {
-        const value = obj.target.value;
-        setSelectedFilter(value);
-        // make sure to use reversed value here
-        onChange(createdDateSliderFilters[reverseSlider()].id);
+        setSelectedFilter(obj.target.value);
     };
+
+    // due to async
+    useEffect(() => {
+        onChange(createdDateSliderFilters[reverseSlider()].id);
+    }, [selectedFilter])
 
     return (
         <div>
