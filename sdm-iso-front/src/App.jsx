@@ -8,6 +8,7 @@ import { ClerkProvider,
 } from "@clerk/clerk-react";
 import { BrowserRouter, Routes, Route, useNavigate } from 'react-router-dom';
 import MainPage from './components/MainPage/MainPage'
+import LoginPage from './components/LoginPage/LoginPage'
 import './index.css';
 import "@fontsource/open-sans";
 import "@fontsource/open-sans/300.css";
@@ -16,6 +17,7 @@ import "@fontsource/open-sans/700.css";
 
 const clerkPubKey = 'pk_test_Y29taWMtbG9vbi0yOC5jbGVyay5hY2NvdW50cy5kZXYk';
 
+// currently not using this could get rid
 function PublicPage() {
   return (
     <>
@@ -32,7 +34,7 @@ const ClerkWithRoutes = () => {
       navigate={(to) => navigate(to)}
     >
       <Routes>
-      <Route path="/" element={<PublicPage/>} />
+      <Route path="/" element={<LoginPage/>} />
         <Route
           path="/sign-in/*"
           element={<SignIn routing="path" path="/sign-in" />}
