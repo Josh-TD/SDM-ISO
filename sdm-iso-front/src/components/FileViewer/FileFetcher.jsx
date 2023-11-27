@@ -5,9 +5,6 @@ import parse from 'html-react-parser';
 import read  from 'txt-reader';
 import { read as readXlsx } from 'xlsx';
 import saveAs from 'file-saver';
-import("pdfjs-dist").then((pdfjsLib) => {
-    pdfjsLib.getDocument();
-});
 
 const FileFetcher = ({ fileName }) => {
     const [fileData, setFileData] = useState(null);
@@ -102,7 +99,7 @@ const FileFetcher = ({ fileName }) => {
         };
     }, [fileName]);
 
-    return <div>{fileData ? fileData : <p>Loading...</p>}</div>;
+    return (<div>{fileData ? fileData : <p>Loading...</p>}</div>);
 };
 
 export default FileFetcher;

@@ -17,6 +17,8 @@
     "react-dom": "^18.2.0",
     "react-icons-kit": "^2.0.0",
     "react-modal": "^3.16.1",
+    "react-native": "^0.72.7",
+    "react-native-web": "^0.19.9",
     "react-table": "^7.8.0",
     "txt-reader": "^1.4.5",
     "web-vitals": "^2.1.4",

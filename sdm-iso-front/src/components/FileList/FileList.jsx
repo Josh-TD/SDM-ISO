@@ -69,7 +69,6 @@ export default function FileList() {
         style={modalStyles}
         contentLabel="Example Modal"
       >
-        <FileViewer filename="dummy" />
 
       </Modal>
       <div className="col-start-1 row-span-2 pr-1">
