@@ -158,16 +158,16 @@ public class FiltersController {
         @Parameter(description = "Must be exact")
         Integer auctionId,
 
-        @RequestParam(name = "resourceTypes", required = false) 
-        @Parameter(description = "Must be exact, searches for any match for {resourceTypes}")
+        @RequestParam(name = "auctionTypes", required = false) 
+        @Parameter(description = "Must be exact, searches for any match for {auctionTypes}")
         List<String> auctionTypes,
 
         @RequestParam(name = "aucBeginDate", required = false) 
-        @Parameter(description = "Must be exact Type java.time LocalDateTime, format 'yyyy-MM-ddTHH:mm:ss' ex '2018-04-01T04:00:00'")
+        @Parameter(description = "Must be exact, searches for dates greater than equal to precise date. Down to the millisecond.")
         LocalDateTime aucBeginDate,
 
         @RequestParam(name = "aucEndDate", required = false) 
-        @Parameter(description = "Must be exact Type java.time LocalDateTime, format 'yyyy-MM-ddTHH:mm:ss' ex '2018-04-01T04:00:00'")
+        @Parameter(description = "Must be exact, searches for dates less than equal to precise date. Down to the millisecond.")
         LocalDateTime aucEndDate,
 
         // commitment period filters
@@ -184,11 +184,11 @@ public class FiltersController {
         String commitPeriodDesc,
 
         @RequestParam(name = "commitPeriodBeginDate", required = false) 
-        @Parameter(description = "Must be exact(?) Type java.time LocalDateTime, format 'yyyy-MM-ddTHH:mm:ss' ex '2018-04-01T04:00:00'")
+        @Parameter(description = "Must be exact, searches for dates greater than equal to precise date. Down to the millisecond.")
         LocalDateTime commitPeriodBeginDate,
 
         @RequestParam(name = "commitPeriodEndDate", required = false) 
-        @Parameter(description = "Must be exact(?) Type java.time LocalDateTime, format 'yyyy-MM-ddTHH:mm:ss' ex '2018-04-01T04:00:00'")
+        @Parameter(description = "Must be exact, searches for dates less than equal to precise date. Down to the millisecond.")
         LocalDateTime commitPeriodEndDate,
     
         @RequestParam(name = "aucPeriodId", required = false) 
@@ -204,11 +204,11 @@ public class FiltersController {
         String aucPeriodDesc,
 
         @RequestParam(name = "aucPeriodBeginDate", required = false) 
-        @Parameter(description = "Must be exact(?) Type java.time LocalDateTime, format 'yyyy-MM-ddTHH:mm:ss' ex '2018-04-01T04:00:00'")
+        @Parameter(description = "Must be exact, searches for dates greater than equal to precise date. Down to the millisecond.")
         LocalDateTime aucPeriodBeginDate,
 
         @RequestParam(name = "aucPeriodEndDate", required = false) 
-        @Parameter(description = "Must be exact(?) Type java.time LocalDateTime, format 'yyyy-MM-ddTHH:mm:ss' ex '2018-04-01T04:00:00'")
+        @Parameter(description = "Must be exact, searches for dates less than equal to precise date. Down to the millisecond.")
         LocalDateTime aucPeriodEndDate
 
         ) { //end parameters
