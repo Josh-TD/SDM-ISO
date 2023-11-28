@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { useMemo } from 'react';
 import mockData from "./mockData.json";
 import { useTable, usePagination, useSortBy, useRowSelect } from "react-table";
@@ -42,6 +42,16 @@ Modal.setAppElement("#root");
 export const FileTable = () => {
     const columns = useMemo(() => COLUMNS, [])
     const data = useMemo(() => mockData, [])
+    let [ test, setTest ] = useState([])
+    useEffect(() => {
+        fetch('http://localhost:8080/api/v3/files/list?pageNum=0&pageSize=10&sortBy=createDate&sortAsc=false', {method:"GET"})
+            .then(response => response.json())
+            .then((data) => {
+                console.log(data);
+                setTest(data);
+            })
+            .catch(error => console.error(error));
+    }, [])
     
     const { 
         getTableProps, 
@@ -162,13 +172,13 @@ export const FileTable = () => {
             </div>
             <pre>
                 <code>
-                {JSON.stringify(
+                {/* {JSON.stringify(
                     {
                     selectedRows: selectedFlatRows.map(row => row.original)
                     },
                     null,
                     2
-                )}
+                )} */}
                 </code>
             </pre>
         </>
