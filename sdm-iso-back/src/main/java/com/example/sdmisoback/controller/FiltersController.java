@@ -102,6 +102,10 @@ public class FiltersController {
         @Parameter(description = "Must be exact")
         Integer propPeriodId,
 
+        @RequestParam(name = "propPeriodTypes", required = false) 
+        @Parameter(description = "Must be exact, can have multiple")
+        List<String> propPeriodTypes,
+
         @RequestParam(name = "propPeriodDesc", required = false) 
         @Parameter(description = "Searches for prefix: '200' can return file with proposal description '2001-02'")
         String propPeriodDesc,
@@ -150,6 +154,23 @@ public class FiltersController {
         List<String> resourceTypes,
 
         // auction filters
+        @RequestParam(name = "auctionId", required = false) 
+        @Parameter(description = "Must be exact")
+        Integer auctionId,
+
+        @RequestParam(name = "resourceTypes", required = false) 
+        @Parameter(description = "Must be exact, searches for any match for {resourceTypes}")
+        List<String> auctionTypes,
+
+        @RequestParam(name = "aucBeginDate", required = false) 
+        @Parameter(description = "Must be exact Type java.time LocalDateTime, format 'yyyy-MM-ddTHH:mm:ss' ex '2018-04-01T04:00:00'")
+        LocalDateTime aucBeginDate,
+
+        @RequestParam(name = "aucEndDate", required = false) 
+        @Parameter(description = "Must be exact Type java.time LocalDateTime, format 'yyyy-MM-ddTHH:mm:ss' ex '2018-04-01T04:00:00'")
+        LocalDateTime aucEndDate,
+
+        // commitment period filters
         @RequestParam(name = "commitPeriodId", required = false) 
         @Parameter(description = "Must be exact")
         Integer commitPeriodId,
@@ -225,10 +246,11 @@ public class FiltersController {
             pr, sortBy, sortAsc,
             fileId, fileName, fileDescription, createdSince, fileTypes,
             attachTypes,
-            proposalId, proposalLabel, propPeriodId, propPeriodDesc, propPeriodBeginDate, propPeriodEndDate,
+            proposalId, proposalLabel, propPeriodId, propPeriodTypes, propPeriodDesc, propPeriodBeginDate, propPeriodEndDate,
             projectId, projectName, projectTypes,
             customerId, customerName,
             resourceId, resourceName, resourceTypes,
+            auctionId, auctionTypes, aucBeginDate, aucEndDate,
             commitPeriodId, commitPeriodTypes, commitPeriodDesc, commitPeriodBeginDate, commitPeriodEndDate,
             aucPeriodId, aucPeriodTypes, aucPeriodDesc, aucPeriodBeginDate, aucPeriodEndDate
         );
