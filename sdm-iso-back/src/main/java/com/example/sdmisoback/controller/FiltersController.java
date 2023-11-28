@@ -1,5 +1,6 @@
 package com.example.sdmisoback.controller;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.Arrays;
 import java.util.List;
@@ -111,12 +112,12 @@ public class FiltersController {
         String propPeriodDesc,
 
         @RequestParam(name = "propPeriodBeginDate", required = false) 
-        @Parameter(description = "Must be exact(?) Type java.time LocalDateTime, format 'yyyy-MM-ddTHH:mm:ss' ex '2018-04-01T04:00:00'")
-        LocalDateTime propPeriodBeginDate,
+        @Parameter(description = "Searches for begin date after {propPeriodBeginDate} format 'yyyy-MM-dd' ex '2018-04-01'")
+        LocalDate propPeriodBeginDate,
 
         @RequestParam(name = "propPeriodEndDate", required = false) 
-        @Parameter(description = "Must be exact(?) Type java.time LocalDateTime, format 'yyyy-MM-ddTHH:mm:ss' ex '2018-04-01T04:00:00'")
-        LocalDateTime propPeriodEndDate,
+        @Parameter(description = "Searches for end date before {propPeriodEndDate} format 'yyyy-MM-dd' ex '2018-04-01'")
+        LocalDate propPeriodEndDate,
 
         // project filters
         @RequestParam(name = "projectId", required = false) 
@@ -163,12 +164,12 @@ public class FiltersController {
         List<String> auctionTypes,
 
         @RequestParam(name = "aucBeginDate", required = false) 
-        @Parameter(description = "Must be exact, searches for dates greater than equal to precise date. Down to the millisecond.")
-        LocalDateTime aucBeginDate,
+        @Parameter(description = "Searches for begin date before {aucBeginDate} format 'yyyy-MM-dd' ex '2018-04-01'")
+        LocalDate aucBeginDate,
 
         @RequestParam(name = "aucEndDate", required = false) 
-        @Parameter(description = "Must be exact, searches for dates less than equal to precise date. Down to the millisecond.")
-        LocalDateTime aucEndDate,
+        @Parameter(description = "Searches for end date before {aucEndDate} format 'yyyy-MM-dd' ex '2018-04-01'")
+        LocalDate aucEndDate,
 
         // commitment period filters
         @RequestParam(name = "commitPeriodId", required = false) 
@@ -184,12 +185,12 @@ public class FiltersController {
         String commitPeriodDesc,
 
         @RequestParam(name = "commitPeriodBeginDate", required = false) 
-        @Parameter(description = "Must be exact, searches for dates greater than equal to precise date. Down to the millisecond.")
-        LocalDateTime commitPeriodBeginDate,
+        @Parameter(description = "Searches for begin date before {commitPeriodBeginDate} format 'yyyy-MM-dd' ex '2018-04-01'")
+        LocalDate commitPeriodBeginDate,
 
         @RequestParam(name = "commitPeriodEndDate", required = false) 
-        @Parameter(description = "Must be exact, searches for dates less than equal to precise date. Down to the millisecond.")
-        LocalDateTime commitPeriodEndDate,
+        @Parameter(description = "Searches for end date before {commitPeriodEndDate} format 'yyyy-MM-dd' ex '2018-04-01'")
+        LocalDate commitPeriodEndDate,
     
         @RequestParam(name = "aucPeriodId", required = false) 
         @Parameter(description = "Must be exact")
@@ -204,12 +205,12 @@ public class FiltersController {
         String aucPeriodDesc,
 
         @RequestParam(name = "aucPeriodBeginDate", required = false) 
-        @Parameter(description = "Must be exact, searches for dates greater than equal to precise date. Down to the millisecond.")
-        LocalDateTime aucPeriodBeginDate,
+        @Parameter(description = "Searches for begin date before {aucPeriodBeginDate} format 'yyyy-MM-dd' ex '2018-04-01'")
+        LocalDate aucPeriodBeginDate,
 
         @RequestParam(name = "aucPeriodEndDate", required = false) 
-        @Parameter(description = "Must be exact, searches for dates less than equal to precise date. Down to the millisecond.")
-        LocalDateTime aucPeriodEndDate
+        @Parameter(description = "Searches for end date before {aucPeriodEndDate} format 'yyyy-MM-dd' ex '2018-04-01'")
+        LocalDate aucPeriodEndDate
 
         ) { //end parameters
 

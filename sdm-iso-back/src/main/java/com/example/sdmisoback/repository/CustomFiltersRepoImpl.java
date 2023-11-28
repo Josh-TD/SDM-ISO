@@ -86,10 +86,10 @@ public class CustomFiltersRepoImpl implements CustomFiltersRepo{
             cb.where(proposal + ".periodInfo.description").like(false).value(f.propPeriodDesc + "%").noEscape();
 
         if(f.propPeriodBeginDate != null)
-            cb.where(proposal + ".periodInfo.beginDate").eq(f.propPeriodBeginDate);
+            cb.where("CAST_DATE(" + proposal + ".periodInfo.beginDate)").ge(f.propPeriodBeginDate);
 
         if(f.propPeriodEndDate != null)
-            cb.where(proposal + ".periodInfo.endDate").eq(f.propPeriodEndDate);
+            cb.where("CAST_DATE(" + proposal + ".periodInfo.endDate)").le(f.propPeriodEndDate);
 
         // project filters
         if(f.projectId != null)
@@ -126,10 +126,10 @@ public class CustomFiltersRepoImpl implements CustomFiltersRepo{
             cb.where(proposal + ".auctionInfo.auctionType").in(f.auctionTypes);
 
         if(f.aucBeginDate != null)
-            cb.where(proposal + ".auctionInfo.auctionBeginDate").ge(f.aucBeginDate);
+            cb.where("CAST_DATE(" + proposal + ".auctionInfo.auctionBeginDate)").ge(f.aucBeginDate);
 
         if(f.aucEndDate != null)
-            cb.where(proposal + ".auctionInfo.auctionEndDate").le(f.aucEndDate);
+            cb.where("CAST_DATE(" + proposal + ".auctionInfo.auctionEndDate)").le(f.aucEndDate);
 
         // commitment period filters
         if(f.commitPeriodId != null)
@@ -142,10 +142,10 @@ public class CustomFiltersRepoImpl implements CustomFiltersRepo{
             cb.where(proposal + ".auctionInfo.commitmentPeriodInfo.description").like(false).value(f.commitPeriodDesc + "%").noEscape();
 
         if(f.commitPeriodBeginDate != null)
-            cb.where(proposal + ".auctionInfo.commitmentPeriodInfo.beginDate").ge(f.commitPeriodBeginDate);
+            cb.where("CAST_DATE(" + proposal + ".auctionInfo.commitmentPeriodInfo.beginDate)").ge(f.commitPeriodBeginDate);
 
         if(f.commitPeriodEndDate != null)
-            cb.where(proposal + ".auctionInfo.commitmentPeriodInfo.endDate").le(f.commitPeriodEndDate);
+            cb.where("CAST_DATE(" + proposal + ".auctionInfo.commitmentPeriodInfo.endDate)").le(f.commitPeriodEndDate);
 
         // auction period filters
         if(f.aucPeriodId != null)
@@ -158,10 +158,10 @@ public class CustomFiltersRepoImpl implements CustomFiltersRepo{
             cb.where(proposal + ".auctionInfo.auctionPeriodInfo.description").like(false).value(f.aucPeriodDesc + "%").noEscape();
 
         if(f.aucPeriodBeginDate != null)
-            cb.where(proposal + ".auctionInfo.auctionPeriodInfo.beginDate").ge(f.aucPeriodBeginDate);
+            cb.where("CAST_DATE(" + proposal + ".auctionInfo.auctionPeriodInfo.beginDate)").ge(f.aucPeriodBeginDate);
 
         if(f.aucPeriodEndDate != null)
-            cb.where(proposal + ".auctionInfo.auctionPeriodInfo.endDate").le(f.aucPeriodEndDate);
+            cb.where("CAST_DATE(" + proposal + ".auctionInfo.auctionPeriodInfo.endDate)").le(f.aucPeriodEndDate);
 
         
         // add pagination here

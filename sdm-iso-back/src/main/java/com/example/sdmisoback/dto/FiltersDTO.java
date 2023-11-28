@@ -1,7 +1,9 @@
 package com.example.sdmisoback.dto;
 
 import java.time.LocalDateTime;
+import java.time.LocalDate;
 import java.util.List;
+
 
 import org.springframework.data.domain.PageRequest;
 
@@ -30,8 +32,8 @@ public class FiltersDTO {
     public Integer propPeriodId;
     public List<String> propPeriodTypes;
     public String propPeriodDesc;
-    public LocalDateTime propPeriodBeginDate;
-    public LocalDateTime propPeriodEndDate;
+    public LocalDate propPeriodBeginDate;
+    public LocalDate propPeriodEndDate;
 
     // project
     public Integer projectId;
@@ -50,34 +52,34 @@ public class FiltersDTO {
     // auction
     public Integer auctionId;
     public List<String> auctionTypes;
-    public LocalDateTime aucBeginDate;
-    public LocalDateTime aucEndDate;
+    public LocalDate aucBeginDate;
+    public LocalDate aucEndDate;
 
     // commitment period
     public Integer commitPeriodId;
     public List<String> commitPeriodTypes;
     public String commitPeriodDesc;
-    public LocalDateTime commitPeriodBeginDate;
-    public LocalDateTime commitPeriodEndDate;
+    public LocalDate commitPeriodBeginDate;
+    public LocalDate commitPeriodEndDate;
 
     // auction period
     public Integer aucPeriodId;
     public List<String> aucPeriodTypes;
     public String aucPeriodDesc;
-    public LocalDateTime aucPeriodBeginDate;
-    public LocalDateTime aucPeriodEndDate;
+    public LocalDate aucPeriodBeginDate;
+    public LocalDate aucPeriodEndDate;
 
     // cons
     public FiltersDTO(PageRequest pr, String sortBy, boolean sortAsc, Integer fileId, String fileName,
             String fileDescription, LocalDateTime createdSince, List<String> fileTypes, List<String> attachTypes,
             Integer proposalId, String proposalLabel, Integer propPeriodId, List<String> propPeriodTypes,
-            String propPeriodDesc, LocalDateTime propPeriodBeginDate, LocalDateTime propPeriodEndDate,
+            String propPeriodDesc, LocalDate propPeriodBeginDate, LocalDate propPeriodEndDate,
             Integer projectId, String projectName, List<String> projectTypes, Integer customerId, String customerName,
             Integer resourceId, String resourceName, List<String> resourceTypes, Integer auctionId,
-            List<String> auctionTypes, LocalDateTime aucBeginDate, LocalDateTime aucEndDate, Integer commitPeriodId,
-            List<String> commitPeriodTypes, String commitPeriodDesc, LocalDateTime commitPeriodBeginDate,
-            LocalDateTime commitPeriodEndDate, Integer aucPeriodId, List<String> aucPeriodTypes, String aucPeriodDesc,
-            LocalDateTime aucPeriodBeginDate, LocalDateTime aucPeriodEndDate) {
+            List<String> auctionTypes, LocalDate aucBeginDate, LocalDate aucEndDate, Integer commitPeriodId,
+            List<String> commitPeriodTypes, String commitPeriodDesc, LocalDate commitPeriodBeginDate,
+            LocalDate commitPeriodEndDate, Integer aucPeriodId, List<String> aucPeriodTypes, String aucPeriodDesc,
+            LocalDate aucPeriodBeginDate, LocalDate aucPeriodEndDate) {
         this.pr = pr;
         this.sortBy = sortBy;
         this.sortAsc = sortAsc;
