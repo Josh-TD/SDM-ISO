@@ -24,6 +24,11 @@ export function AdvancedSearch(){
             <input className="placeholder:text-iso-light-gray placeholder:font-light pl-2 border border-iso-border-light shadow cursor-text h-7 w-1/2" placeholder="Project Name"/>
           </div>
 
+          <div className="flex justify-end py-2 pr-4">
+            <label className="text-iso-dim-gray justify-right font-regular pr-2" for="file_name">File Description:</label>
+            <input className="placeholder:text-iso-light-gray placeholder:font-light border border-iso-border-light shadow cursor-text h-7 w-1/2 pl-2" placeholder="File Description"/>
+          </div>
+
           <div className = "flex w-full justify-end">
             <button className="mr-6 mt-2 bg-iso-light-slate hover:bg-iso-link-blue text-white font-semibold py-1 px-5 rounded cursor-pointer justify-self-end">Search</button>
           </div>
