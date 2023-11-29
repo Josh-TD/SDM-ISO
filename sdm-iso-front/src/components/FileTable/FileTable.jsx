@@ -42,25 +42,39 @@ Modal.setAppElement("#root");
 export const FileTable = () => {
     const columns = useMemo(() => COLUMNS, [])
     let [ files, setFiles ] = useState([])
+    let [ fullApiCall, setFullApiCall ] = useState([])
+    let [ page, setPage ] = useState(0)
+    let [ apiString, setApiString] = useState(`http://localhost:8080/api/v3/files/list?pageNum=${page}&pageSize=10&sortBy=createDate&sortAsc=false`)
     const data = useMemo(() => files, [files])
-    //const data = useMemo(() => mockData, [])
-    console.log(data)
+
     useEffect(() => {
-        fetch('http://localhost:8080/api/v3/files/list?pageNum=0&pageSize=10&sortBy=createDate&sortAsc=false', {method:"GET"})
+        fetch(apiString, {method:"GET"})
             .then((response) => {
                 if (!response.ok) {
-                throw Error(response.statusText);
+                    throw Error(response.statusText);
                 }
                 return response.json();
             })
             .then((f) => {
                 //console.log(f);
+                setFullApiCall(f)
                 setFiles(f.content);
             })
             .catch((err) => {
                 console.log(err.message);
             });
-    }, [])
+    }, [apiString, page])
+
+    useEffect(() => {
+        setApiString(`http://localhost:8080/api/v3/files/list?pageNum=${page}&pageSize=10&sortBy=createDate&sortAsc=false`)
+    }, [page])
+
+    function handleNextClick() {
+        setPage(page => page + 1)
+    }
+    function handlePrevClick() {
+        setPage(page => page - 1)
+    }
 
     const { 
         getTableProps, 
@@ -127,17 +141,17 @@ export const FileTable = () => {
                                     {column.render('Header')}
                                     <span className="inline-block relative top-1.5">
                                     {column.isSorted ? (column.isSortedDesc ? 
-                                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
+                                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" className="w-6 h-6">
                                             <path stroke-linecap="round" stroke-linejoin="round" d="M4.5 15.75l7.5-7.5 7.5 7.5" />
                                         </svg>
                                         : 
-                                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
+                                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" className="w-6 h-6">
                                             <path stroke-linecap="round" stroke-linejoin="round" d="M19.5 8.25l-7.5 7.5-7.5-7.5" />
                                         </svg>
                                     ) :
                                         // removes icon for select row
                                         column.id == 'select' ? <></> : 
-                                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
+                                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" className="w-6 h-6">
                                             <path stroke-linecap="round" stroke-linejoin="round" d="M8.25 15L12 18.75 15.75 15m-7.5-6L12 5.25 15.75 9" />
                                         </svg>
                                     }
@@ -178,8 +192,16 @@ export const FileTable = () => {
                     <FileViewer filename={selectedFileName} />
                 </Modal>
                 <div>
-                    <button className="bg-iso-offwhite p-1 border-solid border-2">Previous</button>
-                    <button className="bg-iso-offwhite p-1 border-solid border-2">Next</button>
+                    {
+                        fullApiCall.first != true && (
+                            <button className="bg-iso-offwhite p-1 border-solid border-2" onClick={handlePrevClick}>Previous</button>
+                        )  
+                    }
+                    {
+                        fullApiCall.last != true && (
+                            <button className="bg-iso-offwhite p-1 border-solid border-2" onClick={handleNextClick}>Next</button>
+                        )  
+                    }
                 </div>
                 <pre>
                     <code>
