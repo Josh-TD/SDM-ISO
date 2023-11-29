@@ -63,7 +63,7 @@ export const FileTable = () => {
             .catch((err) => {
                 console.log(err.message);
             });
-    }, [apiString, page])
+    }, [apiString])
 
     useEffect(() => {
         setApiString(`http://localhost:8080/api/v3/files/list?pageNum=${page}&pageSize=10&sortBy=createDate&sortAsc=false`)
