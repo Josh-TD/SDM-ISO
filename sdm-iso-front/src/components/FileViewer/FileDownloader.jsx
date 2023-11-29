@@ -9,13 +9,13 @@ const FileDownloader = ({fileName}) => {
         axios.get(endpointUrl, {
             responseType: 'arraybuffer',
         })
-            .then(response => {
-                const blob = new Blob([response.data]);
-                saveAs(blob, fileName);
-            })
-            .catch(error => {
-                console.error('Error downloading this file:', error);
-            });
+        .then(response => {
+            const blob = new Blob([response.data]);
+            saveAs(blob, fileName);
+        })
+        .catch(error => {
+            console.error('Error downloading this file:', error);
+        });
     }, [fileName]);
 };
 

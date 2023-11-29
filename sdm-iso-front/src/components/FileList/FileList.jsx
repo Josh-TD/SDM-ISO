@@ -6,7 +6,7 @@ import { FileTable } from "../FileTable/FileTable";
 import { CheckBox } from "../Misc/CheckBox";
 import { CheckBoxes } from "../Misc/CheckBoxes";
 import { DropDown } from "../Misc/DropDown";
-import { FileViewer } from "../FileViewer/FileViewer";
+import { FileRender } from "../FileViewer/FileRender";
 
 import { defaultAll } from "./filters/common";
 import { fileTypesFilter } from "./filters/fileTypes";

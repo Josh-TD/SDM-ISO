@@ -4,7 +4,7 @@ import mockData from "./mockData.json";
 import { useTable, usePagination, useSortBy } from "react-table";
 import Modal from "react-modal";
 import "./FileTable.css"
-import {FileViewer} from "../FileViewer/FileViewer";
+import {FileRender} from "../FileViewer/FileRender";
 
 const COLUMNS = [
     {
@@ -116,7 +116,7 @@ export const FileTable = () => {
                 onRequestClose={() => setIsOpen(false)}
                 contentLabel="File Modal"
                 preventScroll={true}>
-                <FileViewer filename={selectedFileName} />
+                <FileRender filename={selectedFileName} />
             </Modal>
             <div>
                 <button className="bg-iso-offwhite p-1 border-solid border-1" onClick={() => previousPage()}>Previous</button>
