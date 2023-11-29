@@ -1,12 +1,5 @@
 import React from 'react';
-import { ClerkProvider,
-    SignedIn,
-    SignedOut,
-    RedirectToSignIn,
-    SignIn,
-    SignUp,
-} from "@clerk/clerk-react";
-import { BrowserRouter, Routes, Route, useNavigate } from 'react-router-dom';
+import { BrowserRouter as Router, Route, Routes, Navigate } from 'react-router-dom';
 import MainPage from './components/MainPage/MainPage'
 import LoginPage from './components/LoginPage/LoginPage'
 import './index.css';
@@ -14,58 +7,37 @@ import "@fontsource/open-sans";
 import "@fontsource/open-sans/300.css";
 import "@fontsource/open-sans/400.css";
 import "@fontsource/open-sans/700.css";
+import { AuthProvider, useAuth } from './components/AuthContext/AuthContext';
 
-const clerkPubKey = 'pk_test_Y29taWMtbG9vbi0yOC5jbGVyay5hY2NvdW50cy5kZXYk';
-
-// currently not using this could get rid
-function PublicPage() {
+function NoMatch() {
   return (
-    <>
-      <a href="/protected">Go to sign in</a>
-    </>
+    <div style={{ padding: 20 }}>
+      <h2>404: Page Not Found</h2>
+      <p>URL does not lead anywhere.</p>
+    </div>
   );
 }
-const ClerkWithRoutes = () => {
-  const navigate = useNavigate();
-  
-  return (
-    <ClerkProvider
-      publishableKey={clerkPubKey}
-      navigate={(to) => navigate(to)}
-    >
-      <Routes>
-      <Route path="/" element={<LoginPage/>} />
-        <Route
-          path="/sign-in/*"
-          element={<SignIn routing="path" path="/sign-in" />}
-        />
-        <Route
-          path="/sign-up/*"
-          element={<SignUp routing="path" path="/sign-up" />}
-        />
-        <Route
-          path="/protected"
-          element={
-          <>
-            <SignedIn>
-              <MainPage/>
-            </SignedIn>
-            <SignedOut>
-              <RedirectToSignIn />
-            </SignedOut>
-          </>
-          }
-        />
-      </Routes>
-    </ClerkProvider>
-  );
+
+const PrivateRoute = ({ element: Element, ...rest }) => {
+  const { isAuthenticated } = useAuth();
+
+  return isAuthenticated ? <Outlet /> : <Navigate to="/login" />;
 };
+
 function App() {
   return (
-    <BrowserRouter>
-      <ClerkWithRoutes />
-    </BrowserRouter>
-  );
+    <AuthProvider>
+      <Router>
+        <Routes>
+          <Route path="/login" element={<LoginPage />}/>
+          <Route exact path='/' element={<PrivateRoute/>}>
+            <Route exact path='/' element={<MainPage/>}/>
+          </Route>
+          <Route path="*" element={<NoMatch/>} />
+        </Routes>
+      </Router>
+    </AuthProvider>
+  )
 }
 
 export default App;
