@@ -1,6 +1,7 @@
 package com.example.sdmisoback.security.auth;
 
-import com.fasterxml.jackson.annotation.JsonProperty;
+import java.util.List;
+
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -12,8 +13,8 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class AuthenticationResponse {
 
-    @JsonProperty("access_token")
     private String accessToken;
-    @JsonProperty("refresh_token")
     private String refreshToken;
+    private String role;
+    
 }

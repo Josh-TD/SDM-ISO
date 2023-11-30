@@ -1,5 +1,15 @@
 package com.example.sdmisoback.security.auth;
 
+import java.io.IOException;
+
+import org.springframework.http.HttpHeaders;
+import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.BadCredentialsException;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.stereotype.Service;
+
 import com.example.sdmisoback.security.config.JwtService;
 import com.example.sdmisoback.security.token.Token;
 import com.example.sdmisoback.security.token.TokenRepo;
@@ -7,16 +17,10 @@ import com.example.sdmisoback.security.token.TokenType;
 import com.example.sdmisoback.security.user.User;
 import com.example.sdmisoback.security.user.UserRepository;
 import com.fasterxml.jackson.databind.ObjectMapper;
+
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
-import org.springframework.http.HttpHeaders;
-import org.springframework.security.authentication.AuthenticationManager;
-import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
-import org.springframework.security.crypto.password.PasswordEncoder;
-import org.springframework.stereotype.Service;
-
-import java.io.IOException;
 
 @Service
 @RequiredArgsConstructor
@@ -36,30 +40,43 @@ public class AuthenticationService {
         var savedUser = repository.save(user);
         var jwtToken = jwtService.generateToken(user);
         var refreshToken = jwtService.generateRefreshToken(user);
+        var role = user.getRole().name();
         saveUserToken(savedUser, jwtToken);
         return AuthenticationResponse.builder()
+            .role(role)
             .accessToken(jwtToken)
             .refreshToken(refreshToken)
             .build();
     }
 
     public AuthenticationResponse authenticate(AuthenticationRequest request) {
-        authenticationManager.authenticate(
-            new UsernamePasswordAuthenticationToken(
-                request.getEmail(),
-                request.getPassword()
-            )
-        );
-        var user = repository.findByEmail(request.getEmail())
-            .orElseThrow();
-        var jwtToken = jwtService.generateToken(user);
-        var refreshToken = jwtService.generateRefreshToken(user);
-        revokeAllUserTokens(user);
-        saveUserToken(user, jwtToken);
-        return AuthenticationResponse.builder()
-            .accessToken(jwtToken)
-            .refreshToken(refreshToken)
-            .build();
+        try {
+
+            var user = repository.findByEmail(request.getEmail())
+                .orElseThrow(() -> new UsernameNotFoundException("User not found with email: " + request.getEmail()));
+
+            authenticationManager.authenticate(
+                new UsernamePasswordAuthenticationToken(
+                    request.getEmail(),
+                    request.getPassword()
+                )
+            );
+
+            var jwtToken = jwtService.generateToken(user);
+            var refreshToken = jwtService.generateRefreshToken(user);
+            var role = user.getRole().name();
+            
+            revokeAllUserTokens(user);
+            saveUserToken(user, jwtToken);
+            
+            return AuthenticationResponse.builder()
+                .role(role)
+                .accessToken(jwtToken)
+                .refreshToken(refreshToken)
+                .build();
+        } catch (BadCredentialsException e) {
+            throw new BadCredentialsException("Incorrect password", e);
+        }
     }
 
     private void saveUserToken(User user, String jwtToken) {
@@ -101,9 +118,11 @@ public class AuthenticationService {
                 .orElseThrow();
             if (jwtService.isTokenValid(refreshToken, user)) {
                 var accessToken = jwtService.generateToken(user);
+                var role = user.getRole().name();
                 revokeAllUserTokens(user);
                 saveUserToken(user, accessToken);
                 var authResponse = AuthenticationResponse.builder()
+                    .role(role)
                     .accessToken(accessToken)
                     .refreshToken(refreshToken)
                     .build();

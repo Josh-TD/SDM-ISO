@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useRef } from 'react';
 import Header from '../Header/Header';
 import AuthBox from '../AuthBox/AuthBox';
 import { PageTitle } from '../PageTitle/PageTitle';
