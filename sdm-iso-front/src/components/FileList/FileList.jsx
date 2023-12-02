@@ -146,8 +146,14 @@ export default function FileList() {
             <CheckBoxes array={fileTypesFilter} onChange={toggleFileTypes} />
           </DropDown>
 
+
           <div className="inline-flex mt-5 pl-10 items-left">
+
+          <div className="inline-flex mt-5 pl-5 items-left">
             <button className="bg-iso-light-slate hover:bg-iso-link-blue text-white text-sm font-semibold py-2 px-4 rounded cursor-pointer float-right" onClick={() => { fetchFiles() }}>Apply Filters</button>
+            <button className="bg-iso-light-slate hover:bg-iso-link-blue text-white text-sm font-semibold py-2 px-4 rounded cursor-pointer float-right">Clear Filters</button>
+
+
           </div>
 
         </div>
