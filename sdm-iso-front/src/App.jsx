@@ -1,6 +1,6 @@
 import React from 'react';
 import {  Route, Routes } from 'react-router-dom';
-import RequireAuth from './components/RequireAuth/RequireAuth'; 
+import RequireAuth from './components/Security/RequireAuth'; 
 
 import MainPage from './components/MainPage/MainPage'
 import LoginPage from './components/LoginPage/LoginPage'
