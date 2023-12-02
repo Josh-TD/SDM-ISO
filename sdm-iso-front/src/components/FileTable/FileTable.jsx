@@ -25,7 +25,7 @@ const COLUMNS = [
         cell: (props) => <p>{props.getValue()}</p>
     },
     {
-        accessor: 'fileCreatedDate',
+        accessor: 'fileCreateDate',
         Header: 'Date Created',
         cell: (props) => <p>{props.getValue()}</p>
     },

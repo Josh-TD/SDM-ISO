@@ -10,6 +10,7 @@ export default function SearchDropdown() {
             <option value="customer-name">Customer Name</option>
             <option value="proposal-name">Proposal Name</option>
             <option value="resource-name">Resource Name</option>
+            <option value="resource-name">File Description</option>
           </select>
         </div>
     )
