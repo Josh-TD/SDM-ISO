@@ -4,12 +4,10 @@ import Modal from "react-modal";
 import axios from "axios";
 
 import { FileTable } from "../FileTable/FileTable";
-import { CheckBox } from "../Misc/CheckBox";
 import { CheckBoxes } from "../Misc/CheckBoxes";
 import { DropDown } from "../Misc/DropDown";
 import { FileViewer } from "../FileViewer/FileViewer";
 
-import { defaultAll } from "./filters/common";
 import { fileTypesFilter } from "./filters/fileTypes";
 import { resourceTypesFilter } from "./filters/resourceTypes";
 import { auctionTypesFilter } from "./filters/auctionTypes";
