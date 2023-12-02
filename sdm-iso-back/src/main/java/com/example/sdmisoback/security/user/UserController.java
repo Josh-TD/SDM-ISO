@@ -4,6 +4,7 @@ import java.security.Principal;
 
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -28,12 +29,20 @@ public class UserController {
         return ResponseEntity.ok().build();
     }
 
-    @PostMapping("/add-recently-viewed")
+    @PostMapping("/recently-viewed")
     public ResponseEntity<?> addRecentlyViewed(
         @RequestBody Integer fileId,
         Principal connectedUser
     ) {
         service.addFileToRecentlyViewed(connectedUser, fileId);
+        return ResponseEntity.ok().build();
+    }
+
+    @GetMapping("/recently-viewed")
+    public ResponseEntity<?> getRecentlyViewed(
+        Principal connectedUser
+    ) {
+        service.getRecentlyViewedFiles(connectedUser);
         return ResponseEntity.ok().build();
     }
 }

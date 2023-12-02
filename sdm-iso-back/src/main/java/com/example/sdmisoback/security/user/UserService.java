@@ -1,12 +1,13 @@
 package com.example.sdmisoback.security.user;
 
-import lombok.RequiredArgsConstructor;
+import java.security.Principal;
+import java.util.List;
+
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
-import java.security.Principal;
-import java.util.List;
+import lombok.RequiredArgsConstructor;
 
 @Service
 @RequiredArgsConstructor
@@ -47,5 +48,10 @@ public class UserService {
 
         user.setRecentlyViewed(recentlyViewed);
         repository.save(user);
+    }
+
+    public List<Integer> getRecentlyViewedFiles(Principal connectedUser){
+        var user = (User) ((UsernamePasswordAuthenticationToken) connectedUser).getPrincipal();
+        return user.getRecentlyViewed();
     }
 }
