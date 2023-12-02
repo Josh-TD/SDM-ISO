@@ -7,6 +7,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -24,6 +25,7 @@ import io.swagger.v3.oas.annotations.responses.ApiResponses;
 
 @RestController
 @RequestMapping("/api/v3")
+@CrossOrigin(origins = "http://localhost:3000")
 public class FiltersController {
 
     private FiltersService filtersService;
@@ -39,6 +41,7 @@ public class FiltersController {
     // Link works after the backend is launched
     // if you want to use Postman for API testing instead: use SDM email, details in the google doc
     @GetMapping("/files/list")
+    @CrossOrigin(origins = "http://localhost:3000")
     @Operation(summary = "Get a single page of FileViews sorted, with many optional filters", 
                description = "returns a Spring Page object with content AttachmentFileView based on the filters and sorting applied")
     @ApiResponses(value = {
