@@ -1,6 +1,7 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import DatePicker from "react-datepicker";
 import Modal from "react-modal";
+import axios from "axios";
 
 import { FileTable } from "../FileTable/FileTable";
 import { CheckBox } from "../Misc/CheckBox";
@@ -13,9 +14,20 @@ import { fileTypesFilter } from "./filters/fileTypes";
 import { resourceTypesFilter } from "./filters/resourceTypes";
 import { auctionTypesFilter } from "./filters/auctionTypes";
 import { projectTypesFilter } from "./filters/projectTypes";
-import { CreatedDateSlider } from "./filters/date";
+import { CreatedDateSlider, getFilterDateFormat } from "./filters/date";
 
+import mockData from "./mockData.json";
+
+// in the future, this file  list should also takes in how many files to display
 export default function FileList() {
+  // hardcoded endpoints, use .env file?
+  const _endpoint = "http://localhost:8080/api";
+  const endpoint = _endpoint + "/v3/files/list";
+  // these are the things that should pass into this file list in the future
+  const pageNum = 0;
+  const pageSize = 10;
+  const sortBy = "createDate";
+  const sortAsc = "false";
 
   // doing this so if we want we can do this inline instead of making it a new function
   const checkBoxesToggling = (get, set) => {
@@ -30,23 +42,53 @@ export default function FileList() {
     };
   }
 
-  const [selectedFileTypes, setSelectedFileTypes] = useState([defaultAll]);
+  const [selectedFileTypes, setSelectedFileTypes] = useState([]);
   const toggleFileTypes = (obj) => { return checkBoxesToggling(selectedFileTypes, setSelectedFileTypes)(obj) };
 
-  const [selectedResourceTypes, setSelectedResourceTypes] = useState([defaultAll]);
+  const [selectedResourceTypes, setSelectedResourceTypes] = useState([]);
   const toggleResouceTypes = (obj) => { return checkBoxesToggling(selectedResourceTypes, setSelectedResourceTypes)(obj) };
 
-  const [selectedDateRange, setSelectedDateRange] = useState(defaultAll);
+  const [selectedDateRange, setSelectedDateRange] = useState("all");
 
-  const [selectedAuctionTypes, setSelectedAuctionTypes] = useState([defaultAll]);
+  const [selectedAuctionTypes, setSelectedAuctionTypes] = useState([]);
   const toggleAuctionTypes = (obj) => { return checkBoxesToggling(selectedAuctionTypes, setSelectedAuctionTypes)(obj) };
 
-  const [selectedProjectTypes, setSelectedProjectTypes] = useState([defaultAll]);
+  const [selectedProjectTypes, setSelectedProjectTypes] = useState([]);
   const toggleProjectTypes = (obj) => { return checkBoxesToggling(selectedProjectTypes, setSelectedProjectTypes)(obj) };
 
   const [auctionDateStart, setAuctionDateStart] = useState(new Date());
   const [auctionDateEnd, setAuctionDateEnd] = useState(new Date());
   const [auctionDateAny, setAuctionDateAny] = useState(true);
+
+  const [data, setData] = useState(null);
+
+  // default to fetch data by itself, maybe done in outer layer if possible
+  useEffect(() => {
+    fetchFiles();
+  }, []);
+
+  const fetchFiles = () => {
+    // not enough contents in the entry so we need more for proper filtering
+    const basic_url = endpoint + `?pageNum=${pageNum}&pageSize=${pageSize}&sortBy=${sortBy}&sortAsc=${sortAsc ? "true" : "false"}`;
+
+    const isoDate = getFilterDateFormat(selectedDateRange);
+    const javaDate = isoDate.substring(0, isoDate.length - 5);
+
+    const full_url = basic_url
+      + `${selectedProjectTypes.reduce((acc, e) => acc + "&projectTypes=" + e, "")}`
+      + `${selectedResourceTypes.reduce((acc, e) => acc + "&resourceTypes=" + e, "")}`
+      // there is no auction type??
+      // + `${auctionTypesFilter.reduce((acc, e) => acc + "&auctionTypes=" + e, "")}`
+      + `${selectedFileTypes.reduce((acc, e) => acc + "&fileTypes=" + e, "")}`
+      + `&createdSince=${javaDate}`
+      ;
+
+    axios.get(full_url).then((res) => {
+      setData(
+        res.data.content
+      );
+    })
+  };
 
   const [modalIsOpen, setIsOpen] = useState(false);
   const modalStyles = {
@@ -104,8 +146,12 @@ export default function FileList() {
             <CheckBoxes array={fileTypesFilter} onChange={toggleFileTypes} />
           </DropDown>
 
-          <div className="inline-flex mt-5 pl-10 items-left">
-            <button className="bg-iso-light-slate hover:bg-iso-link-blue text-white text-sm font-semibold py-2 px-4 rounded cursor-pointer float-right">Apply Filters</button>
+
+          <div className="inline-flex mt-5 pl-5 items-left">
+            <button className="bg-iso-light-slate hover:bg-iso-link-blue text-white text-sm font-semibold py-2 px-4 rounded cursor-pointer float-right" onClick={() => { fetchFiles() }}>Apply Filters</button>
+            <button className="bg-iso-light-slate hover:bg-iso-link-blue text-white text-sm font-semibold py-2 px-4 rounded cursor-pointer float-right">Clear Filters</button>
+
+
           </div>
 
         </div>
@@ -114,7 +160,7 @@ export default function FileList() {
       <div className="bg-white col-start-2 row-start-1 p-4">
         {/* File list */}
         <div className="width: 100% height: 100%">
-          <FileTable />
+          {data && <FileTable data={data} />}
         </div>
       </div>
     </div>

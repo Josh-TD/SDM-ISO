@@ -2,12 +2,14 @@ import React from 'react';
 import ReactDOM from "react-dom/client";
 import reportWebVitals from './reportWebVitals';
 import App from './App';
-
 import './index.css';
 import "@fontsource/open-sans";
 import "@fontsource/open-sans/300.css";
 import "@fontsource/open-sans/400.css";
 import "@fontsource/open-sans/700.css";
+
+const clerkPubKey = 'pk_test_Y29taWMtbG9vbi0yOC5jbGVyay5hY2NvdW50cy5kZXYk';
+
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(<App />);

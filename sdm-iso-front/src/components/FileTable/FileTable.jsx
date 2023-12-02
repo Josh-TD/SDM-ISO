@@ -1,11 +1,10 @@
 import React, { useEffect, useState } from "react";
 import { useMemo } from 'react';
-import mockData from "./mockData.json";
 import { useTable, usePagination, useSortBy, useRowSelect } from "react-table";
 import Modal from "react-modal";
 import "./FileTable.css"
-import {FileViewer} from "../FileViewer/FileViewer";
-import {FileTableCheckbox} from "./FileTableCheckbox"
+import { FileViewer } from "../FileViewer/FileViewer";
+import { FileTableCheckbox } from "./FileTableCheckbox"
 
 const COLUMNS = [
 
@@ -39,7 +38,7 @@ const COLUMNS = [
 
 Modal.setAppElement("#root");
 
-export const FileTable = () => {
+export const FileTable = ({ data }) => {
     const columns = useMemo(() => COLUMNS, [])
     let [ files, setFiles ] = useState([])
     let [ fullApiCall, setFullApiCall ] = useState([])
@@ -83,21 +82,21 @@ export const FileTable = () => {
         rows,
         prepareRow,
         selectedFlatRows
-    } = useTable (
+    } = useTable(
         {
-        columns,
-        data
+            columns,
+            data
         },
         useSortBy,
         useRowSelect,
         (hooks) => {
             hooks.visibleColumns.push(columns => [
                 {
-                id: 'select',
-                Header: ({ getToggleAllRowsSelectedProps }) => (
-                    <FileTableCheckbox {...getToggleAllRowsSelectedProps()} />
-                ),
-                Cell: ({ row }) => <FileTableCheckbox {...row.getToggleRowSelectedProps()} />
+                    id: 'select',
+                    Header: ({ getToggleAllRowsSelectedProps }) => (
+                        <FileTableCheckbox {...getToggleAllRowsSelectedProps()} />
+                    ),
+                    Cell: ({ row }) => <FileTableCheckbox {...row.getToggleRowSelectedProps()} />
                 },
                 ...columns
             ])
@@ -117,7 +116,7 @@ export const FileTable = () => {
             <div className="bg-white col-start-2 row-start-1 flex items-center justify-start">
                 <div className="inline-flex items-center justify-between mx-3">
                     <div className="pr-1">
-                        <input type="checkbox" id="selectAll" name="selectAll" onClick={() => {handleSelectAll}}></input>
+                        <input type="checkbox" id="selectAll" name="selectAll" onClick={() => { handleSelectAll }}></input>
                     </div>
                     <label htmlFor="html" className="text-base font-semibold text-iso-secondary-text">Select All</label>
                 </div>
@@ -127,11 +126,13 @@ export const FileTable = () => {
                     <div className="text-base font-semibold text-iso-secondary-text cursor-pointer">View</div>
                 </div>
             </div>
+
             {data.length > 0 ? (
             <React.Fragment>
                 <table className="bg-iso-offwhite w-full h-4/5" {...getTableProps()}>
                     <thead className="bg-iso-offwhite h-12">
                         {headerGroups.map((headerGroup) => (
+
                         <tr {...headerGroup.getHeaderGroupProps()} className="items-center">
                             {headerGroup.headers.map((column) => (
                                 <th {...column.getHeaderProps(
@@ -159,6 +160,7 @@ export const FileTable = () => {
                                 </th>
                             ))}
                         </tr>
+
                         ))}
                     </thead>
                     <tbody {...getTableBodyProps()} className="text-center">

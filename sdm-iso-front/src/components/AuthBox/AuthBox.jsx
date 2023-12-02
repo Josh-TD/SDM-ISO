@@ -58,6 +58,7 @@ export function AuthBox(props) {
           </div> 
 
           <div className="w-full text-right p-7">
+            <a className="text-iso-link-blue font-regular pr-5" href='/protected'>Sign in with SSO </a>
             <a className="text-iso-link-blue font-regular">Forgot your password?</a>
           </div> 
  
