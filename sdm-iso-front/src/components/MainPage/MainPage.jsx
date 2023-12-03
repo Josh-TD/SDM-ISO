@@ -1,7 +1,7 @@
 import React from 'react';
 import Header from '../Header/Header';
 import { PageTitleWithSearchBar } from '../PageTitle/PageTitle';
-import FileList from '../FileList/FileList';
+import {FileList} from '../FileList/FileList';
 
 import {UserButton } from "@clerk/clerk-react";
 import {useState} from 'react';
