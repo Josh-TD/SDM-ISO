@@ -43,13 +43,13 @@ public class S3BucketController {
     // Testing: "http://localhost:8080/api/sdmisofiles/viewordownload?fileName=thingy.png"
     // Testing: The file displayed on the frontend after calling that endpoint should be thingy.png
     @GetMapping("/viewordownload")
-    public ResponseEntity<byte[]> viewOrDownloadFile(@RequestParam(name = "fileName") String fileName) throws IOException {
-        S3Object s3Object = amazonS3.getObject(S3_BUCKET_NAME, fileName);
+    public ResponseEntity<byte[]> viewOrDownloadFile(@RequestParam(name = "filePath") String filePath) throws IOException {
+        S3Object s3Object = amazonS3.getObject(S3_BUCKET_NAME, filePath);
         byte[] content = s3Object.getObjectContent().readAllBytes();
 
         HttpHeaders headers = new HttpHeaders();
         headers.setContentType(MediaType.APPLICATION_OCTET_STREAM);
-        headers.setContentDispositionFormData("attachment", fileName);
+        headers.setContentDispositionFormData("attachment", filePath);
 
         return ResponseEntity.ok()
                 .headers(headers)
