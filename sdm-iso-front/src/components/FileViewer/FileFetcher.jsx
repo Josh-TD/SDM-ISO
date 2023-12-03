@@ -24,6 +24,7 @@ const FileFetcher = ({ fileName }) => {
         // We can modify the endpointURL parameter to do this like so:
         // http://localhost:8080/api/sdmisofiles/viewordownload?filePath=FCTS_data/Attachments/${encodeURIComponent(fileName)}
         const endpointUrl = `http://localhost:8080/api/sdmisofiles/viewordownload?filePath=${encodeURIComponent(fileName)}`;
+
         const fileType = fileName.split('.').pop().toUpperCase();
         axios
             .get(endpointUrl, {
@@ -38,39 +39,21 @@ const FileFetcher = ({ fileName }) => {
                 } else if (fileType === 'PDF') {
                     const pdfBlob = new Blob([response.data], {type: 'application/pdf'});
                     const pdfURL = URL.createObjectURL(pdfBlob);
-                    setFileData(
-                        <iframe
-                            src={pdfURL}
-                            width="100%"
-                            height="500px"
-                            style={{border: 'none'}}
-                        />
-                    );
-                } else if (fileType === 'TXT' || fileType === 'HTML' || fileType === 'HTM') {
+                    setFileData(<iframe src={pdfURL} width="100%" height="500px" style={{border: 'none'}}/>);
+                } else if (['TXT', 'HTML', 'HTM'].includes(fileType)) {
                     const reader = new FileReader();
-                    reader.onloadend = function () {
-                        setFileData(parse(reader.result));
-                    };
+                    reader.onloadend = function () {setFileData(parse(reader.result));};
                     reader.readAsText(blob);
                 } else if (fileType === 'DOCX') {
                     const result = await mammoth.extractRawText({arrayBuffer});
                     setFileData(parse(result.value));
                 } else if (['XLSX', 'XLSM'].includes(fileType)) {
                     ExcelRenderer(blob, (err, resp) => {
-                        if (err) {
-                            console.log(err);
-                        } else {
-                            setExcelData({
-                                cols: resp.cols,
-                                rows: resp.rows,
-                            });
-                        }
+                        setExcelData({cols: resp.cols,rows: resp.rows,});
                     });
                 }
                 else if (fileType == 'MSG') {
-                    const msgReader = new MsgReader(arrayBuffer);
-                    const msgInfo = msgReader.getFileData();
-                    const msgBody = msgInfo.body;
+                    const msgBody = new MsgReader(arrayBuffer).getFileData().body;
                     setFileData(<div>{msgBody}</div>);
                 }
                 else if (fileType == 'DOC') {
