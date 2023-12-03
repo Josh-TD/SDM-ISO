@@ -3,6 +3,7 @@ import axios from 'axios';
 import parse from 'html-react-parser';
 import mammoth from 'mammoth';
 import ExcelRenderer from 'react-excel-renderer';
+import ExcelTable from "./ExcelRenderTable";
 import MsgReader from '@kenjiuno/msgreader'
 
 const FileFetcher = ({ fileName }) => {
@@ -87,26 +88,5 @@ const FileFetcher = ({ fileName }) => {
     return <div>{fileData || (excelData && <ExcelTable excelData={excelData}/>) || <p>Loading...</p>}</div>;
 
 };
-
-const ExcelTable = ({ excelData }) => (
-    <table className="ExcelTable2007">
-        <thead className="heading">
-        <tr>
-            {excelData.cols.map((col, index) => (
-                <th key={index}>{typeof col === 'object' ? col.name : col}</th>
-            ))}
-        </tr>
-        </thead>
-        <tbody>
-        {excelData.rows.map((row, rowIndex) => (
-            <tr key={rowIndex}>
-                {row.map((cell, cellIndex) => (
-                    <td key={cellIndex}>{typeof cell === 'object' ? cell.name : cell}</td>
-                ))}
-            </tr>
-        ))}
-        </tbody>
-    </table>
-);
 
 export default FileFetcher;
