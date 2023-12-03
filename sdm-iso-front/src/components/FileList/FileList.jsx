@@ -17,7 +17,7 @@ import { CreatedDateSlider, getFilterDateFormat } from "./filters/date";
 import mockData from "./mockData.json";
 
 // in the future, this file  list should also takes in how many files to display
-export default function FileList() {
+export function FileList() {
   // hardcoded endpoints, use .env file?
   const _endpoint = "http://localhost:8080/api";
   const endpoint = _endpoint + "/v3/files/list";
@@ -145,13 +145,9 @@ export default function FileList() {
           </DropDown>
 
 
-          <div className="inline-flex mt-5 pl-10 items-left">
-
           <div className="inline-flex mt-5 pl-5 items-left">
             <button className="bg-iso-light-slate hover:bg-iso-link-blue text-white text-sm font-semibold py-2 px-4 rounded cursor-pointer float-right" onClick={() => { fetchFiles() }}>Apply Filters</button>
             <button className="bg-iso-light-slate hover:bg-iso-link-blue text-white text-sm font-semibold py-2 px-4 rounded cursor-pointer float-right">Clear Filters</button>
-
-
           </div>
 
         </div>
