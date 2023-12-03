@@ -38,13 +38,13 @@ const COLUMNS = [
 
 Modal.setAppElement("#root");
 
-export const FileTable = ({ data }) => {
+export const FileTable = ({ data, fetchFunction }) => {
     const columns = useMemo(() => COLUMNS, [])
     let [ files, setFiles ] = useState([])
     let [ fullApiCall, setFullApiCall ] = useState([])
     let [ page, setPage ] = useState(0)
     let [ apiString, setApiString] = useState(`http://localhost:8080/api/v3/files/list?pageNum=${page}&pageSize=10&sortBy=createDate&sortAsc=false`)
-    const data = useMemo(() => files, [files])
+    //data = useMemo(() => files, [files])
 
     useEffect(() => {
         fetch(apiString, {method:"GET"})
@@ -70,9 +70,13 @@ export const FileTable = ({ data }) => {
 
     function handleNextClick() {
         setPage(page => page + 1)
+        //page = page+1
+        //fetchFunction(page)
     }
     function handlePrevClick() {
         setPage(page => page - 1)
+        //page = page-1
+        //fetchFunction(page)
     }
 
     const { 

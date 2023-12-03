@@ -64,10 +64,10 @@ export default function FileList() {
 
   // default to fetch data by itself, maybe done in outer layer if possible
   useEffect(() => {
-    fetchFiles();
+    fetchFiles(0);
   }, []);
 
-  const fetchFiles = () => {
+  const fetchFiles = (pageNum) => {
     // not enough contents in the entry so we need more for proper filtering
     const basic_url = endpoint + `?pageNum=${pageNum}&pageSize=${pageSize}&sortBy=${sortBy}&sortAsc=${sortAsc ? "true" : "false"}`;
 
@@ -147,8 +147,8 @@ export default function FileList() {
           </DropDown>
 
 
-          <div className="inline-flex mt-5 pl-5 items-left">
-            <button className="bg-iso-light-slate hover:bg-iso-link-blue text-white text-sm font-semibold py-2 px-4 rounded cursor-pointer float-right" onClick={() => { fetchFiles() }}>Apply Filters</button>
+          <div className="inline-flex mt-5 pl-5 mb-5 items-left">
+            <button className="bg-iso-light-slate hover:bg-iso-link-blue text-white text-sm font-semibold py-2 px-4 mr-2 rounded cursor-pointer float-right" onClick={() => { fetchFiles(0) }}>Apply Filters</button>
             <button className="bg-iso-light-slate hover:bg-iso-link-blue text-white text-sm font-semibold py-2 px-4 rounded cursor-pointer float-right">Clear Filters</button>
 
 
@@ -160,7 +160,7 @@ export default function FileList() {
       <div className="bg-white col-start-2 row-start-1 p-4">
         {/* File list */}
         <div className="width: 100% height: 100%">
-          {data && <FileTable data={data} />}
+          {data && <FileTable data={data} fetchFunction={fetchFiles} />}
         </div>
       </div>
     </div>
