@@ -1,5 +1,6 @@
 package com.example.sdmisoback.controller;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.Arrays;
 import java.util.List;
@@ -98,6 +99,26 @@ public class FiltersController {
         @Parameter(description = "Searches for proposal label containing input: '17' can return file with proposal label '2022-05-17-FCA'")
         String proposalLabel,
 
+        @RequestParam(name = "propPeriodId", required = false) 
+        @Parameter(description = "Must be exact")
+        Integer propPeriodId,
+
+        @RequestParam(name = "propPeriodTypes", required = false) 
+        @Parameter(description = "Must be exact, can have multiple")
+        List<String> propPeriodTypes,
+
+        @RequestParam(name = "propPeriodDesc", required = false) 
+        @Parameter(description = "Searches for prefix: '200' can return file with proposal description '2001-02'")
+        String propPeriodDesc,
+
+        @RequestParam(name = "propPeriodBeginDate", required = false) 
+        @Parameter(description = "Searches for begin date after {propPeriodBeginDate} format 'yyyy-MM-dd' ex '2018-04-01'")
+        LocalDate propPeriodBeginDate,
+
+        @RequestParam(name = "propPeriodEndDate", required = false) 
+        @Parameter(description = "Searches for end date before {propPeriodEndDate} format 'yyyy-MM-dd' ex '2018-04-01'")
+        LocalDate propPeriodEndDate,
+
         // project filters
         @RequestParam(name = "projectId", required = false) 
         @Parameter(description = "Must be exact")
@@ -138,14 +159,58 @@ public class FiltersController {
         @Parameter(description = "Must be exact")
         Integer auctionId,
 
-        // period filters
-        @RequestParam(name = "periodId", required = false) 
-        @Parameter(description = "Must be exact")
-        Integer periodId,
+        @RequestParam(name = "auctionTypes", required = false) 
+        @Parameter(description = "Must be exact, searches for any match for {auctionTypes}")
+        List<String> auctionTypes,
 
-        @RequestParam(name = "periodDesc", required = false) 
-        @Parameter(description = "Searches for prefix: '2011' can return file with period description '2011-12'")
-        String periodDesc
+        @RequestParam(name = "aucBeginDate", required = false) 
+        @Parameter(description = "Searches for begin date before {aucBeginDate} format 'yyyy-MM-dd' ex '2018-04-01'")
+        LocalDate aucBeginDate,
+
+        @RequestParam(name = "aucEndDate", required = false) 
+        @Parameter(description = "Searches for end date before {aucEndDate} format 'yyyy-MM-dd' ex '2018-04-01'")
+        LocalDate aucEndDate,
+
+        // commitment period filters
+        @RequestParam(name = "commitPeriodId", required = false) 
+        @Parameter(description = "Must be exact")
+        Integer commitPeriodId,
+
+        @RequestParam(name = "commitPeriodTypes", required = false) 
+        @Parameter(description = "Must be exact, can input multiple")
+        List<String> commitPeriodTypes,
+
+        @RequestParam(name = "commitPeriodDesc", required = false) 
+        @Parameter(description = "Searches for prefix: '200' can return file with commit period description '2001-02'")
+        String commitPeriodDesc,
+
+        @RequestParam(name = "commitPeriodBeginDate", required = false) 
+        @Parameter(description = "Searches for begin date before {commitPeriodBeginDate} format 'yyyy-MM-dd' ex '2018-04-01'")
+        LocalDate commitPeriodBeginDate,
+
+        @RequestParam(name = "commitPeriodEndDate", required = false) 
+        @Parameter(description = "Searches for end date before {commitPeriodEndDate} format 'yyyy-MM-dd' ex '2018-04-01'")
+        LocalDate commitPeriodEndDate,
+    
+        @RequestParam(name = "aucPeriodId", required = false) 
+        @Parameter(description = "Must be exact")
+        Integer aucPeriodId,
+
+        @RequestParam(name = "aucPeriodTypes", required = false) 
+        @Parameter(description = "Must be exact, can input multiple")
+        List<String> aucPeriodTypes,
+
+        @RequestParam(name = "aucPeriodDesc", required = false) 
+        @Parameter(description = "Searches for prefix: '200' can return file with auction period description '2001-02'")
+        String aucPeriodDesc,
+
+        @RequestParam(name = "aucPeriodBeginDate", required = false) 
+        @Parameter(description = "Searches for begin date before {aucPeriodBeginDate} format 'yyyy-MM-dd' ex '2018-04-01'")
+        LocalDate aucPeriodBeginDate,
+
+        @RequestParam(name = "aucPeriodEndDate", required = false) 
+        @Parameter(description = "Searches for end date before {aucPeriodEndDate} format 'yyyy-MM-dd' ex '2018-04-01'")
+        LocalDate aucPeriodEndDate
 
         ) { //end parameters
 
@@ -182,12 +247,13 @@ public class FiltersController {
             pr, sortBy, sortAsc,
             fileId, fileName, fileDescription, createdSince, fileTypes,
             attachTypes,
-            proposalId, proposalLabel,
+            proposalId, proposalLabel, propPeriodId, propPeriodTypes, propPeriodDesc, propPeriodBeginDate, propPeriodEndDate,
             projectId, projectName, projectTypes,
             customerId, customerName,
             resourceId, resourceName, resourceTypes,
-            auctionId,
-            periodId, periodDesc
+            auctionId, auctionTypes, aucBeginDate, aucEndDate,
+            commitPeriodId, commitPeriodTypes, commitPeriodDesc, commitPeriodBeginDate, commitPeriodEndDate,
+            aucPeriodId, aucPeriodTypes, aucPeriodDesc, aucPeriodBeginDate, aucPeriodEndDate
         );
 
         return filtersService.filterAttachments(filters);
