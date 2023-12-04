@@ -40,7 +40,7 @@ public class S3BucketController {
     }
 
     // Endpoint to view a single file
-    // Testing: "http://localhost:8080/api/sdmisofiles/viewordownload?fileName=thingy.png"
+    // Testing: "http://localhost:8080/api/sdmisofiles/viewordownload?filePath=thingy.png"
     // Testing: The file displayed on the frontend after calling that endpoint should be thingy.png
     @GetMapping("/viewordownload")
     public ResponseEntity<byte[]> viewOrDownloadFile(@RequestParam(name = "filePath") String filePath) throws IOException {

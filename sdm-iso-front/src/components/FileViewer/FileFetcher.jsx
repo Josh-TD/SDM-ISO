@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import parse from 'html-react-parser';
 import mammoth from 'mammoth';
-import ExcelRenderer from 'react-excel-renderer';
+import {ExcelRenderer} from 'react-excel-renderer';
 import ExcelTable from "./ExcelRenderTable";
 import MsgReader from '@kenjiuno/msgreader'
 
