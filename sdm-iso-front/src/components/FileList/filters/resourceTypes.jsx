@@ -1,4 +1,3 @@
-
 export const resourceTypesFilter = [
     {
         id: "GEN",

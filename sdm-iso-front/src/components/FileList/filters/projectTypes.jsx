@@ -1,4 +1,3 @@
-
 export const projectTypesFilter = [
     {
         id: 'NEW_GEN', // not sure if this is correct
