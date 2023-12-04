@@ -92,6 +92,15 @@ export default function FileList() {
     })
   };
 
+  const fetchUnfiltered = () => {
+    const basic_url = endpoint + `?pageNum=${pageNum}&pageSize=${pageSize}&sortBy=${sortBy}&sortAsc=${sortAsc ? "true" : "false"}`;
+    axios.get(basic_url).then((res) => {
+      setData(
+        res.data
+      );
+    })
+  }
+
   const [modalIsOpen, setIsOpen] = useState(false);
   const modalStyles = {
     content: {
@@ -151,7 +160,7 @@ export default function FileList() {
 
           <div className="inline-flex mt-5 pl-5 mb-5 items-left">
             <button className="bg-iso-light-slate hover:bg-iso-link-blue text-white text-sm font-semibold py-2 px-4 mr-2 rounded cursor-pointer float-right" onClick={() => { fetchFiles(0) }}>Apply Filters</button>
-            <button className="bg-iso-light-slate hover:bg-iso-link-blue text-white text-sm font-semibold py-2 px-4 rounded cursor-pointer float-right">Clear Filters</button>
+            <button className="bg-iso-light-slate hover:bg-iso-link-blue text-white text-sm font-semibold py-2 px-4 rounded cursor-pointer float-right" onClick={() => { fetchUnfiltered() }}>Clear Filters</button>
 
 
           </div>
