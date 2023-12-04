@@ -1,7 +1,9 @@
 package com.example.sdmisoback.dto;
 
 import java.time.LocalDateTime;
+import java.time.LocalDate;
 import java.util.List;
+
 
 import org.springframework.data.domain.PageRequest;
 
@@ -31,6 +33,11 @@ public class FiltersDTO {
     // proposal
     public Integer proposalId;
     public String proposalLabel;
+    public Integer propPeriodId;
+    public List<String> propPeriodTypes;
+    public String propPeriodDesc;
+    public LocalDate propPeriodBeginDate;
+    public LocalDate propPeriodEndDate;
 
     // project
     public Integer projectId;
@@ -48,8 +55,21 @@ public class FiltersDTO {
 
     // auction
     public Integer auctionId;
+    public List<String> auctionTypes;
+    public LocalDate aucBeginDate;
+    public LocalDate aucEndDate;
 
-    // period
-    public Integer periodId;
-    public String periodDesc;
+    // commitment period
+    public Integer commitPeriodId;
+    public List<String> commitPeriodTypes;
+    public String commitPeriodDesc;
+    public LocalDate commitPeriodBeginDate;
+    public LocalDate commitPeriodEndDate;
+
+    // auction period
+    public Integer aucPeriodId;
+    public List<String> aucPeriodTypes;
+    public String aucPeriodDesc;
+    public LocalDate aucPeriodBeginDate;
+    public LocalDate aucPeriodEndDate;
 }

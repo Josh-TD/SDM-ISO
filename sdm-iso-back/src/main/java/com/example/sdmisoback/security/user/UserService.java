@@ -44,6 +44,7 @@ public class UserService {
         var user = (User) ((UsernamePasswordAuthenticationToken) connectedUser).getPrincipal();
         
         List<Integer> recentlyViewed = user.getRecentlyViewed();
+        if(recentlyViewed.contains(fileId)){return;}
         recentlyViewed.add(fileId);
 
         // Keep only the latest 10 files
