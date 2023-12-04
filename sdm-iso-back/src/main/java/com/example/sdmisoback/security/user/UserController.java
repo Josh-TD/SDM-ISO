@@ -2,6 +2,8 @@ package com.example.sdmisoback.security.user;
 
 import java.security.Principal;
 
+import org.springframework.data.domain.Page;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -10,6 +12,8 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+
+import com.example.sdmisoback.dto.AttachmentFileView;
 
 import lombok.RequiredArgsConstructor;
 
@@ -42,7 +46,16 @@ public class UserController {
     public ResponseEntity<?> getRecentlyViewed(
         Principal connectedUser
     ) {
-        service.getRecentlyViewedFiles(connectedUser);
-        return ResponseEntity.ok().build();
+        try {
+            Page<AttachmentFileView> files = service.getRecentlyViewedFiles(connectedUser);
+            if (files.isEmpty()) {
+                return ResponseEntity.status(HttpStatus.NOT_FOUND)
+                    .body("No recently viewed files found for the user");
+            }
+            return ResponseEntity.ok(files);
+        } catch (Exception e) {
+        return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+            .body("An error occurred while processing the request");
+        }
     }
 }

@@ -3,9 +3,14 @@ package com.example.sdmisoback.security.user;
 import java.security.Principal;
 import java.util.List;
 
+import org.springframework.data.domain.Page;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+
+import com.example.sdmisoback.dto.AttachmentFileView;
+import com.example.sdmisoback.dto.FiltersDTO;
+import com.example.sdmisoback.repository.FiltersRepo;
 
 import lombok.RequiredArgsConstructor;
 
@@ -14,7 +19,9 @@ import lombok.RequiredArgsConstructor;
 public class UserService {
 
     private final PasswordEncoder passwordEncoder;
-    private final UserRepository repository;
+    private final UserRepository user_repo;
+    private final FiltersRepo file_repo;
+    
     public void changePassword(ChangePasswordRequest request, Principal connectedUser) {
 
         var user = (User) ((UsernamePasswordAuthenticationToken) connectedUser).getPrincipal();
@@ -32,7 +39,7 @@ public class UserService {
         user.setPassword(passwordEncoder.encode(request.getNewPassword()));
 
         // save the new password
-        repository.save(user);
+        user_repo.save(user);
     }
 
     public void addFileToRecentlyViewed(Principal connectedUser, Integer fileId) {
@@ -47,11 +54,14 @@ public class UserService {
         }
 
         user.setRecentlyViewed(recentlyViewed);
-        repository.save(user);
+        user_repo.save(user);
     }
 
-    public List<Integer> getRecentlyViewedFiles(Principal connectedUser){
+    public Page<AttachmentFileView> getRecentlyViewedFiles(Principal connectedUser){
         var user = (User) ((UsernamePasswordAuthenticationToken) connectedUser).getPrincipal();
-        return user.getRecentlyViewed();
+
+        FiltersDTO filters = new FiltersDTO();
+        filters.fileIds = user.getRecentlyViewed();
+        return file_repo.filterAttachments(filters);
     }
 }
