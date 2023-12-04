@@ -40,43 +40,19 @@ Modal.setAppElement("#root");
 
 export const FileTable = ({ data, fetchFunction }) => {
     const columns = useMemo(() => COLUMNS, [])
-    let [ files, setFiles ] = useState([])
-    let [ fullApiCall, setFullApiCall ] = useState([])
     let [ page, setPage ] = useState(0)
-    let [ apiString, setApiString] = useState(`http://localhost:8080/api/v3/files/list?pageNum=${page}&pageSize=10&sortBy=createDate&sortAsc=false`)
-    //data = useMemo(() => files, [files])
 
     useEffect(() => {
-        fetch(apiString, {method:"GET"})
-            .then((response) => {
-                if (!response.ok) {
-                    throw Error(response.statusText);
-                }
-                return response.json();
-            })
-            .then((f) => {
-                //console.log(f);
-                setFullApiCall(f)
-                setFiles(f.content);
-            })
-            .catch((err) => {
-                console.log(err.message);
-            });
-    }, [apiString])
-
-    useEffect(() => {
-        setApiString(`http://localhost:8080/api/v3/files/list?pageNum=${page}&pageSize=10&sortBy=createDate&sortAsc=false`)
+        fetchFunction(page)
     }, [page])
 
     function handleNextClick() {
         setPage(page => page + 1)
-        //page = page+1
-        fetchFunction(page)
+        console.log('next')
     }
     function handlePrevClick() {
         setPage(page => page - 1)
-        //page = page-1
-        fetchFunction(page)
+        console.log('prev')
     }
 
     const { 
@@ -89,7 +65,7 @@ export const FileTable = ({ data, fetchFunction }) => {
     } = useTable(
         {
             columns,
-            data
+            data: data?.content
         },
         useSortBy,
         useRowSelect,
@@ -131,7 +107,7 @@ export const FileTable = ({ data, fetchFunction }) => {
                 </div>
             </div>
 
-            {data.length > 0 ? (
+            {data.content.length > 0 ? (
             <React.Fragment>
                 <table className="bg-iso-offwhite w-full h-4/5" {...getTableProps()}>
                     <thead className="bg-iso-offwhite h-12">
@@ -199,12 +175,12 @@ export const FileTable = ({ data, fetchFunction }) => {
                 </Modal>
                 <div>
                     {
-                        fullApiCall.first != true && (
+                        data.first != true && (
                             <button className="bg-iso-offwhite p-1 border-solid border-2" onClick={handlePrevClick}>Previous</button>
                         )  
                     }
                     {
-                        fullApiCall.last != true && (
+                        data.last != true && (
                             <button className="bg-iso-offwhite p-1 border-solid border-2" onClick={handleNextClick}>Next</button>
                         )  
                     }

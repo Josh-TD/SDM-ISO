@@ -65,6 +65,8 @@ export default function FileList() {
   // default to fetch data by itself, maybe done in outer layer if possible
   useEffect(() => {
     fetchFiles(0);
+    console.log('hi')
+    console.log(data)
   }, []);
 
   const fetchFiles = (pageNum) => {
@@ -85,7 +87,7 @@ export default function FileList() {
 
     axios.get(full_url).then((res) => {
       setData(
-        res.data.content
+        res.data
       );
     })
   };
