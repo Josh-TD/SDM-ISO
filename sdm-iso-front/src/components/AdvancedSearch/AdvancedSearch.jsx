@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
+import axios from 'axios';
 
-export function AdvancedSearch({ data }){
+export function AdvancedSearch(){
   const _endpoint = "http://localhost:8080/api";
   const endpoint = _endpoint + "/v3/files/list";
   // these are the things that should pass into this file list in the future
@@ -24,9 +25,6 @@ export function AdvancedSearch({ data }){
   const fetchFiles = () => {
     // not enough contents in the entry so we need more for proper filtering
     const basic_url = endpoint + `?pageNum=${pageNum}&pageSize=${pageSize}&sortBy=${sortBy}&sortAsc=${sortAsc ? "true" : "false"}`;
-
-    const isoDate = getFilterDateFormat(selectedDateRange);
-    const javaDate = isoDate.substring(0, isoDate.length - 5);
 
     const full_url = basic_url
       + `${"&fileName=" + selectedFileName}`

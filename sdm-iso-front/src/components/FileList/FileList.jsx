@@ -156,7 +156,7 @@ export function FileList() {
       <div className="bg-white col-start-2 row-start-1 p-4">
         {/* File list */}
         <div className="width: 100% height: 100%">
-          {data && <FileTable data={data}/> && <AdvancedSearch data={data}/>}
+          {data && <FileTable data={data}/>}
         </div>
       </div>
     </div>
