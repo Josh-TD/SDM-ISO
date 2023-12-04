@@ -71,12 +71,12 @@ export const FileTable = ({ data, fetchFunction }) => {
     function handleNextClick() {
         setPage(page => page + 1)
         //page = page+1
-        //fetchFunction(page)
+        fetchFunction(page)
     }
     function handlePrevClick() {
         setPage(page => page - 1)
         //page = page-1
-        //fetchFunction(page)
+        fetchFunction(page)
     }
 
     const { 
