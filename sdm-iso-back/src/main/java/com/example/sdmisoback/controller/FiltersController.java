@@ -64,9 +64,9 @@ public class FiltersController {
         boolean sortAsc,
 
         // attachmentFile filters
-        @RequestParam(name = "fileId", required = false) 
-        @Parameter(description = "Must be exact")
-        Integer fileId,
+        @RequestParam(name = "fileIds", required = false) 
+        @Parameter(description = "Must be exact, can query by multiple")
+        List<Integer> fileIds,
 
         @RequestParam(name = "fileName", required = false) 
         @Parameter(description = "Searches for prefix: 'ener' can return file with name 'EnergyConverter.pdf'")
@@ -180,7 +180,7 @@ public class FiltersController {
 
         FiltersDTO filters = new FiltersDTO(
             pr, sortBy, sortAsc,
-            fileId, fileName, fileDescription, createdSince, fileTypes,
+            fileIds, fileName, fileDescription, createdSince, fileTypes,
             attachTypes,
             proposalId, proposalLabel,
             projectId, projectName, projectTypes,

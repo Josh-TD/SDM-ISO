@@ -46,8 +46,8 @@ public class CustomFiltersRepoImpl implements CustomFiltersRepo{
         if(f.fileName != null)
             cb.where("fileName").like(false).value(f.fileName+'%').noEscape();
         
-        if(f.fileId != null)
-            cb.where("attachmentId").eq(f.fileId);
+        if(f.fileIds != null)
+            cb.where("attachmentId").in(f.fileIds);
 
         if(f.fileDescription != null)
             cb.where("description").like(false).value('%'+ f.fileDescription + '%').noEscape();
