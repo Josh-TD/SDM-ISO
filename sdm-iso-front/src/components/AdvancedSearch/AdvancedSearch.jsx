@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 
-export function AdvancedSearch(){
+export function AdvancedSearch({ data }){
   const _endpoint = "http://localhost:8080/api";
   const endpoint = _endpoint + "/v3/files/list";
   // these are the things that should pass into this file list in the future

@@ -1,4 +1,3 @@
-import { defaultAll } from "./common";
 
 export const resourceTypesFilter = [
     {
