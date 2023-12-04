@@ -5,7 +5,7 @@ import Modal from "react-modal";
 import { FileTable } from "../FileTable/FileTable";
 import { CheckBoxes } from "../Misc/CheckBoxes";
 import { DropDown } from "../Misc/DropDown";
-import { FileViewer } from "../FileViewer/FileViewer";
+import { FileRender } from "../FileViewer/FileRender";
 
 import { defaultAll } from "./filters/common";
 import { fileTypesFilter } from "./filters/fileTypes";
@@ -68,7 +68,6 @@ export default function FileList() {
         style={modalStyles}
         contentLabel="Example Modal"
       >
-        <FileViewer filename="dummy" />
 
       </Modal>
       <div className="col-start-1 row-span-2 pr-1">
