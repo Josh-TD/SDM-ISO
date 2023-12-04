@@ -1,6 +1,8 @@
 package com.example.sdmisoback.repository;
 
-import jakarta.persistence.EntityManager;
+import java.util.Comparator;
+import java.util.List;
+import java.util.Collections;
 
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
@@ -13,9 +15,13 @@ import com.blazebit.persistence.view.EntityViewManager;
 import com.blazebit.persistence.view.EntityViewSetting;
 import com.example.sdmisoback.dto.AttachmentFileView;
 import com.example.sdmisoback.dto.FiltersDTO;
-import com.example.sdmisoback.model.*;
+import com.example.sdmisoback.model.AttachmentFile;
+
+import jakarta.persistence.EntityManager;
+import lombok.RequiredArgsConstructor;
 
 
+@RequiredArgsConstructor
 public class CustomFiltersRepoImpl implements CustomFiltersRepo{
 
     private final EntityManager em;
@@ -23,12 +29,6 @@ public class CustomFiltersRepoImpl implements CustomFiltersRepo{
     private final CriteriaBuilderFactory cbf;
  
     private final EntityViewManager evm;
-
-    public CustomFiltersRepoImpl(EntityManager em, CriteriaBuilderFactory cbf, EntityViewManager evm) {
-        this.em = em;
-        this.cbf = cbf;
-        this.evm = evm;
-    }
 
     @Override
     public Page<AttachmentFileView> filterAttachments(FiltersDTO f){
@@ -46,8 +46,8 @@ public class CustomFiltersRepoImpl implements CustomFiltersRepo{
         if(f.fileName != null)
             cb.where("fileName").like(false).value(f.fileName+'%').noEscape();
         
-        if(f.fileIds != null)
-            cb.where("attachmentId").in(f.fileIds);
+        if(f.fileId != null)
+            cb.where("attachmentId").eq(f.fileId);
 
         if(f.fileDescription != null)
             cb.where("description").like(false).value('%'+ f.fileDescription + '%').noEscape();
@@ -126,5 +126,20 @@ public class CustomFiltersRepoImpl implements CustomFiltersRepo{
         // finally get the total count of the query and return
         int count = (int) pagedAttachments.getTotalSize();
         return new PageImpl<>(pagedAttachments, f.pr, count);
+    }
+
+    @Override 
+    public List<AttachmentFileView> getRecentlyViewed(List<Integer> fileIds){
+       CriteriaBuilder<AttachmentFile> cb = cbf.create(em, AttachmentFile.class)
+                                                .where("attachmentId").in(fileIds)
+                                                .setMaxResults(10)
+                                                .orderByAsc("attachmentId");
+
+        List<AttachmentFileView> fileViews = evm.applySetting(EntityViewSetting.create(AttachmentFileView.class), cb).getResultList();
+                                                
+
+        fileViews.sort(Comparator.comparingInt(file -> fileIds.indexOf(file.getAttachmentId())));
+        Collections.reverse(fileViews);
+        return fileViews;
     }
 }

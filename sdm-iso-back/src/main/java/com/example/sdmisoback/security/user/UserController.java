@@ -2,7 +2,7 @@ package com.example.sdmisoback.security.user;
 
 import java.security.Principal;
 
-import org.springframework.data.domain.Page;
+import java.util.List;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -47,7 +47,7 @@ public class UserController {
         Principal connectedUser
     ) {
         try {
-            Page<AttachmentFileView> files = service.getRecentlyViewedFiles(connectedUser);
+            List<AttachmentFileView> files = service.getRecentlyViewedFiles(connectedUser);
             if (files.isEmpty()) {
                 return ResponseEntity.status(HttpStatus.NOT_FOUND)
                     .body("No recently viewed files found for the user");

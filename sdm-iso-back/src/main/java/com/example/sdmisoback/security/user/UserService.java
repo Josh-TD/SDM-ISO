@@ -4,6 +4,7 @@ import java.security.Principal;
 import java.util.List;
 
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -57,11 +58,10 @@ public class UserService {
         user_repo.save(user);
     }
 
-    public Page<AttachmentFileView> getRecentlyViewedFiles(Principal connectedUser){
+    public List<AttachmentFileView> getRecentlyViewedFiles(Principal connectedUser){
         var user = (User) ((UsernamePasswordAuthenticationToken) connectedUser).getPrincipal();
 
-        FiltersDTO filters = new FiltersDTO();
-        filters.fileIds = user.getRecentlyViewed();
-        return file_repo.filterAttachments(filters);
+        List<Integer> recentlyViewed = user.getRecentlyViewed();
+        return file_repo.getRecentlyViewed(recentlyViewed);
     }
 }

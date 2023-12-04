@@ -19,7 +19,7 @@ public class FiltersDTO {
     public boolean sortAsc;
     
     // file
-    public List<Integer> fileIds;
+    public Integer fileId;
     public String fileName;
     public String fileDescription;
     public LocalDateTime createdSince;
