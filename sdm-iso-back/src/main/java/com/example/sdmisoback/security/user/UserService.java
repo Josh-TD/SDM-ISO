@@ -3,14 +3,11 @@ package com.example.sdmisoback.security.user;
 import java.security.Principal;
 import java.util.List;
 
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import com.example.sdmisoback.dto.AttachmentFileView;
-import com.example.sdmisoback.dto.FiltersDTO;
 import com.example.sdmisoback.repository.FiltersRepo;
 
 import lombok.RequiredArgsConstructor;

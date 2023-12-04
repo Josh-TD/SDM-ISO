@@ -1,7 +1,5 @@
 package com.example.sdmisoback.security.auth;
 
-import java.util.List;
-
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
