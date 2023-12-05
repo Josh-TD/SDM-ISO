@@ -74,6 +74,7 @@ export const FileTable = () => {
     const [modalIsOpen, setIsOpen] = React.useState(false);
     const [selectedFileName, setSelectedFileName] = React.useState("");
 
+    // TODO: For some reason the filename being passed in is "undefined"
     const openModal = (fileName) => {
         // setSelectedFileName(fileName);
         setIsOpen(true);
@@ -134,7 +135,9 @@ export const FileTable = () => {
                             <tr {...row.getRowProps()}
                                 onClick={(e) => {
                                         if (!e.target.closest('input[type="checkbox"]')) {
+                                            // TODO: For some reason the filename being passed in is "undefined"
                                             openModal(row.original.fName)
+                                            // I added the line below but nothing changed
                                             setSelectedFileName(row.original.fName)
                                         }
                                     }    

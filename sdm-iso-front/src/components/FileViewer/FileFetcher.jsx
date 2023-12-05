@@ -9,6 +9,7 @@ import MsgReader from '@kenjiuno/msgreader'
 const FileFetcher = ({ fileName }) => {
     const [fileData, setFileData] = useState(null);
     const [excelData, setExcelData] = useState(null);
+    // TODO: For some reason the filename being passed in is "undefined"
     console.log("This is FileFetcher, the file you want is this: " + fileName)
     useEffect(() => {
 
