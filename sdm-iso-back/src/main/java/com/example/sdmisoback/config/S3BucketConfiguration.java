@@ -1,4 +1,4 @@
-package com.example.sdmisoback.fileshare;
+package com.example.sdmisoback.config;
 
 import com.amazonaws.regions.Regions;
 import org.springframework.beans.factory.annotation.Value;
@@ -10,7 +10,7 @@ import com.amazonaws.services.s3.AmazonS3;
 import com.amazonaws.services.s3.AmazonS3Client;
 
 @Configuration
-public class AmazonS3Config {
+public class S3BucketConfiguration {
 
     @Value("${aws.accessKey}")
     private String accessKey;
