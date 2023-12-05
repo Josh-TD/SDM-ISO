@@ -4,8 +4,8 @@ import mockData from "./mockData.json";
 import { useTable, usePagination, useSortBy, useRowSelect } from "react-table";
 import Modal from "react-modal";
 import "./FileTable.css"
-import {FileViewer} from "../FileViewer/FileViewer";
 import {FileTableCheckbox} from "./FileTableCheckbox"
+import FileFetcher from "../FileViewer/FileFetcher";
 
 const COLUMNS = [
 
@@ -75,7 +75,7 @@ export const FileTable = () => {
     const [selectedFileName, setSelectedFileName] = React.useState("");
 
     const openModal = (fileName) => {
-        setSelectedFileName(fileName);
+        // setSelectedFileName(fileName);
         setIsOpen(true);
     };
 
@@ -135,6 +135,7 @@ export const FileTable = () => {
                                 onClick={(e) => {
                                         if (!e.target.closest('input[type="checkbox"]')) {
                                             openModal(row.original.fName)
+                                            setSelectedFileName(row.original.fName)
                                         }
                                     }    
                                 }
@@ -154,7 +155,7 @@ export const FileTable = () => {
                 contentLabel="File Modal"
                 preventScroll={true}
             >
-                <FileViewer filename={selectedFileName} />
+                <FileFetcher filename={selectedFileName} />
             </Modal>
             <div>
                 <button className="bg-iso-offwhite p-1 border-solid border-2">Previous</button>

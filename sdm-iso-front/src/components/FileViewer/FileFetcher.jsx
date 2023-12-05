@@ -9,7 +9,7 @@ import MsgReader from '@kenjiuno/msgreader'
 const FileFetcher = ({ fileName }) => {
     const [fileData, setFileData] = useState(null);
     const [excelData, setExcelData] = useState(null);
-
+    console.log("This is FileFetcher, the file you want is this: " + fileName)
     useEffect(() => {
 
         // TODO: Fixing .DOCX vs .docx filetype bug
