@@ -2,7 +2,6 @@ package com.example.sdmisoback.repository;
 
 import java.util.Comparator;
 import java.util.List;
-import java.util.Collections;
 
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
@@ -191,7 +190,6 @@ public class CustomFiltersRepoImpl implements CustomFiltersRepo{
                                                 
 
         fileViews.sort(Comparator.comparingInt(file -> fileIds.indexOf(file.getAttachmentId())));
-        Collections.reverse(fileViews);
         return fileViews;
     }
 }

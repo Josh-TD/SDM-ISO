@@ -44,12 +44,16 @@ public class UserService {
         var user = (User) ((UsernamePasswordAuthenticationToken) connectedUser).getPrincipal();
         
         List<Integer> recentlyViewed = user.getRecentlyViewed();
-        if(recentlyViewed.contains(fileId)){return;}
-        recentlyViewed.add(fileId);
+
+        // move file to top of list in case already viewed
+        if(recentlyViewed.contains(fileId))
+            recentlyViewed.remove(fileId);
+        
+        recentlyViewed.add(0, fileId);
 
         // Keep only the latest 10 files
         if (recentlyViewed.size() > 10) {
-            recentlyViewed = recentlyViewed.subList(recentlyViewed.size() - 10, recentlyViewed.size());
+            recentlyViewed = recentlyViewed.subList(0, 10);
         }
 
         user.setRecentlyViewed(recentlyViewed);
