@@ -17,7 +17,7 @@ import { CreatedDateSlider, getFilterDateFormat } from "./filters/date";
 import mockData from "./mockData.json";
 
 // in the future, this file  list should also takes in how many files to display
-export function FileList() {
+export const FileList = ({searchData}) => {
   // hardcoded endpoints, use .env file?
   const _endpoint = "http://localhost:8080/api";
   const endpoint = _endpoint + "/v3/files/list";

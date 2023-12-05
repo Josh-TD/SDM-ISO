@@ -40,6 +40,10 @@ export function AdvancedSearch(){
       );
     })
   };
+
+  const updateFileTable = () => {
+    {data && <FileList searchData={data}/>}
+  }
   
   return (
         <div className="w-full">
