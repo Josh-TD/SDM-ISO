@@ -34,10 +34,16 @@ public class AuthenticationController {
     private Long refreshExpiration;
 
     @PostMapping("/register")
-    public ResponseEntity<AuthenticationResponse> register(
+    public ResponseEntity<?> register(
         @RequestBody RegisterRequest request
     ) {
-        return ResponseEntity.ok(service.register(request));
+        AuthenticationResponse response = service.register(request);
+        if(response == null){
+            return ResponseEntity
+                .status(HttpStatus.CONFLICT)
+                .body("Email already exists. Please use a different email address.");
+        }
+        return ResponseEntity.ok(response);
     }
     
     @PostMapping("/authenticate")
