@@ -15,6 +15,8 @@ export function AdvancedSearch({onClosePopup, onAdvancedSearchPressed}) {
     const [selectedProjectName, setProjectName] = useState('');
     const [selectedFileDescription, setFileDescription] = useState('');
 
+    const [loading, setLoading] = useState(false);
+
     const fetchFiles = (selectedFileName, selectedCustomerName, selectedProposalName, selectedProjectName, selectedFileDescription) => {
         var basic_url = endpoint + `?pageNum=${pageNum}&pageSize=${pageSize}&sortBy=${sortBy}&sortAsc=${sortAsc ? "true" : "false"}`;
 
@@ -44,23 +46,16 @@ export function AdvancedSearch({onClosePopup, onAdvancedSearchPressed}) {
     };
 
     const performSearch = () => {
+        setLoading(true);
         fetchFiles(selectedFileName, selectedCustomerName, selectedProposalName, selectedProjectName, selectedFileDescription);
         onClosePopup();
+        setTimeout(() => {setLoading(false)}, 10000);
     }
 
     return (
         <div className="w-full">
             <p className="text-xl pb-2 text-iso-dark-text">Advanced Search</p>
             <div className="w-full">
-                <div className="flex justify-end py-2 pr-4">
-                    <label className="text-iso-dim-gray justify-right font-regular pr-2" htmlFor="file_name">File
-                        Name:</label>
-                    <input
-                        className="placeholder:text-iso-light-gray placeholder:font-light border border-iso-border-light shadow cursor-text h-7 w-1/2 pl-2"
-                        placeholder="File Name"
-                        onChange={(e) => setFileName(e.target.value)}
-                    />
-                </div>
                 <div className="flex justify-end py-2 pr-4">
                     <label className="text-iso-dim-gray justify-right font-regular pr-2" htmlFor="customer_name">Customer
                         Name:</label>
