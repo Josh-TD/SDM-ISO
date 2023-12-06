@@ -74,7 +74,10 @@ export const FileTable = ({ data, fetchFunction }) => {
                 {
                     id: 'select',
                     Header: ({ getToggleAllRowsSelectedProps }) => (
-                        <FileTableCheckbox {...getToggleAllRowsSelectedProps()} />
+                        <div className="flex items-center w-28">
+                            <span className="text-base">Select All </span>
+                            <FileTableCheckbox {...getToggleAllRowsSelectedProps()} />
+                        </div>
                     ),
                     Cell: ({ row }) => <FileTableCheckbox {...row.getToggleRowSelectedProps()} />
                 },
@@ -94,12 +97,6 @@ export const FileTable = ({ data, fetchFunction }) => {
     return (
         <>
             <div className="bg-white col-start-2 row-start-1 flex items-center justify-start">
-                <div className="inline-flex items-center justify-between mx-3">
-                    <div className="pr-1">
-                        <input type="checkbox" id="selectAll" name="selectAll" onClick={() => { handleSelectAll }}></input>
-                    </div>
-                    <label htmlFor="html" className="text-base font-semibold text-iso-secondary-text">Select All</label>
-                </div>
                 <div className="flex items-center justify-between mx-3">
                     <div className="text-base font-semibold text-iso-secondary-text cursor-pointer">Download</div>
                     <div className="text-base font-semibold text-iso-secondary-text">&nbsp;|&nbsp;</div>
@@ -121,21 +118,21 @@ export const FileTable = ({ data, fetchFunction }) => {
                                     )} className="p-2 place-items-center">
                                     {column.render('Header')}
                                     <span className="inline-block relative top-1.5">
-                                    {column.isSorted ? (column.isSortedDesc ? 
-                                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" className="w-6 h-6">
-                                            <path stroke-linecap="round" stroke-linejoin="round" d="M4.5 15.75l7.5-7.5 7.5 7.5" />
-                                        </svg>
-                                        : 
-                                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" className="w-6 h-6">
-                                            <path stroke-linecap="round" stroke-linejoin="round" d="M19.5 8.25l-7.5 7.5-7.5-7.5" />
-                                        </svg>
-                                    ) :
-                                        // removes icon for select row
-                                        column.id == 'select' ? <></> : 
-                                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" className="w-6 h-6">
-                                            <path stroke-linecap="round" stroke-linejoin="round" d="M8.25 15L12 18.75 15.75 15m-7.5-6L12 5.25 15.75 9" />
-                                        </svg>
-                                    }
+                                        {column.isSorted ? (column.isSortedDesc ?
+                                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="1.5" stroke="currentColor" className="w-6 h-6">
+                                                <path strokeLinecap="round" strokeLinejoin="round" d="M4.5 15.75l7.5-7.5 7.5 7.5" />
+                                            </svg>
+                                            :
+                                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="1.5" stroke="currentColor" className="w-6 h-6">
+                                                <path strokeLinecap="round" strokeLinejoin="round" d="M19.5 8.25l-7.5 7.5-7.5-7.5" />
+                                            </svg>
+                                        ) :
+                                            // removes icon for select row
+                                            column.id == 'select' ? <></> :
+                                                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="1.5" stroke="currentColor" className="w-6 h-6">
+                                                    <path strokeLinecap="round" strokeLinejoin="round" d="M8.25 15L12 18.75 15.75 15m-7.5-6L12 5.25 15.75 9" />
+                                                </svg>
+                                        }
                                     </span>
                                 </th>
                             ))}
