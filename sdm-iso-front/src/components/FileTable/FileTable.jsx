@@ -55,10 +55,10 @@ export const FileTable = ({ data, fetchFunction }) => {
         console.log('prev')
     }
 
-    const { 
-        getTableProps, 
-        getTableBodyProps, 
-        headerGroups, 
+    const {
+        getTableProps,
+        getTableBodyProps,
+        headerGroups,
         rows,
         prepareRow,
         selectedFlatRows
@@ -121,17 +121,17 @@ export const FileTable = ({ data, fetchFunction }) => {
                                     )} className="p-2 place-items-center">
                                     {column.render('Header')}
                                     <span className="inline-block relative top-1.5">
-                                    {column.isSorted ? (column.isSortedDesc ? 
+                                    {column.isSorted ? (column.isSortedDesc ?
                                         <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" className="w-6 h-6">
                                             <path stroke-linecap="round" stroke-linejoin="round" d="M4.5 15.75l7.5-7.5 7.5 7.5" />
                                         </svg>
-                                        : 
+                                        :
                                         <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" className="w-6 h-6">
                                             <path stroke-linecap="round" stroke-linejoin="round" d="M19.5 8.25l-7.5 7.5-7.5-7.5" />
                                         </svg>
                                     ) :
                                         // removes icon for select row
-                                        column.id == 'select' ? <></> : 
+                                        column.id == 'select' ? <></> :
                                         <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" className="w-6 h-6">
                                             <path stroke-linecap="round" stroke-linejoin="round" d="M8.25 15L12 18.75 15.75 15m-7.5-6L12 5.25 15.75 9" />
                                         </svg>
@@ -153,7 +153,7 @@ export const FileTable = ({ data, fetchFunction }) => {
                                             if (!e.target.closest('input[type="checkbox"]')) {
                                                 openModal(row.original.fName)
                                             }
-                                        }    
+                                        }
                                     }
                                     className={`cursor-pointer hover:bg-gray-200 ${rowClassName}`}
                                 >
@@ -177,12 +177,12 @@ export const FileTable = ({ data, fetchFunction }) => {
                     {
                         data.first != true && (
                             <button className="bg-iso-offwhite p-1 border-solid border-2" onClick={handlePrevClick}>Previous</button>
-                        )  
+                        )
                     }
                     {
                         data.last != true && (
                             <button className="bg-iso-offwhite p-1 border-solid border-2" onClick={handleNextClick}>Next</button>
-                        )  
+                        )
                     }
                 </div>
                 <pre>
