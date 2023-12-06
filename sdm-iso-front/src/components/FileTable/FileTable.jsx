@@ -148,6 +148,7 @@ export const FileTable = ({ data }) => {
                 onRequestClose={() => setIsOpen(false)}
                 contentLabel="File Modal"
                 preventScroll={true}>
+                // TODO: FIX THIS
                 <FileRender filename={selectedFileName} closeModal={() => setIsOpen(false)}/>
             </Modal>
             <div>
