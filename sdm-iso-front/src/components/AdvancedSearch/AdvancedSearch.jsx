@@ -16,14 +16,29 @@ export function AdvancedSearch({onClosePopup, onAdvancedSearchPressed}) {
     const [selectedFileDescription, setFileDescription] = useState('');
 
     const fetchFiles = (selectedFileName, selectedCustomerName, selectedProposalName, selectedProjectName, selectedFileDescription) => {
-        const basic_url = endpoint + `?pageNum=${pageNum}&pageSize=${pageSize}&sortBy=${sortBy}&sortAsc=${sortAsc ? "true" : "false"}`;
-        const full_url = basic_url
-            + `${"&fileName=" + selectedFileName}`
-            + `${"&customerName=" + selectedCustomerName}`
-            + `${"&proposalName=" + selectedProposalName}`
-            + `${"&projectName=" + selectedProjectName}`
-            + `${"&fileDescription=" + selectedFileDescription}`;
-        axios.get(full_url).then((res) => {
+        var basic_url = endpoint + `?pageNum=${pageNum}&pageSize=${pageSize}&sortBy=${sortBy}&sortAsc=${sortAsc ? "true" : "false"}`;
+
+        if (selectedFileName != ''){
+            basic_url = basic_url + `${"&fileName=" + selectedFileName}`
+        }
+
+        if (selectedCustomerName != ''){
+            basic_url = basic_url + `${"&customerName=" + selectedCustomerName}`
+        }
+
+        if (selectedProposalName != ''){
+            basic_url = basic_url + `${"&proposalName=" + selectedProposalName}`
+        }
+
+        if (selectedProjectName != ''){
+            basic_url = basic_url + `${"&projectName=" + selectedProjectName}`
+        }
+
+        if (selectedFileDescription != ''){
+            basic_url = basic_url + `${"&fileDescription=" + selectedFileDescription}`
+        }
+
+        axios.get(basic_url).then((res) => {
             onAdvancedSearchPressed(res.data.content)
         });
     };
