@@ -93,16 +93,12 @@ export const FileList = ({filterData, searchData, advancedSearchData}) => {
     // not enough contents in the entry so we need more for proper filtering
     const basic_url = endpoint + `?pageNum=${pageNum}&pageSize=${pageSize}&sortBy=${sortBy}&sortAsc=${sortAsc ? "true" : "false"}`;
 
-    const isoDate = getFilterDateFormat(selectedDateRange);
-    const javaDate = isoDate.substring(0, isoDate.length - 5);
-
     const full_url = basic_url
       + `${selectedProjectTypes.reduce((acc, e) => acc + "&projectTypes=" + e, "")}`
       + `${selectedResourceTypes.reduce((acc, e) => acc + "&resourceTypes=" + e, "")}`
       // there is no auction type??
       // + `${auctionTypesFilter.reduce((acc, e) => acc + "&auctionTypes=" + e, "")}`
       + `${selectedFileTypes.reduce((acc, e) => acc + "&fileTypes=" + e, "")}`
-      + `&createdSince=${javaDate}`
       ;
 
     axios.get(full_url).then((res) => {
