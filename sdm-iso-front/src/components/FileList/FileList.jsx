@@ -1,19 +1,17 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import DatePicker from "react-datepicker";
 import Modal from "react-modal";
 
 import { FileTable } from "../FileTable/FileTable";
-import { CheckBox } from "../Misc/CheckBox";
 import { CheckBoxes } from "../Misc/CheckBoxes";
 import { DropDown } from "../Misc/DropDown";
-import { FileViewer } from "../FileViewer/FileViewer";
+import { FileRender } from "../FileViewer/FileRender";
 
 import { defaultAll } from "./filters/common";
 import { fileTypesFilter } from "./filters/fileTypes";
 import { resourceTypesFilter } from "./filters/resourceTypes";
 import { auctionTypesFilter } from "./filters/auctionTypes";
 import { projectTypesFilter } from "./filters/projectTypes";
-import { CreatedDateSlider } from "./filters/date";
 
 export default function FileList() {
 
@@ -36,7 +34,8 @@ export default function FileList() {
   const [selectedResourceTypes, setSelectedResourceTypes] = useState([defaultAll]);
   const toggleResouceTypes = (obj) => { return checkBoxesToggling(selectedResourceTypes, setSelectedResourceTypes)(obj) };
 
-  const [selectedDateRange, setSelectedDateRange] = useState(defaultAll);
+  const [selectedCreatedDate, setSelectedCreatedDate] = useState(new Date());
+  const [createdDateAny, setCreatedDateAny] = useState(true);
 
   const [selectedAuctionTypes, setSelectedAuctionTypes] = useState([defaultAll]);
   const toggleAuctionTypes = (obj) => { return checkBoxesToggling(selectedAuctionTypes, setSelectedAuctionTypes)(obj) };
@@ -69,7 +68,6 @@ export default function FileList() {
         style={modalStyles}
         contentLabel="Example Modal"
       >
-        <FileViewer filename="dummy" />
 
       </Modal>
       <div className="col-start-1 row-span-2 pr-1">
@@ -97,7 +95,7 @@ export default function FileList() {
           </DropDown>
 
           <DropDown label="Created Date" defaultHidden={true}>
-            <CreatedDateSlider id="hello" onChange={setSelectedDateRange} />
+            <DatePicker selected={selectedCreatedDate} onChange={(date) => { setSelectedCreatedDate(date); setCreatedDateAny(false) }} />
           </DropDown>
 
           <DropDown label="File Type" defaultHidden={true}>

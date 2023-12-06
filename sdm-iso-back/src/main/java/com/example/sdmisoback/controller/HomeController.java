@@ -9,6 +9,6 @@ public class HomeController {
     @CrossOrigin(origins = "http://localhost:3000")
     @GetMapping("/")
     public String index() {
-        return "Hello World - Love From Local Host 8080 :)";
+        return "Hello World, Love From Local Host 8080 :)";
     }
 }

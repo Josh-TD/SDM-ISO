@@ -4,8 +4,8 @@ import mockData from "./mockData.json";
 import { useTable, usePagination, useSortBy, useRowSelect } from "react-table";
 import Modal from "react-modal";
 import "./FileTable.css"
-import {FileViewer} from "../FileViewer/FileViewer";
 import {FileTableCheckbox} from "./FileTableCheckbox"
+import FileFetcher from "../FileViewer/FileFetcher";
 
 const COLUMNS = [
 
@@ -74,8 +74,9 @@ export const FileTable = () => {
     const [modalIsOpen, setIsOpen] = React.useState(false);
     const [selectedFileName, setSelectedFileName] = React.useState("");
 
+    // TODO: For some reason the filename being passed in is "undefined"
     const openModal = (fileName) => {
-        setSelectedFileName(fileName);
+        // setSelectedFileName(fileName);
         setIsOpen(true);
     };
 
@@ -134,7 +135,10 @@ export const FileTable = () => {
                             <tr {...row.getRowProps()}
                                 onClick={(e) => {
                                         if (!e.target.closest('input[type="checkbox"]')) {
+                                            // TODO: For some reason the filename being passed in is "undefined"
                                             openModal(row.original.fName)
+                                            // I added the line below but nothing changed
+                                            setSelectedFileName(row.original.fName)
                                         }
                                     }    
                                 }
@@ -154,7 +158,7 @@ export const FileTable = () => {
                 contentLabel="File Modal"
                 preventScroll={true}
             >
-                <FileViewer filename={selectedFileName} />
+                <FileFetcher fileName={selectedFileName} />
             </Modal>
             <div>
                 <button className="bg-iso-offwhite p-1 border-solid border-2">Previous</button>
