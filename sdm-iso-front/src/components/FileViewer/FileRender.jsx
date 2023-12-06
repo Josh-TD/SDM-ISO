@@ -11,12 +11,13 @@ export const FileRender = ({filename, closeModal}) => {
         closeModal()
         console.log("closing modal")
     }
-    const [download, setDownload] = useState(false)
+    let [download, setDownload] = useState(false)
     const downloadHandler = () => {
+        download = true
         setDownload(true)
         console.log("user is requesting download")
     }
-
+    
     return (
     <div className='flex flex-col h-full w-full'> 
         <nav className='top-part mb-4'>
@@ -30,7 +31,7 @@ export const FileRender = ({filename, closeModal}) => {
                             <path d="M13 8V2H7v6H2l8 8 8-8h-5zM0 18h20v2H0v-2z"/>
                         </svg>
                         <span>Download</span>
-                        {/*<FileDownloader fileName={filename}/>*/}
+                        {download && <FileDownloader fileName={filename} />}
                     </button>
                 </div>
                 <div className='flex-exit flex justify-end'>
