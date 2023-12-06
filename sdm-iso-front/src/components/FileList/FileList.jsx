@@ -6,23 +6,16 @@ import axios from "axios";
 import { FileTable } from "../FileTable/FileTable";
 import { CheckBoxes } from "../Misc/CheckBoxes";
 import { DropDown } from "../Misc/DropDown";
-import { FileRender } from "../FileViewer/FileRender";
 
 import { fileTypesFilter } from "./filters/fileTypes";
 import { resourceTypesFilter } from "./filters/resourceTypes";
 import { auctionTypesFilter } from "./filters/auctionTypes";
 import { projectTypesFilter } from "./filters/projectTypes";
-import { CreatedDateSlider, getFilterDateFormat } from "./filters/date";
+import { getFilterDateFormat } from "./filters/date";
 
-// in the future, this file  list should also takes in how many files to display
-// there are three types of data that can be passed into FileList
-// one is when the user applies filters, the second is when they search normally, and third when they do adv search
-// in main there are callback functions which will execute when the user does something so only then
-// will the fileList recieve one or multiple of these parameters which we can handle in useEffect
-export const FileList = ({filterData, searchData, advancedSearchData}) => {
+export const FileList = ({searchData, advancedSearchData}) => {
   // hardcoded endpoints, use .env file?
-  const _endpoint = "http://localhost:8080/api";
-  const endpoint = _endpoint + "/v3/files/list";
+  const endpoint = "http://localhost:8080/api/v3/files/list";
   // these are the things that should pass into this file list in the future
   const pageNum = 0;
   const pageSize = 10;
@@ -46,7 +39,7 @@ export const FileList = ({filterData, searchData, advancedSearchData}) => {
   const toggleFileTypes = (obj) => { return checkBoxesToggling(selectedFileTypes, setSelectedFileTypes)(obj) };
 
   const [selectedResourceTypes, setSelectedResourceTypes] = useState([]);
-  const toggleResouceTypes = (obj) => { return checkBoxesToggling(selectedResourceTypes, setSelectedResourceTypes)(obj) };
+  const toggleResourceTypes = (obj) => { return checkBoxesToggling(selectedResourceTypes, setSelectedResourceTypes)(obj) };
 
   const [selectedCreatedDate, setSelectedCreatedDate] = useState(new Date());
   const [createdDateAny, setCreatedDateAny] = useState(true);
@@ -64,32 +57,19 @@ export const FileList = ({filterData, searchData, advancedSearchData}) => {
 
   const [data, setData] = useState(null);
 
-  // TODO: Maybe abstract this since the if-else's are redundant
-  // default to fetch data by itself, maybe done in outer layer if possible
   useEffect(() => {
-    if (filterData) {
-      // when the user wants to search something normally
-      console.log("This is filtering reporting for duty")
-      setData(filterData)
-    }
-    else if (searchData) {
-      // when the user wants to search something normally
+    if (searchData) {
       console.log("This is regular search reporting for duty")
       setData(searchData)
     }
     else if (advancedSearchData != null) {
       console.log("This is advanced search reporting for duty")
-      console.log(advancedSearchData)
       setData(advancedSearchData)
     }
-    // TODO: Add in the cases when there are a combination of these data inputs
-        // when the user wants to search and filter or filter and advanced search, etc.
     else {
-      // this is the default call that shows files initally before
-      // the user interacts with the application
       fetchFiles();
     }
-  }, [filterData, searchData, advancedSearchData]);
+  }, [searchData, advancedSearchData]);
 
   const fetchFiles = () => {
     // not enough contents in the entry so we need more for proper filtering
@@ -147,7 +127,7 @@ export const FileList = ({filterData, searchData, advancedSearchData}) => {
           </DropDown>
 
           <DropDown label="Resource Type" defaultHidden={true}>
-            <CheckBoxes array={resourceTypesFilter} onChange={toggleResouceTypes} />
+            <CheckBoxes array={resourceTypesFilter} onChange={toggleResourceTypes} />
           </DropDown>
 
           <DropDown label="Auction Type" defaultHidden={true}>
