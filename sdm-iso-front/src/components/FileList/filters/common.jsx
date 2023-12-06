@@ -1,1 +1,0 @@
-export const defaultAll = "all";

@@ -1,7 +1,5 @@
 package com.example.sdmisoback.repository;
 
-import jakarta.persistence.EntityManager;
-
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 
@@ -13,7 +11,9 @@ import com.blazebit.persistence.view.EntityViewManager;
 import com.blazebit.persistence.view.EntityViewSetting;
 import com.example.sdmisoback.dto.AttachmentFileView;
 import com.example.sdmisoback.dto.FiltersDTO;
-import com.example.sdmisoback.model.*;
+import com.example.sdmisoback.model.AttachmentFile;
+
+import jakarta.persistence.EntityManager;
 
 
 public class CustomFiltersRepoImpl implements CustomFiltersRepo{
@@ -76,6 +76,21 @@ public class CustomFiltersRepoImpl implements CustomFiltersRepo{
         if(f.proposalLabel != null)
             cb.where(proposal + ".proposalLabel").like(false).value('%'+f.proposalLabel + '%').noEscape();
 
+        if(f.propPeriodId != null)
+            cb.where(proposal + ".periodInfo.periodId").eq(f.propPeriodId);
+
+        if(f.propPeriodTypes != null)
+            cb.where(proposal + ".periodInfo.periodType").in(f.propPeriodTypes);
+
+        if(f.propPeriodDesc != null)
+            cb.where(proposal + ".periodInfo.description").like(false).value(f.propPeriodDesc + "%").noEscape();
+
+        if(f.propPeriodBeginDate != null)
+            cb.where("CAST_DATE(" + proposal + ".periodInfo.beginDate)").ge(f.propPeriodBeginDate);
+
+        if(f.propPeriodEndDate != null)
+            cb.where("CAST_DATE(" + proposal + ".periodInfo.endDate)").le(f.propPeriodEndDate);
+
         // project filters
         if(f.projectId != null)
             cb.where(proposal + ".projInfo.projectId").eq(f.projectId);
@@ -107,12 +122,47 @@ public class CustomFiltersRepoImpl implements CustomFiltersRepo{
         if(f.auctionId != null)
             cb.where(proposal + ".auctionInfo.auctionId").eq(f.auctionId);
 
-        // period filters
-        if(f.periodId != null)
-            cb.where(proposal + ".periodInfo.periodId").eq(f.periodId);
-        
-        if(f.periodDesc != null)
-            cb.where(proposal + ".periodInfo.description").like(false).value(f.periodDesc+'%').noEscape();
+        if(f.auctionTypes != null)
+            cb.where(proposal + ".auctionInfo.auctionType").in(f.auctionTypes);
+
+        if(f.aucBeginDate != null)
+            cb.where("CAST_DATE(" + proposal + ".auctionInfo.auctionBeginDate)").ge(f.aucBeginDate);
+
+        if(f.aucEndDate != null)
+            cb.where("CAST_DATE(" + proposal + ".auctionInfo.auctionEndDate)").le(f.aucEndDate);
+
+        // commitment period filters
+        if(f.commitPeriodId != null)
+            cb.where(proposal + ".auctionInfo.commitmentPeriodInfo.periodId").eq(f.commitPeriodId);
+
+        if(f.commitPeriodTypes != null)
+            cb.where(proposal + ".auctionInfo.commitmentPeriodInfo.periodType").in(f.commitPeriodTypes);
+
+        if(f.commitPeriodDesc != null)
+            cb.where(proposal + ".auctionInfo.commitmentPeriodInfo.description").like(false).value(f.commitPeriodDesc + "%").noEscape();
+
+        if(f.commitPeriodBeginDate != null)
+            cb.where("CAST_DATE(" + proposal + ".auctionInfo.commitmentPeriodInfo.beginDate)").ge(f.commitPeriodBeginDate);
+
+        if(f.commitPeriodEndDate != null)
+            cb.where("CAST_DATE(" + proposal + ".auctionInfo.commitmentPeriodInfo.endDate)").le(f.commitPeriodEndDate);
+
+        // auction period filters
+        if(f.aucPeriodId != null)
+            cb.where(proposal + ".auctionInfo.auctionPeriodInfo.periodId").eq(f.aucPeriodId);
+
+        if(f.aucPeriodTypes != null)
+            cb.where(proposal + ".auctionInfo.auctionPeriodInfo.periodType").in(f.aucPeriodTypes);
+
+        if(f.aucPeriodDesc != null)
+            cb.where(proposal + ".auctionInfo.auctionPeriodInfo.description").like(false).value(f.aucPeriodDesc + "%").noEscape();
+
+        if(f.aucPeriodBeginDate != null)
+            cb.where("CAST_DATE(" + proposal + ".auctionInfo.auctionPeriodInfo.beginDate)").ge(f.aucPeriodBeginDate);
+
+        if(f.aucPeriodEndDate != null)
+            cb.where("CAST_DATE(" + proposal + ".auctionInfo.auctionPeriodInfo.endDate)").le(f.aucPeriodEndDate);
+
         
         // add pagination here
         // first is creating the "setting" to apply pagination
