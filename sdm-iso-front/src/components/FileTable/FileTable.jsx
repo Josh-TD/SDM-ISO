@@ -132,7 +132,7 @@ export const FileTable = ({ data }) => {
                             <tr {...row.getRowProps()}
                                 onClick={(e) => {
                                     if (!e.target.closest('input[type="checkbox"]')) {
-                                        openModal(row.original.fName)
+                                        openModal(row.original.fileName)
                                     }
                                 }
                                 }
