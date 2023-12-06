@@ -11,7 +11,6 @@ import { FileViewer } from "../FileViewer/FileViewer";
 import { fileTypesFilter } from "./filters/fileTypes";
 import { resourceTypesFilter } from "./filters/resourceTypes";
 import { auctionTypesFilter } from "./filters/auctionTypes";
-import { projectTypesFilter } from "./filters/projectTypes";
 import { CreatedDateSlider, getFilterDateFormat } from "./filters/date";
 
 // in the future, this file  list should also takes in how many files to display
@@ -54,7 +53,8 @@ export const FileList = ({ filterData, searchData, advancedSearchData }) => {
   const [selectedResourceTypes, setSelectedResourceTypes] = useState([]);
   const toggleResouceTypes = (obj) => { return checkBoxesToggling(selectedResourceTypes, setSelectedResourceTypes)(obj) };
 
-  const [selectedDateRange, setSelectedDateRange] = useState("all");
+  const [selectedCreatedDate, setSelectedCreatedDate] = useState(new Date());
+  const [createdDateAny, setCreatedDateAny] = useState(true);
 
   const [selectedAuctionTypes, setSelectedAuctionTypes] = useState([]);
   const toggleAuctionTypes = (obj) => { return checkBoxesToggling(selectedAuctionTypes, setSelectedAuctionTypes)(obj) };
@@ -162,7 +162,7 @@ export const FileList = ({ filterData, searchData, advancedSearchData }) => {
           </DropDown>
 
           <DropDown label="Created Date" defaultHidden={true}>
-            <CreatedDateSlider id="hello" onChange={setSelectedDateRange} />
+            <DatePicker selected={selectedCreatedDate} onChange={(date) => { setSelectedCreatedDate(date); setCreatedDateAny(false) }} />
           </DropDown>
 
           <DropDown label="File Type" defaultHidden={true}>
