@@ -61,8 +61,8 @@ export const FileTable = ({ data }) => {
                     id: 'select',
                     Header: ({ getToggleAllRowsSelectedProps }) => (
                         <div className="flex items-center w-28">
-                            <span className="text-base">Select All </span>
                             <FileTableCheckbox {...getToggleAllRowsSelectedProps()} />
+                            <span className="text-base ml-2"> Select All</span>
                         </div>
                     ),
                     Cell: ({ row }) => <FileTableCheckbox {...row.getToggleRowSelectedProps()} />
