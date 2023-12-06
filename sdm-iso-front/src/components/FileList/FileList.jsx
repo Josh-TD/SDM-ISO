@@ -1,25 +1,19 @@
-import React, { useEffect, useState } from "react";
+import React, {useEffect, useState} from "react";
 import DatePicker from "react-datepicker";
 import Modal from "react-modal";
 import axios from "axios";
 
-import { FileTable } from "../FileTable/FileTable";
-import { CheckBox } from "../Misc/CheckBox";
-import { CheckBoxes } from "../Misc/CheckBoxes";
-import { DropDown } from "../Misc/DropDown";
-import { FileViewer } from "../FileViewer/FileViewer";
+import {FileTable} from "../FileTable/FileTable";
+import {CheckBoxes} from "../Misc/CheckBoxes";
+import {DropDown} from "../Misc/DropDown";
 
-import { defaultAll } from "./filters/common";
-import { fileTypesFilter } from "./filters/fileTypes";
-import { resourceTypesFilter } from "./filters/resourceTypes";
-import { auctionTypesFilter } from "./filters/auctionTypes";
-import { projectTypesFilter } from "./filters/projectTypes";
-import { CreatedDateSlider, getFilterDateFormat } from "./filters/date";
-
-import mockData from "./mockData.json";
+import {fileTypesFilter} from "./filters/fileTypes";
+import {resourceTypesFilter} from "./filters/resourceTypes";
+import {auctionTypesFilter} from "./filters/auctionTypes";
+import {projectTypesFilter} from "./filters/projectTypes";
 
 // in the future, this file  list should also takes in how many files to display
-export default function FileList() {
+export function FileList({searchParameters, advancedSearchParameters}) {
   // hardcoded endpoints, use .env file?
   const _endpoint = "http://localhost:8080/api";
   const endpoint = _endpoint + "/v3/files/list";
@@ -46,7 +40,10 @@ export default function FileList() {
   const toggleFileTypes = (obj) => { return checkBoxesToggling(selectedFileTypes, setSelectedFileTypes)(obj) };
 
   const [selectedResourceTypes, setSelectedResourceTypes] = useState([]);
-  const toggleResouceTypes = (obj) => { return checkBoxesToggling(selectedResourceTypes, setSelectedResourceTypes)(obj) };
+  const toggleResourceTypes = (obj) => { return checkBoxesToggling(selectedResourceTypes, setSelectedResourceTypes)(obj) };
+
+  const [selectedCreatedDate, setSelectedCreatedDate] = useState(new Date())
+  const [createdDateAny, setCreatedDateAny] = useState(true)
 
   const [selectedDateRange, setSelectedDateRange] = useState("all");
 
@@ -61,29 +58,42 @@ export default function FileList() {
   const [auctionDateAny, setAuctionDateAny] = useState(true);
 
   const [data, setData] = useState(null);
+  const [filters, usingFilters] = useState(false);
 
   // default to fetch data by itself, maybe done in outer layer if possible
   useEffect(() => {
     fetchFiles(0);
-    console.log('hi')
-    console.log(data)
-  }, []);
+  }, [searchParameters, advancedSearchParameters]);
+
+  const onApplyFilters = () => {
+    usingFilters(true)
+    fetchFiles(0)
+  }
 
   const fetchFiles = (pageNum) => {
     // not enough contents in the entry so we need more for proper filtering
     const basic_url = endpoint + `?pageNum=${pageNum}&pageSize=${pageSize}&sortBy=${sortBy}&sortAsc=${sortAsc ? "true" : "false"}`;
 
-    const isoDate = getFilterDateFormat(selectedDateRange);
-    const javaDate = isoDate.substring(0, isoDate.length - 5);
+    // const isoDate = getFilterDateFormat(selectedDateRange);
+    // const javaDate = isoDate.substring(0, isoDate.length - 5);
 
-    const full_url = basic_url
+    let full_url = basic_url
       + `${selectedProjectTypes.reduce((acc, e) => acc + "&projectTypes=" + e, "")}`
       + `${selectedResourceTypes.reduce((acc, e) => acc + "&resourceTypes=" + e, "")}`
       // there is no auction type??
       // + `${auctionTypesFilter.reduce((acc, e) => acc + "&auctionTypes=" + e, "")}`
       + `${selectedFileTypes.reduce((acc, e) => acc + "&fileTypes=" + e, "")}`
-      + `&createdSince=${javaDate}`
+      // + `&createdSince=${javaDate}`
       ;
+      if (searchParameters != null) {
+        console.log("im search")
+        full_url = full_url + searchParameters;
+      }
+      if (advancedSearchParameters != null) {
+        console.log("im advanced")
+        full_url = full_url + advancedSearchParameters;
+      }
+      console.log(full_url)
 
     axios.get(full_url).then((res) => {
       setData(
@@ -122,7 +132,6 @@ export default function FileList() {
         style={modalStyles}
         contentLabel="Example Modal"
       >
-        <FileViewer filename="dummy" />
 
       </Modal>
       <div className="col-start-1 row-span-2 pr-1">
@@ -135,7 +144,7 @@ export default function FileList() {
           </DropDown>
 
           <DropDown label="Resource Type" defaultHidden={true}>
-            <CheckBoxes array={resourceTypesFilter} onChange={toggleResouceTypes} />
+            <CheckBoxes array={resourceTypesFilter} onChange={toggleResourceTypes} />
           </DropDown>
 
           <DropDown label="Auction Type" defaultHidden={true}>
@@ -150,7 +159,7 @@ export default function FileList() {
           </DropDown>
 
           <DropDown label="Created Date" defaultHidden={true}>
-            <CreatedDateSlider id="hello" onChange={setSelectedDateRange} />
+            <DatePicker selected={selectedCreatedDate} onChange={(date) => { setSelectedCreatedDate(date); setCreatedDateAny(false) }} />
           </DropDown>
 
           <DropDown label="File Type" defaultHidden={true}>
@@ -159,7 +168,7 @@ export default function FileList() {
 
 
           <div className="inline-flex mt-5 pl-5 mb-5 items-left">
-            <button className="bg-iso-light-slate hover:bg-iso-link-blue text-white text-sm font-semibold py-2 px-4 mr-2 rounded cursor-pointer float-right" onClick={() => { fetchFiles(0) }}>Apply Filters</button>
+            <button className="bg-iso-light-slate hover:bg-iso-link-blue text-white text-sm font-semibold py-2 px-4 mr-2 rounded cursor-pointer float-right" onClick={() => { onApplyFilters() }}>Apply Filters</button>
             <button className="bg-iso-light-slate hover:bg-iso-link-blue text-white text-sm font-semibold py-2 px-4 rounded cursor-pointer float-right" onClick={() => { fetchUnfiltered() }}>Clear Filters</button>
 
 
@@ -177,7 +186,6 @@ export default function FileList() {
     </div>
   )
 };
-
 
 export function FileListLayout() {
   return (
