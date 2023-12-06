@@ -1,22 +1,21 @@
-import React, {useEffect, useState} from "react";
+import React, { useEffect, useState } from "react";
 import DatePicker from "react-datepicker";
 import Modal from "react-modal";
 import axios from "axios";
 
-import {FileTable} from "../FileTable/FileTable";
-import {CheckBoxes} from "../Misc/CheckBoxes";
-import {DropDown} from "../Misc/DropDown";
+import { FileTable } from "../FileTable/FileTable";
+import { CheckBoxes } from "../Misc/CheckBoxes";
+import { DropDown } from "../Misc/DropDown";
 
-import {fileTypesFilter} from "./filters/fileTypes";
-import {resourceTypesFilter} from "./filters/resourceTypes";
-import {auctionTypesFilter} from "./filters/auctionTypes";
-import {projectTypesFilter} from "./filters/projectTypes";
+import { fileTypesFilter } from "./filters/fileTypes";
+import { resourceTypesFilter } from "./filters/resourceTypes";
+import { auctionTypesFilter } from "./filters/auctionTypes";
+import { projectTypesFilter } from "./filters/projectTypes";
+import { getFilterDateFormat } from "./filters/date";
 
-// in the future, this file  list should also takes in how many files to display
-export function FileList({searchParameters, advancedSearchParameters}) {
+export const FileList = ({searchData, advancedSearchData}) => {
   // hardcoded endpoints, use .env file?
-  const _endpoint = "http://localhost:8080/api";
-  const endpoint = _endpoint + "/v3/files/list";
+  const endpoint = "http://localhost:8080/api/v3/files/list";
   // these are the things that should pass into this file list in the future
   const pageNum = 0;
   const pageSize = 10;
@@ -42,9 +41,8 @@ export function FileList({searchParameters, advancedSearchParameters}) {
   const [selectedResourceTypes, setSelectedResourceTypes] = useState([]);
   const toggleResourceTypes = (obj) => { return checkBoxesToggling(selectedResourceTypes, setSelectedResourceTypes)(obj) };
 
-  const [selectedCreatedDate, setSelectedCreatedDate] = useState(new Date())
-  const [createdDateAny, setCreatedDateAny] = useState(true)
-
+  const [selectedCreatedDate, setSelectedCreatedDate] = useState(new Date());
+  const [createdDateAny, setCreatedDateAny] = useState(true);
   const [selectedDateRange, setSelectedDateRange] = useState("all");
 
   const [selectedAuctionTypes, setSelectedAuctionTypes] = useState([]);
@@ -58,58 +56,43 @@ export function FileList({searchParameters, advancedSearchParameters}) {
   const [auctionDateAny, setAuctionDateAny] = useState(true);
 
   const [data, setData] = useState(null);
-  const [filters, usingFilters] = useState(false);
 
-  // default to fetch data by itself, maybe done in outer layer if possible
   useEffect(() => {
-    fetchFiles(0);
-  }, [searchParameters, advancedSearchParameters]);
+    if (searchData) {
+      console.log("This is regular search reporting for duty")
+      setData(searchData)
+    }
+    else if (advancedSearchData != null) {
+      console.log("This is advanced search reporting for duty")
+      setData(advancedSearchData)
+    }
+    else {
+      fetchFiles();
+    }
+  }, [searchData, advancedSearchData]);
 
-  const onApplyFilters = () => {
-    usingFilters(true)
-    fetchFiles(0)
-  }
-
-  const fetchFiles = (pageNum) => {
+  const fetchFiles = () => {
     // not enough contents in the entry so we need more for proper filtering
     const basic_url = endpoint + `?pageNum=${pageNum}&pageSize=${pageSize}&sortBy=${sortBy}&sortAsc=${sortAsc ? "true" : "false"}`;
 
-    // const isoDate = getFilterDateFormat(selectedDateRange);
-    // const javaDate = isoDate.substring(0, isoDate.length - 5);
+    const isoDate = getFilterDateFormat(selectedDateRange);
+    const javaDate = isoDate.substring(0, isoDate.length - 5);
 
-    let full_url = basic_url
+    const full_url = basic_url
       + `${selectedProjectTypes.reduce((acc, e) => acc + "&projectTypes=" + e, "")}`
       + `${selectedResourceTypes.reduce((acc, e) => acc + "&resourceTypes=" + e, "")}`
       // there is no auction type??
       // + `${auctionTypesFilter.reduce((acc, e) => acc + "&auctionTypes=" + e, "")}`
       + `${selectedFileTypes.reduce((acc, e) => acc + "&fileTypes=" + e, "")}`
-      // + `&createdSince=${javaDate}`
+      + `&createdSince=${javaDate}`
       ;
-      if (searchParameters != null) {
-        console.log("im search")
-        full_url = full_url + searchParameters;
-      }
-      if (advancedSearchParameters != null) {
-        console.log("im advanced")
-        full_url = full_url + advancedSearchParameters;
-      }
-      console.log(full_url)
 
     axios.get(full_url).then((res) => {
       setData(
-        res.data
+        res.data.content
       );
     })
   };
-
-  const fetchUnfiltered = () => {
-    const basic_url = endpoint + `?pageNum=${pageNum}&pageSize=${pageSize}&sortBy=${sortBy}&sortAsc=${sortAsc ? "true" : "false"}`;
-    axios.get(basic_url).then((res) => {
-      setData(
-        res.data
-      );
-    })
-  }
 
   const [modalIsOpen, setIsOpen] = useState(false);
   const modalStyles = {
@@ -167,11 +150,9 @@ export function FileList({searchParameters, advancedSearchParameters}) {
           </DropDown>
 
 
-          <div className="inline-flex mt-5 pl-5 mb-5 items-left">
-            <button className="bg-iso-light-slate hover:bg-iso-link-blue text-white text-sm font-semibold py-2 px-4 mr-2 rounded cursor-pointer float-right" onClick={() => { onApplyFilters() }}>Apply Filters</button>
-            <button className="bg-iso-light-slate hover:bg-iso-link-blue text-white text-sm font-semibold py-2 px-4 rounded cursor-pointer float-right" onClick={() => { fetchUnfiltered() }}>Clear Filters</button>
-
-
+          <div className="inline-flex mt-5 pl-5 items-left">
+            <button className="bg-iso-light-slate hover:bg-iso-link-blue text-white text-sm font-semibold py-2 px-4 rounded cursor-pointer float-right" onClick={() => { fetchFiles() }}>Apply Filters</button>
+            <button className="bg-iso-light-slate hover:bg-iso-link-blue text-white text-sm font-semibold py-2 px-4 rounded cursor-pointer float-right">Clear Filters</button>
           </div>
 
         </div>
@@ -180,7 +161,7 @@ export function FileList({searchParameters, advancedSearchParameters}) {
       <div className="bg-white col-start-2 row-start-1 p-4">
         {/* File list */}
         <div className="width: 100% height: 100%">
-          {data && <FileTable data={data} fetchFunction={fetchFiles} />}
+          {data && <FileTable data={data}/>}
         </div>
       </div>
     </div>
