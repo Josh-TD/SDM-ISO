@@ -8,8 +8,18 @@ import {useState} from 'react';
 import Popup from '../Misc/Popup';
 import { AdvancedSearch } from '../AdvancedSearch/AdvancedSearch';
 
+
 export default function MainPage() {
   const [buttonPopup, setButtonPopup] = useState(false);
+
+  const [data, setData] = useState(null);
+  const [advancedSearchButtonPressed, setAdvancedSearchButtonPressed] = useState(false);
+
+  const updateDataFromAdvancedSearch = (newData) => {
+    setData(newData);
+    setAdvancedSearchButtonPressed(false);
+  };
+
   return (
     <div className='flex flex-col h-screen'>
     <UserButton/>
@@ -20,7 +30,7 @@ export default function MainPage() {
         <FileList />
       </main>
       <Popup trigger = {buttonPopup} setTrigger = {setButtonPopup}>
-        <AdvancedSearch/>
+        <AdvancedSearch onClosePopup = {() => setButtonPopup(false)}/>
       </Popup>
     </div>
   )

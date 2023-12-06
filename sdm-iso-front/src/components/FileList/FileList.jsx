@@ -100,6 +100,13 @@ export const FileList = ({searchData}) => {
     },
   };
 
+  const [advancedSearchButtonPressed, setAdvancedSearchButtonPressed] = useState(false);
+  const updateDataFromAdvancedSearch = (newData) => {
+    setData(newData);
+    // Reset the state variable after updating data
+    setAdvancedSearchButtonPressed(false);
+  };
+
   return (
     <div className="grid grid-cols-[15%,85%] grid-rows-[7%,93%] h-full">
       <Modal
