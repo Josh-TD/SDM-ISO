@@ -9,7 +9,6 @@ export function AdvancedSearch({onClosePopup, onAdvancedSearchPressed}) {
     const sortAsc = "false";
 
     const [data, setFileData] = useState(null)
-    const [selectedFileName, setFileName] = useState('');
     const [selectedCustomerName, setCustomerName] = useState('');
     const [selectedProposalName, setProposalName] = useState('');
     const [selectedProjectName, setProjectName] = useState('');
@@ -17,12 +16,9 @@ export function AdvancedSearch({onClosePopup, onAdvancedSearchPressed}) {
 
     const [loading, setLoading] = useState(false);
 
-    const fetchFiles = (selectedFileName, selectedCustomerName, selectedProposalName, selectedProjectName, selectedFileDescription) => {
+    const fetchFiles = (selectedCustomerName, selectedProposalName, selectedProjectName, selectedFileDescription) => {
         var basic_url = endpoint + `?pageNum=${pageNum}&pageSize=${pageSize}&sortBy=${sortBy}&sortAsc=${sortAsc ? "true" : "false"}`;
 
-        if (selectedFileName != ''){
-            basic_url = basic_url + `${"&fileName=" + selectedFileName}`
-        }
 
         if (selectedCustomerName != ''){
             basic_url = basic_url + `${"&customerName=" + selectedCustomerName}`
@@ -47,7 +43,7 @@ export function AdvancedSearch({onClosePopup, onAdvancedSearchPressed}) {
 
     const performSearch = () => {
         setLoading(true);
-        fetchFiles(selectedFileName, selectedCustomerName, selectedProposalName, selectedProjectName, selectedFileDescription);
+        fetchFiles(selectedCustomerName, selectedProposalName, selectedProjectName, selectedFileDescription);
         onClosePopup();
         setTimeout(() => {setLoading(false)}, 10000);
     }
