@@ -75,8 +75,9 @@ export const FileList = ({filterData, searchData, advancedSearchData}) => {
       console.log("This is regular search reporting for duty")
       setData(searchData)
     }
-    else if (advancedSearchData) {
+    else if (advancedSearchData != null) {
       console.log("This is advanced search reporting for duty")
+      console.log(advancedSearchData)
       setData(advancedSearchData)
     }
     // TODO: Add in the cases when there are a combination of these data inputs
@@ -87,13 +88,6 @@ export const FileList = ({filterData, searchData, advancedSearchData}) => {
       fetchFiles();
     }
   }, [filterData, searchData, advancedSearchData]);
-
-  const [fileData, setFileData] = useState(null); // Add state for file data
-
-  const updateFileData = (newData) => {
-    console.log(newData)
-    setFileData(newData);
-  };
 
   const fetchFiles = () => {
     // not enough contents in the entry so we need more for proper filtering

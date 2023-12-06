@@ -11,8 +11,10 @@ import { AdvancedSearch } from '../AdvancedSearch/AdvancedSearch';
 export default function MainPage() {
   const [buttonPopup, setButtonPopup] = useState(false);
   const [fileData, setFileData] = useState(null);
+  const [advancedSearch, setAdvancedSearch] = useState(false);
 
   const updateFileData = (newData) => {
+    setAdvancedSearch(true)
     setFileData(newData);
   };
 
@@ -23,7 +25,7 @@ export default function MainPage() {
       <PageTitleWithSearchBar />
       <button onClick = {() => setButtonPopup(true)} className="place-self-end mr-14 text-sm hover:text-iso-link-blue">Advanced Search</button>
       <main className="flex-grow overflow-visible">
-        <FileList advancedSearchData={fileData} />
+        {advancedSearch ? <FileList advancedSearchData={fileData}/> : <FileList/>}
       </main>
       <Popup trigger = {buttonPopup} setTrigger = {setButtonPopup}>
         <AdvancedSearch onClosePopup = {() => setButtonPopup(false)}

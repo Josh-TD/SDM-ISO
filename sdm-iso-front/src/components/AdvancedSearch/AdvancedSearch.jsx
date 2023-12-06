@@ -8,15 +8,12 @@ export function AdvancedSearch({onClosePopup, onAdvancedSearchPressed}) {
     const sortBy = "createDate";
     const sortAsc = "false";
 
+    const [data, setFileData] = useState(null)
     const [selectedFileName, setFileName] = useState('');
     const [selectedCustomerName, setCustomerName] = useState('');
     const [selectedProposalName, setProposalName] = useState('');
     const [selectedProjectName, setProjectName] = useState('');
     const [selectedFileDescription, setFileDescription] = useState('');
-
-    useEffect(() => {
-        fetchFiles();
-    }, []);
 
     const fetchFiles = (selectedFileName, selectedCustomerName, selectedProposalName, selectedProjectName, selectedFileDescription) => {
         const basic_url = endpoint + `?pageNum=${pageNum}&pageSize=${pageSize}&sortBy=${sortBy}&sortAsc=${sortAsc ? "true" : "false"}`;
