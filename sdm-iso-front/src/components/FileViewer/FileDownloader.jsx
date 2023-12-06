@@ -5,7 +5,7 @@ import saveAs from 'file-saver';
 const FileDownloader = ({fileName}) => {
     const [fileData, setFileData] = useState(null);
     useEffect(() => {
-        const endpointUrl = "http://localhost:8080/api/sdmisofiles/viewordownload?filePath=FCTS_data/Attachments/" + fileName;
+        const endpointUrl = `http://localhost:8080/api/sdmisofiles/viewordownload?filePath=FCTS_data/Attachments/${encodeURIComponent(fileName)}`;
         axios.get(endpointUrl, {
             responseType: 'arraybuffer',
         })
