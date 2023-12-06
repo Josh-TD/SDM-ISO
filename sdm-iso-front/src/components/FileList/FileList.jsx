@@ -19,7 +19,7 @@ import { CreatedDateSlider, getFilterDateFormat } from "./filters/date";
 // one is when the user applies filters, the second is when they search normally, and third when they do adv search
 // in main there are callback functions which will execute when the user does something so only then
 // will the fileList recieve one or multiple of these parameters which we can handle in useEffect
-export const FileList = ({filterData, searchData, advancedSearchData}) => {
+export const FileList = ({ filterData, searchData, advancedSearchData }) => {
   // hardcoded endpoints, use .env file?
   const _endpoint = "http://localhost:8080/api";
   const endpoint = _endpoint + "/v3/files/list";
@@ -32,13 +32,19 @@ export const FileList = ({filterData, searchData, advancedSearchData}) => {
   // doing this so if we want we can do this inline instead of making it a new function
   const checkBoxesToggling = (get, set) => {
     return function (obj) {
-      const id = obj.target.id;
+      const id = obj.target.id.split(",");
 
-      if (get.includes(id)) {
-        set(get.filter(curr => curr !== id));
-      } else {
-        set(get.concat(id));
-      }
+      let res = get;
+
+      id.forEach(e => {
+        if (get.includes(e)) {
+          res = res.filter(curr => curr !== e);
+        } else {
+          res = res.concat(e);
+        }
+      });
+
+      set(res);
     };
   }
 
@@ -81,7 +87,7 @@ export const FileList = ({filterData, searchData, advancedSearchData}) => {
       setData(advancedSearchData)
     }
     // TODO: Add in the cases when there are a combination of these data inputs
-        // when the user wants to search and filter or filter and advanced search, etc.
+    // when the user wants to search and filter or filter and advanced search, etc.
     else {
       // this is the default call that shows files initally before
       // the user interacts with the application
@@ -96,8 +102,7 @@ export const FileList = ({filterData, searchData, advancedSearchData}) => {
     const full_url = basic_url
       + `${selectedProjectTypes.reduce((acc, e) => acc + "&projectTypes=" + e, "")}`
       + `${selectedResourceTypes.reduce((acc, e) => acc + "&resourceTypes=" + e, "")}`
-      // there is no auction type??
-      // + `${auctionTypesFilter.reduce((acc, e) => acc + "&auctionTypes=" + e, "")}`
+      + `${selectedAuctionTypes.reduce((acc, e) => acc + "&auctionTypes=" + e, "")}`
       + `${selectedFileTypes.reduce((acc, e) => acc + "&fileTypes=" + e, "")}`
       ;
 
@@ -176,7 +181,7 @@ export const FileList = ({filterData, searchData, advancedSearchData}) => {
       <div className="bg-white col-start-2 row-start-1 p-4">
         {/* File list */}
         <div className="width: 100% height: 100%">
-          {data && <FileTable data={data}/>}
+          {data && <FileTable data={data} />}
         </div>
       </div>
     </div>

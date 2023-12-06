@@ -15,7 +15,7 @@ export const fileTypesFilter = [
     default: false,
   },
   {
-    id: ["jpg", "jpeg"],
+    id: "jpg",
     label: "JPG",
     default: false,
   },
@@ -35,7 +35,7 @@ export const fileTypesFilter = [
     default: false,
   },
   {
-    id: ["xls", "xlsm", "xlsx"],
+    id: ["xlsm", "xlsx"],
     label: "XLSM/XLSX",
     default: false,
   },
