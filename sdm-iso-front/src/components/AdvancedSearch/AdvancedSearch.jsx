@@ -1,51 +1,31 @@
 import React, { useEffect, useState } from "react";
-import axios from 'axios';
 
 export function AdvancedSearch({onClosePopup, onAdvancedSearchPressed}) {
-    const endpoint = "http://localhost:8080/api/v3/files/list";
-    const pageNum = 0;
-    const pageSize = 10;
-    const sortBy = "createDate";
-    const sortAsc = "false";
-
-    const [data, setFileData] = useState(null)
     const [selectedCustomerName, setCustomerName] = useState('');
     const [selectedProposalName, setProposalName] = useState('');
     const [selectedProjectName, setProjectName] = useState('');
     const [selectedFileDescription, setFileDescription] = useState('');
 
-    const [loading, setLoading] = useState(false);
-
-    const fetchFiles = (selectedCustomerName, selectedProposalName, selectedProjectName, selectedFileDescription) => {
-        var basic_url = endpoint + `?pageNum=${pageNum}&pageSize=${pageSize}&sortBy=${sortBy}&sortAsc=${sortAsc ? "true" : "false"}`;
-
-
+    const constructEndpoint = (selectedCustomerName, selectedProposalName, selectedProjectName, selectedFileDescription) => {
+        let parameterURL = ''
         if (selectedCustomerName != ''){
-            basic_url = basic_url + `${"&customerName=" + selectedCustomerName}`
+            parameterURL = parameterURL + `${"&customerName=" + selectedCustomerName}`
         }
-
         if (selectedProposalName != ''){
-            basic_url = basic_url + `${"&proposalName=" + selectedProposalName}`
+            parameterURL = parameterURL + `${"&proposalName=" + selectedProposalName}`
         }
-
         if (selectedProjectName != ''){
-            basic_url = basic_url + `${"&projectName=" + selectedProjectName}`
+            parameterURL = parameterURL + `${"&projectName=" + selectedProjectName}`
         }
-
         if (selectedFileDescription != ''){
-            basic_url = basic_url + `${"&fileDescription=" + selectedFileDescription}`
+            parameterURL = parameterURL + `${"&fileDescription=" + selectedFileDescription}`
         }
-
-        axios.get(basic_url).then((res) => {
-            onAdvancedSearchPressed(res.data.content)
-        });
+        onAdvancedSearchPressed(parameterURL)
     };
 
     const performSearch = () => {
-        setLoading(true);
-        fetchFiles(selectedCustomerName, selectedProposalName, selectedProjectName, selectedFileDescription);
+        constructEndpoint(selectedCustomerName, selectedProposalName, selectedProjectName, selectedFileDescription);
         onClosePopup();
-        setTimeout(() => {setLoading(false)}, 10000);
     }
 
     return (
@@ -92,8 +72,7 @@ export function AdvancedSearch({onClosePopup, onAdvancedSearchPressed}) {
             <div className="flex w-full justify-end">
                 <button
                     className="mr-6 mt-2 bg-iso-light-slate hover:bg-iso-link-blue text-white font-semibold py-1 px-5 rounded cursor-pointer justify-self-end"
-                    onClick={performSearch}
-                >
+                    onClick={performSearch}>
                     Search
                 </button>
             </div>

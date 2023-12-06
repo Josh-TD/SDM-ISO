@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { useMemo } from 'react';
 import { useTable, usePagination, useSortBy, useRowSelect } from "react-table";
 import Modal from "react-modal";
@@ -38,20 +38,34 @@ const COLUMNS = [
 
 Modal.setAppElement("#root");
 
-export const FileTable = ({ data }) => {
+export const FileTable = ({ data, fetchFunction }) => {
     const columns = useMemo(() => COLUMNS, [])
+    let [ page, setPage ] = useState(0)
 
-    const {
-        getTableProps,
-        getTableBodyProps,
-        headerGroups,
+    useEffect(() => {
+        fetchFunction(page)
+    }, [page])
+
+    function handleNextClick() {
+        setPage(page => page + 1)
+        console.log('next')
+    }
+    function handlePrevClick() {
+        setPage(page => page - 1)
+        console.log('prev')
+    }
+
+    const { 
+        getTableProps, 
+        getTableBodyProps, 
+        headerGroups, 
         rows,
         prepareRow,
         selectedFlatRows
     } = useTable(
         {
             columns,
-            data
+            data: data?.content
         },
         useSortBy,
         useRowSelect,
@@ -83,38 +97,48 @@ export const FileTable = ({ data }) => {
     return (
         <>
             <div className="bg-white col-start-2 row-start-1 flex items-center justify-start">
+                <div className="inline-flex items-center justify-between mx-3">
+                    <div className="pr-1">
+                        <input type="checkbox" id="selectAll" name="selectAll" onClick={() => { handleSelectAll }}></input>
+                    </div>
+                    <label htmlFor="html" className="text-base font-semibold text-iso-secondary-text">Select All</label>
+                </div>
                 <div className="flex items-center justify-between mx-3">
                     <div className="text-base font-semibold text-iso-secondary-text cursor-pointer">Download</div>
                     <div className="text-base font-semibold text-iso-secondary-text">&nbsp;|&nbsp;</div>
                     <div className="text-base font-semibold text-iso-secondary-text cursor-pointer">View</div>
                 </div>
             </div>
-            <table className="bg-iso-offwhite w-full h-4/5" {...getTableProps()}>
-                <thead className="bg-iso-offwhite h-12">
-                    {headerGroups.map((headerGroup) => (
+
+            {data.content.length > 0 ? (
+            <React.Fragment>
+                <table className="bg-iso-offwhite w-full h-4/5" {...getTableProps()}>
+                    <thead className="bg-iso-offwhite h-12">
+                        {headerGroups.map((headerGroup) => (
+
                         <tr {...headerGroup.getHeaderGroupProps()} className="items-center">
                             {headerGroup.headers.map((column) => (
                                 <th {...column.getHeaderProps(
                                     // if column id is equal to select then don't have sort by for that column
                                     column.id !== 'select' ? column.getSortByToggleProps() : {}
-                                )} className="p-2 place-items-center">
+                                    )} className="p-2 place-items-center">
                                     {column.render('Header')}
                                     <span className="inline-block relative top-1.5">
-                                        {column.isSorted ? (column.isSortedDesc ?
-                                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="1.5" stroke="currentColor" className="w-6 h-6">
-                                                <path strokeLinecap="round" strokeLinejoin="round" d="M4.5 15.75l7.5-7.5 7.5 7.5" />
-                                            </svg>
-                                            :
-                                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="1.5" stroke="currentColor" className="w-6 h-6">
-                                                <path strokeLinecap="round" strokeLinejoin="round" d="M19.5 8.25l-7.5 7.5-7.5-7.5" />
-                                            </svg>
-                                        ) :
-                                            // removes icon for select row
-                                            column.id == 'select' ? <></> :
-                                                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="1.5" stroke="currentColor" className="w-6 h-6">
-                                                    <path strokeLinecap="round" strokeLinejoin="round" d="M8.25 15L12 18.75 15.75 15m-7.5-6L12 5.25 15.75 9" />
-                                                </svg>
-                                        }
+                                    {column.isSorted ? (column.isSortedDesc ? 
+                                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" className="w-6 h-6">
+                                            <path stroke-linecap="round" stroke-linejoin="round" d="M4.5 15.75l7.5-7.5 7.5 7.5" />
+                                        </svg>
+                                        : 
+                                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" className="w-6 h-6">
+                                            <path stroke-linecap="round" stroke-linejoin="round" d="M19.5 8.25l-7.5 7.5-7.5-7.5" />
+                                        </svg>
+                                    ) :
+                                        // removes icon for select row
+                                        column.id == 'select' ? <></> : 
+                                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" className="w-6 h-6">
+                                            <path stroke-linecap="round" stroke-linejoin="round" d="M8.25 15L12 18.75 15.75 15m-7.5-6L12 5.25 15.75 9" />
+                                        </svg>
+                                    }
                                     </span>
                                 </th>
                             ))}
@@ -148,24 +172,17 @@ export const FileTable = ({ data }) => {
                 onRequestClose={() => setIsOpen(false)}
                 contentLabel="File Modal"
                 preventScroll={true}>
-                // TODO: FIX THIS
                 <FileRender filename={selectedFileName} closeModal={() => setIsOpen(false)}/>
             </Modal>
             <div>
                 <button className="bg-iso-offwhite p-1 border-solid border-2">Previous</button>
                 <button className="bg-iso-offwhite p-1 border-solid border-2">Next</button>
             </div>
-            {/* <pre>
-                <code>
-                    {JSON.stringify(
-                        {
-                            selectedRows: selectedFlatRows.map(row => row.original)
-                        },
-                        null,
-                        2
-                    )}
-                </code>
-            </pre> */}
+            </React.Fragment>
+                ) : (
+                    <p>Loading...</p>
+                )
+            }
         </>
     )
 }
