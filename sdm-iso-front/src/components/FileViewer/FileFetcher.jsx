@@ -21,7 +21,7 @@ const FileFetcher = ({ fileName }) => {
             fileName = fileName.slice(0, fileName.length - 5) + ".DOCX";
         }
 
-        const endpointUrl = `http://localhost:8080/api/sdmisofiles/viewordownload?filePath=FCTS_data/Attachments/${encodeURIComponent(fileName)}`;
+        const endpointUrl = "http://localhost:8080/api/sdmisofiles/viewordownload?filePath=FCTS_data/Attachments/" + fileName;
 
         const fileType = fileName.split('.').pop().toUpperCase();
         axios

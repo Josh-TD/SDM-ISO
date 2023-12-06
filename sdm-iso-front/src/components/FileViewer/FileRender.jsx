@@ -4,7 +4,7 @@ import { IoMdExit } from "react-icons/io";
 import {useState} from "react";
 import FileDownloader from "./FileDownloader";
 
-export const FileRender = ({filename }) => {
+export const FileRender = ({fileName }) => {
     const [exit, setExit] = useState(false);
     const exitHandler = () => {
         setExit(true)
@@ -18,7 +18,7 @@ export const FileRender = ({filename }) => {
 
     return (
     <div className='flex flex-col h-full w-full'>
-        <h2> {filename} </h2>
+        <h2> {fileName} </h2>
 
         {/* Exit Button */}
         <button onClick={exitHandler} className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
@@ -26,7 +26,7 @@ export const FileRender = ({filename }) => {
         </button>
 
         {/* Render File With FileFetcher Component */}
-        <FileFetcher fileName={filename} />
+        <FileFetcher fileName={fileName} />
 
         {/* Download Button */}
         <button onClick={downloadHandler}
@@ -35,7 +35,7 @@ export const FileRender = ({filename }) => {
                 <path d="M13 8V2H7v6H2l8 8 8-8h-5zM0 18h20v2H0v-2z"/>
             </svg>
             <span>Download</span>
-            {/*<FileDownloader fileName={filename}/>*/}
+            {/*<FileDownloader fileName={fileName}/>*/}
         </button>
         </div>
     )
