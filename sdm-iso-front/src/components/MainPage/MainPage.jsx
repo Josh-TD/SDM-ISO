@@ -8,16 +8,12 @@ import {useState} from 'react';
 import Popup from '../Misc/Popup';
 import { AdvancedSearch } from '../AdvancedSearch/AdvancedSearch';
 
-
 export default function MainPage() {
   const [buttonPopup, setButtonPopup] = useState(false);
+  const [fileData, setFileData] = useState(null);
 
-  const [data, setData] = useState(null);
-  const [advancedSearchButtonPressed, setAdvancedSearchButtonPressed] = useState(false);
-
-  const updateDataFromAdvancedSearch = (newData) => {
-    setData(newData);
-    setAdvancedSearchButtonPressed(false);
+  const updateFileData = (newData) => {
+    setFileData(newData);
   };
 
   return (
@@ -27,10 +23,11 @@ export default function MainPage() {
       <PageTitleWithSearchBar />
       <button onClick = {() => setButtonPopup(true)} className="place-self-end mr-14 text-sm hover:text-iso-link-blue">Advanced Search</button>
       <main className="flex-grow overflow-visible">
-        <FileList />
+        <FileList advancedSearchData={fileData} />
       </main>
       <Popup trigger = {buttonPopup} setTrigger = {setButtonPopup}>
-        <AdvancedSearch onClosePopup = {() => setButtonPopup(false)}/>
+        <AdvancedSearch onClosePopup = {() => setButtonPopup(false)}
+                        onAdvancedSearchPressed={updateFileData}/>
       </Popup>
     </div>
   )

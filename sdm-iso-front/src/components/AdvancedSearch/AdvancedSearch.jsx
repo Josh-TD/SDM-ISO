@@ -1,8 +1,7 @@
 import React, { useEffect, useState } from "react";
 import axios from 'axios';
-// import {ResponseParser} from './ResponseParser'
 
-export function AdvancedSearch({onClosePopup, onSearchPressed}) {
+export function AdvancedSearch({onClosePopup, onAdvancedSearchPressed}) {
     const endpoint = "http://localhost:8080/api/v3/files/list";
     const pageNum = 0;
     const pageSize = 10;
@@ -28,8 +27,7 @@ export function AdvancedSearch({onClosePopup, onSearchPressed}) {
             + `${"&projectName=" + selectedProjectName}`
             + `${"&fileDescription=" + selectedFileDescription}`;
         axios.get(full_url).then((res) => {
-            // ResponseParser(res.data.content)
-            onSearchPressed(res.data.content)
+            onAdvancedSearchPressed(res.data.content)
         });
     };
 
@@ -99,5 +97,3 @@ export function AdvancedSearch({onClosePopup, onSearchPressed}) {
         </div>
     );
 };
-
-export default AdvancedSearch;

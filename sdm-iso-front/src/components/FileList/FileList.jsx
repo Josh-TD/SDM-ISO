@@ -14,10 +14,12 @@ import { auctionTypesFilter } from "./filters/auctionTypes";
 import { projectTypesFilter } from "./filters/projectTypes";
 import { CreatedDateSlider, getFilterDateFormat } from "./filters/date";
 
-import mockData from "./mockData.json";
-
 // in the future, this file  list should also takes in how many files to display
-export const FileList = ({searchData}) => {
+// there are three types of data that can be passed into FileList
+// one is when the user applies filters, the second is when they search normally, and third when they do adv search
+// in main there are callback functions which will execute when the user does something so only then
+// will the fileList recieve one or multiple of these parameters which we can handle in useEffect
+export const FileList = ({filterData, searchData, advancedSearchData}) => {
   // hardcoded endpoints, use .env file?
   const _endpoint = "http://localhost:8080/api";
   const endpoint = _endpoint + "/v3/files/list";
@@ -60,10 +62,38 @@ export const FileList = ({searchData}) => {
 
   const [data, setData] = useState(null);
 
+  // TODO: Maybe abstract this since the if-else's are redundant
   // default to fetch data by itself, maybe done in outer layer if possible
   useEffect(() => {
-    fetchFiles();
-  }, []);
+    if (filterData) {
+      // when the user wants to search something normally
+      console.log("This is filtering reporting for duty")
+      setData(filterData)
+    }
+    else if (searchData) {
+      // when the user wants to search something normally
+      console.log("This is regular search reporting for duty")
+      setData(searchData)
+    }
+    else if (advancedSearchData) {
+      console.log("This is advanced search reporting for duty")
+      setData(advancedSearchData)
+    }
+    // TODO: Add in the cases when there are a combination of these data inputs
+        // when the user wants to search and filter or filter and advanced search, etc.
+    else {
+      // this is the default call that shows files initally before
+      // the user interacts with the application
+      fetchFiles();
+    }
+  }, [filterData, searchData, advancedSearchData]);
+
+  const [fileData, setFileData] = useState(null); // Add state for file data
+
+  const updateFileData = (newData) => {
+    console.log(newData)
+    setFileData(newData);
+  };
 
   const fetchFiles = () => {
     // not enough contents in the entry so we need more for proper filtering
@@ -98,13 +128,6 @@ export const FileList = ({searchData}) => {
       marginRight: '-50%',
       transform: 'translate(-50%, -50%)',
     },
-  };
-
-  const [advancedSearchButtonPressed, setAdvancedSearchButtonPressed] = useState(false);
-  const updateDataFromAdvancedSearch = (newData) => {
-    setData(newData);
-    // Reset the state variable after updating data
-    setAdvancedSearchButtonPressed(false);
   };
 
   return (
@@ -169,7 +192,6 @@ export const FileList = ({searchData}) => {
     </div>
   )
 };
-
 
 export function FileListLayout() {
   return (
