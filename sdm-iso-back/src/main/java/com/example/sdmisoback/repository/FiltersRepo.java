@@ -6,5 +6,5 @@ import org.springframework.stereotype.Repository;
 import com.example.sdmisoback.model.AttachmentFile;
 
 @Repository
-public interface AttachmentFileRepo extends JpaRepository<AttachmentFile, Integer>, CustomAttachmentFileRepo{
+public interface FiltersRepo extends JpaRepository<AttachmentFile, Integer>, CustomFiltersRepo{
 }

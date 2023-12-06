@@ -45,8 +45,7 @@ export const FileRender = ({filename, closeModal}) => {
 
         <div className="mb-4"></div>
         {/* Render File With FileFetcher Component */}
-        <FileFetcher fileName={filename} />
-
+        <FileFetcher fileName={fileName} />
         
     </div>
     )

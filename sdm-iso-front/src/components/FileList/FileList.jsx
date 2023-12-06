@@ -1,21 +1,26 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import DatePicker from "react-datepicker";
 import Modal from "react-modal";
+import axios from "axios";
 
 import { FileTable } from "../FileTable/FileTable";
-import { CheckBox } from "../Misc/CheckBox";
 import { CheckBoxes } from "../Misc/CheckBoxes";
 import { DropDown } from "../Misc/DropDown";
-import { FileRender } from "../FileViewer/FileRender";
 
-import { defaultAll } from "./filters/common";
 import { fileTypesFilter } from "./filters/fileTypes";
 import { resourceTypesFilter } from "./filters/resourceTypes";
 import { auctionTypesFilter } from "./filters/auctionTypes";
 import { projectTypesFilter } from "./filters/projectTypes";
-import { CreatedDateSlider } from "./filters/date";
+import { getFilterDateFormat } from "./filters/date";
 
-export default function FileList() {
+export const FileList = ({searchData, advancedSearchData}) => {
+  // hardcoded endpoints, use .env file?
+  const endpoint = "http://localhost:8080/api/v3/files/list";
+  // these are the things that should pass into this file list in the future
+  const pageNum = 0;
+  const pageSize = 10;
+  const sortBy = "createDate";
+  const sortAsc = "false";
 
   // doing this so if we want we can do this inline instead of making it a new function
   const checkBoxesToggling = (get, set) => {
@@ -30,23 +35,64 @@ export default function FileList() {
     };
   }
 
-  const [selectedFileTypes, setSelectedFileTypes] = useState([defaultAll]);
+  const [selectedFileTypes, setSelectedFileTypes] = useState([]);
   const toggleFileTypes = (obj) => { return checkBoxesToggling(selectedFileTypes, setSelectedFileTypes)(obj) };
 
-  const [selectedResourceTypes, setSelectedResourceTypes] = useState([defaultAll]);
-  const toggleResouceTypes = (obj) => { return checkBoxesToggling(selectedResourceTypes, setSelectedResourceTypes)(obj) };
+  const [selectedResourceTypes, setSelectedResourceTypes] = useState([]);
+  const toggleResourceTypes = (obj) => { return checkBoxesToggling(selectedResourceTypes, setSelectedResourceTypes)(obj) };
 
-  const [selectedDateRange, setSelectedDateRange] = useState(defaultAll);
+  const [selectedCreatedDate, setSelectedCreatedDate] = useState(new Date());
+  const [createdDateAny, setCreatedDateAny] = useState(true);
+  const [selectedDateRange, setSelectedDateRange] = useState("all");
 
-  const [selectedAuctionTypes, setSelectedAuctionTypes] = useState([defaultAll]);
+  const [selectedAuctionTypes, setSelectedAuctionTypes] = useState([]);
   const toggleAuctionTypes = (obj) => { return checkBoxesToggling(selectedAuctionTypes, setSelectedAuctionTypes)(obj) };
 
-  const [selectedProjectTypes, setSelectedProjectTypes] = useState([defaultAll]);
+  const [selectedProjectTypes, setSelectedProjectTypes] = useState([]);
   const toggleProjectTypes = (obj) => { return checkBoxesToggling(selectedProjectTypes, setSelectedProjectTypes)(obj) };
 
   const [auctionDateStart, setAuctionDateStart] = useState(new Date());
   const [auctionDateEnd, setAuctionDateEnd] = useState(new Date());
   const [auctionDateAny, setAuctionDateAny] = useState(true);
+
+  const [data, setData] = useState(null);
+
+  useEffect(() => {
+    if (searchData) {
+      console.log("This is regular search reporting for duty")
+      setData(searchData)
+    }
+    else if (advancedSearchData != null) {
+      console.log("This is advanced search reporting for duty")
+      setData(advancedSearchData)
+    }
+    else {
+      fetchFiles();
+    }
+  }, [searchData, advancedSearchData]);
+
+  const fetchFiles = () => {
+    // not enough contents in the entry so we need more for proper filtering
+    const basic_url = endpoint + `?pageNum=${pageNum}&pageSize=${pageSize}&sortBy=${sortBy}&sortAsc=${sortAsc ? "true" : "false"}`;
+
+    const isoDate = getFilterDateFormat(selectedDateRange);
+    const javaDate = isoDate.substring(0, isoDate.length - 5);
+
+    const full_url = basic_url
+      + `${selectedProjectTypes.reduce((acc, e) => acc + "&projectTypes=" + e, "")}`
+      + `${selectedResourceTypes.reduce((acc, e) => acc + "&resourceTypes=" + e, "")}`
+      // there is no auction type??
+      // + `${auctionTypesFilter.reduce((acc, e) => acc + "&auctionTypes=" + e, "")}`
+      + `${selectedFileTypes.reduce((acc, e) => acc + "&fileTypes=" + e, "")}`
+      + `&createdSince=${javaDate}`
+      ;
+
+    axios.get(full_url).then((res) => {
+      setData(
+        res.data.content
+      );
+    })
+  };
 
   const [modalIsOpen, setIsOpen] = useState(false);
   const modalStyles = {
@@ -81,7 +127,7 @@ export default function FileList() {
           </DropDown>
 
           <DropDown label="Resource Type" defaultHidden={true}>
-            <CheckBoxes array={resourceTypesFilter} onChange={toggleResouceTypes} />
+            <CheckBoxes array={resourceTypesFilter} onChange={toggleResourceTypes} />
           </DropDown>
 
           <DropDown label="Auction Type" defaultHidden={true}>
@@ -96,62 +142,31 @@ export default function FileList() {
           </DropDown>
 
           <DropDown label="Created Date" defaultHidden={true}>
-            <CreatedDateSlider id="hello" onChange={setSelectedDateRange} />
+            <DatePicker selected={selectedCreatedDate} onChange={(date) => { setSelectedCreatedDate(date); setCreatedDateAny(false) }} />
           </DropDown>
 
           <DropDown label="File Type" defaultHidden={true}>
             <CheckBoxes array={fileTypesFilter} onChange={toggleFileTypes} />
           </DropDown>
 
-          <div className="inline-flex mt-5 pl-10 items-left">
-            <button className="bg-iso-light-slate hover:bg-iso-link-blue text-white text-sm font-semibold py-2 px-4 rounded cursor-pointer float-right">Apply Filters</button>
+
+          <div className="inline-flex mt-5 pl-5 items-left">
+            <button className="bg-iso-light-slate hover:bg-iso-link-blue text-white text-sm font-semibold py-2 px-4 rounded cursor-pointer float-right" onClick={() => { fetchFiles() }}>Apply Filters</button>
+            <button className="bg-iso-light-slate hover:bg-iso-link-blue text-white text-sm font-semibold py-2 px-4 rounded cursor-pointer float-right">Clear Filters</button>
           </div>
 
         </div>
       </div>
-
-      {/* Top Bar */}
-      <div className="bg-white col-start-2 row-start-1 flex items-center justify-start">
-
-        {/* Top bar item */}
-        {/* <div className="flex items-center justify-between mx-3">
-          <div className="text-base font-semibold text-iso-secondary-text">Sort:&nbsp;</div>
-          <div className="text-base font-semibold text-iso-secondary-text cursor-pointer">Default</div>
-          <svg 
-            className="w-5 h-5 cursor-pointer pt-1"
-            xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
-            <path fillRule="evenodd" d="M5.23 7.21a.75.75 0 011.06.02L10 11.168l3.71-3.938a.75.75 0 111.08 1.04l-4.25 4.5a.75.75 0 01-1.08 0l-4.25-4.5a.75.75 0 01.02-1.06z" clipRule="evenodd" />
-          </svg>
-        </div> */}
-
-        {/* Top bar item */}
-        <div className="inline-flex items-center justify-between mx-3">
-          <div className="pr-1">
-            <input type="checkbox" id="selectAll" name="selectAll" value="selectAll"></input>
-          </div>
-          <label for="html" className="text-base font-semibold text-iso-secondary-text">Select All</label>
-        </div>
-
-        {/* Top bar item */}
-        <div className="flex items-center justify-between mx-3">
-          <div className="text-base font-semibold text-iso-secondary-text cursor-pointer">Download</div>
-          <div className="text-base font-semibold text-iso-secondary-text">&nbsp;|&nbsp;</div>
-          <div className="text-base font-semibold text-iso-secondary-text cursor-pointer">View</div>
-        </div>
-
-      </div>
-
       {/* File List */}
-      <div className="bg-white col-start-2 row-start-2 p-4">
+      <div className="bg-white col-start-2 row-start-1 p-4">
         {/* File list */}
         <div className="width: 100% height: 100%">
-          <FileTable />
+          {data && <FileTable data={data}/>}
         </div>
       </div>
     </div>
   )
 };
-
 
 export function FileListLayout() {
   return (

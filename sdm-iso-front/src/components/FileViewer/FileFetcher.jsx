@@ -9,7 +9,8 @@ import MsgReader from '@kenjiuno/msgreader'
 const FileFetcher = ({ fileName }) => {
     const [fileData, setFileData] = useState(null);
     const [excelData, setExcelData] = useState(null);
-
+    // TODO: For some reason the filename being passed in is "undefined"
+    console.log("This is FileFetcher, the file you want is this: " + fileName)
     useEffect(() => {
 
         // TODO: Fixing .DOCX vs .docx filetype bug
@@ -20,10 +21,7 @@ const FileFetcher = ({ fileName }) => {
             fileName = fileName.slice(0, fileName.length - 5) + ".DOCX";
         }
 
-        // TODO: Access file from FCTS_data/Attachments/{fileName} once we are ready
-        // We can modify the endpointURL parameter to do this like so:
-        // http://localhost:8080/api/sdmisofiles/viewordownload?filePath=FCTS_data/Attachments/${encodeURIComponent(fileName)}
-        const endpointUrl = `http://localhost:8080/api/sdmisofiles/viewordownload?filePath=${encodeURIComponent(fileName)}`;
+        const endpointUrl = "http://localhost:8080/api/sdmisofiles/viewordownload?filePath=FCTS_data/Attachments/" + fileName;
 
         const fileType = fileName.split('.').pop().toUpperCase();
         axios
