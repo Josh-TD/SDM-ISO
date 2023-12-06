@@ -158,7 +158,7 @@ export const FileTable = () => {
                 contentLabel="File Modal"
                 preventScroll={true}
             >
-                <FileFetcher filename={selectedFileName} />
+                <FileFetcher fileName={selectedFileName} />
             </Modal>
             <div>
                 <button className="bg-iso-offwhite p-1 border-solid border-2">Previous</button>
