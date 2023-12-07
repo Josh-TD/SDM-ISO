@@ -71,7 +71,7 @@ export function AdvancedSearch({onClosePopup, onAdvancedSearchPressed}) {
             </div>
             <div className="flex w-full justify-end">
                 <button
-                    className="mr-6 mt-2 bg-iso-light-slate hover:bg-iso-link-blue text-white font-semibold py-1 px-5 rounded cursor-pointer justify-self-end"
+                    className="mr-6 mt-2 bg-iso-slate hover:bg-iso-link-blue text-white font-semibold py-1 px-5 rounded cursor-pointer justify-self-end"
                     onClick={performSearch}>
                     Search
                 </button>

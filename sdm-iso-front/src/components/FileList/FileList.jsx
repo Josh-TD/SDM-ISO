@@ -163,8 +163,8 @@ export function FileList({searchParameters, advancedSearchParameters}) {
           </DropDown>
 
           <div className="inline-flex mt-5 pl-5 mb-5 items-left">
-            <button className="bg-iso-light-slate hover:bg-iso-link-blue text-white text-sm font-semibold py-2 px-4 mx-1 rounded cursor-pointer float-right" onClick={() => { onApplyFilters() }}>Apply Filters</button>
-            <button className="bg-iso-light-slate hover:bg-iso-link-blue text-white text-sm font-semibold py-2 px-4 mx-1 rounded cursor-pointer float-right" onClick={() => { fetchUnfiltered() }}>Clear Filters</button>
+            <button className="bg-iso-slate hover:bg-iso-link-blue text-white text-sm font-semibold py-2 px-4 mx-1 rounded cursor-pointer float-right" onClick={() => { onApplyFilters() }}>Apply Filters</button>
+            <button className="bg-iso-slate hover:bg-iso-link-blue text-white text-sm font-semibold py-2 px-4 mx-1 rounded cursor-pointer float-right" onClick={() => { fetchUnfiltered() }}>Clear Filters</button>
           </div>
         </div>
       </div>
