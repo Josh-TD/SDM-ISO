@@ -74,10 +74,7 @@ export const FileTable = ({ data, fetchFunction }) => {
                 {
                     id: 'select',
                     Header: ({ getToggleAllRowsSelectedProps }) => (
-                        <div className="flex items-center w-28">
-                            <FileTableCheckbox {...getToggleAllRowsSelectedProps()} />
-                            <span className="text-base ml-2"> Select All</span>
-                        </div>
+                        <FileTableCheckbox {...getToggleAllRowsSelectedProps()} />
                     ),
                     Cell: ({ row }) => <FileTableCheckbox {...row.getToggleRowSelectedProps()} />
                 },
@@ -97,6 +94,12 @@ export const FileTable = ({ data, fetchFunction }) => {
     return (
         <>
             <div className="bg-white col-start-2 row-start-1 flex items-center justify-start">
+                <div className="inline-flex items-center justify-between mx-3">
+                    <div className="pr-1">
+                        <input type="checkbox" id="selectAll" name="selectAll" onClick={() => { handleSelectAll }}></input>
+                    </div>
+                    <label htmlFor="html" className="text-base font-semibold text-iso-secondary-text">Select All</label>
+                </div>
                 <div className="flex items-center justify-between mx-3">
                     <div className="text-base font-semibold text-iso-secondary-text cursor-pointer">Download</div>
                     <div className="text-base font-semibold text-iso-secondary-text">&nbsp;|&nbsp;</div>
@@ -138,6 +141,7 @@ export const FileTable = ({ data, fetchFunction }) => {
                             ))}
                         </tr>
                     ))}
+
                 </thead>
                 <tbody {...getTableBodyProps()} className="text-center">
                     {rows.map((row, index) => {
@@ -169,8 +173,16 @@ export const FileTable = ({ data, fetchFunction }) => {
                 <FileRender filename={selectedFileName} closeModal={() => setIsOpen(false)}/>
             </Modal>
             <div>
-                <button className="bg-iso-offwhite p-1 border-solid border-2">Previous</button>
-                <button className="bg-iso-offwhite p-1 border-solid border-2">Next</button>
+                {
+                    data.first != true && (
+                        <button className="bg-iso-offwhite p-1 border-solid border-2" onClick={handlePrevClick}>Previous</button>
+                    )
+                }
+                {
+                    data.last != true && (
+                        <button className="bg-iso-offwhite p-1 border-solid border-2" onClick={handleNextClick}>Next</button>
+                    )
+                }
             </div>
             </React.Fragment>
                 ) : (
