@@ -13,14 +13,6 @@ const FileFetcher = ({ fileName }) => {
     console.log("This is FileFetcher, the file you want is this: " + fileName)
     useEffect(() => {
 
-        // TODO: Fixing .DOCX vs .docx filetype bug
-        // for some reason converting other .docx files to .DOCX before the call is
-        // made works, but then for g_gravityworks_proposal.DOCX it doesn't work, response 500
-        // but calling g_gravityworks_proposal.docx does work, so not sure what is going on there
-        if (fileName.toLowerCase().endsWith('.docx')) {
-            fileName = fileName.slice(0, fileName.length - 5) + ".DOCX";
-        }
-
         const endpointUrl = `http://localhost:8080/api/sdmisofiles/viewordownload?filePath=FCTS_data/Attachments/${encodeURIComponent(fileName)}`;
 
         const fileType = fileName.split('.').pop().toUpperCase();
