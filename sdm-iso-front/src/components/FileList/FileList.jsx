@@ -11,6 +11,7 @@ import { FileViewer } from "../FileViewer/FileViewer";
 import { fileTypesFilter } from "./filters/fileTypes";
 import { resourceTypesFilter } from "./filters/resourceTypes";
 import { auctionTypesFilter } from "./filters/auctionTypes";
+import { projectTypesFilter } from "./filters/projectTypes";
 import { CreatedDateSlider, getFilterDateFormat } from "./filters/date";
 
 // in the future, this file  list should also takes in how many files to display
