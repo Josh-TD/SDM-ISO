@@ -1,6 +1,5 @@
 package com.example.sdmisoback.controller;
 
-import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.Arrays;
 import java.util.List;
@@ -112,12 +111,12 @@ public class FiltersController {
         String propPeriodDesc,
 
         @RequestParam(name = "propPeriodBeginDate", required = false) 
-        @Parameter(description = "Searches for begin date after {propPeriodBeginDate} format 'yyyy-MM-dd' ex '2018-04-01'")
-        LocalDate propPeriodBeginDate,
+        @Parameter(description = "Searches for begin date after {propPeriodBeginDate} format 'yyyy-MM-ddTHH:mm:ss' ex '2018-04-01T00:00:00'. Timestamp does matter, use with time 00:00:00 or some standard")
+        LocalDateTime propPeriodBeginDate,
 
         @RequestParam(name = "propPeriodEndDate", required = false) 
-        @Parameter(description = "Searches for end date before {propPeriodEndDate} format 'yyyy-MM-dd' ex '2018-04-01'")
-        LocalDate propPeriodEndDate,
+        @Parameter(description = "Searches for end date before {propPeriodEndDate} format 'yyyy-MM-ddTHH:mm:ss' ex '2018-04-01T00:00:00'. Timestamp does matter, use with time 00:00:00 or some standard")
+        LocalDateTime propPeriodEndDate,
 
         // project filters
         @RequestParam(name = "projectId", required = false) 
@@ -164,12 +163,12 @@ public class FiltersController {
         List<String> auctionTypes,
 
         @RequestParam(name = "aucBeginDate", required = false) 
-        @Parameter(description = "Searches for begin date before {aucBeginDate} format 'yyyy-MM-dd' ex '2018-04-01'")
-        LocalDate aucBeginDate,
+        @Parameter(description = "Searches for begin date before {aucBeginDate} format 'yyyy-MM-ddTHH:mm:ss' ex '2018-04-01T00:00:00'. Timestamp does matter, use with time 00:00:00 or some standard")
+        LocalDateTime aucBeginDate,
 
         @RequestParam(name = "aucEndDate", required = false) 
-        @Parameter(description = "Searches for end date before {aucEndDate} format 'yyyy-MM-dd' ex '2018-04-01'")
-        LocalDate aucEndDate,
+        @Parameter(description = "Searches for end date before {aucEndDate} format 'yyyy-MM-ddTHH:mm:ss' ex '2018-04-01T00:00:00'. Timestamp does matter, use with time 00:00:00 or some standard")
+        LocalDateTime aucEndDate,
 
         // commitment period filters
         @RequestParam(name = "commitPeriodId", required = false) 
@@ -185,12 +184,12 @@ public class FiltersController {
         String commitPeriodDesc,
 
         @RequestParam(name = "commitPeriodBeginDate", required = false) 
-        @Parameter(description = "Searches for begin date before {commitPeriodBeginDate} format 'yyyy-MM-dd' ex '2018-04-01'")
-        LocalDate commitPeriodBeginDate,
+        @Parameter(description = "Searches for begin date before {commitPeriodBeginDate} format 'yyyy-MM-ddTHH:mm:ss' ex '2018-04-01T00:00:00'. Timestamp does matter, use with time 00:00:00 or some standard")
+        LocalDateTime commitPeriodBeginDate,
 
         @RequestParam(name = "commitPeriodEndDate", required = false) 
-        @Parameter(description = "Searches for end date before {commitPeriodEndDate} format 'yyyy-MM-dd' ex '2018-04-01'")
-        LocalDate commitPeriodEndDate,
+        @Parameter(description = "Searches for end date before {commitPeriodEndDate} format 'yyyy-MM-ddTHH:mm:ss' ex '2018-04-01T00:00:00'. Timestamp does matter, use with time 00:00:00 or some standard")
+        LocalDateTime commitPeriodEndDate,
     
         @RequestParam(name = "aucPeriodId", required = false) 
         @Parameter(description = "Must be exact")
@@ -205,12 +204,12 @@ public class FiltersController {
         String aucPeriodDesc,
 
         @RequestParam(name = "aucPeriodBeginDate", required = false) 
-        @Parameter(description = "Searches for begin date before {aucPeriodBeginDate} format 'yyyy-MM-dd' ex '2018-04-01'")
-        LocalDate aucPeriodBeginDate,
+        @Parameter(description = "Searches for begin date before {aucPeriodBeginDate} format 'yyyy-MM-ddTHH:mm:ss' ex '2018-04-01T00:00:00'. Timestamp does matter, use with time 00:00:00 or some standard")
+        LocalDateTime aucPeriodBeginDate,
 
         @RequestParam(name = "aucPeriodEndDate", required = false) 
-        @Parameter(description = "Searches for end date before {aucPeriodEndDate} format 'yyyy-MM-dd' ex '2018-04-01'")
-        LocalDate aucPeriodEndDate
+        @Parameter(description = "Searches for end date before {aucPeriodEndDate} format 'yyyy-MM-ddTHH:mm:ss' ex '2018-04-01T00:00:00'. Timestamp does matter, use with time 00:00:00 or some standard")
+        LocalDateTime aucPeriodEndDate
 
         ) { //end parameters
 
