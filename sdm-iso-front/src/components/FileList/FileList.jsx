@@ -13,6 +13,7 @@ import { auctionTypesFilter } from "./filters/auctionTypes";
 import { projectTypesFilter } from "./filters/projectTypes";
 
 // in the future, this file  list should also takes in how many files to display
+
 export function FileList({searchParameters, advancedSearchParameters}) {
   // hardcoded endpoints, use .env file?
   const endpoint = "http://localhost:8080/api/v3/files/list";
@@ -25,13 +26,19 @@ export function FileList({searchParameters, advancedSearchParameters}) {
   // doing this so if we want we can do this inline instead of making it a new function
   const checkBoxesToggling = (get, set) => {
     return function (obj) {
-      const id = obj.target.id;
+      const id = obj.target.id.split(",");
 
-      if (get.includes(id)) {
-        set(get.filter(curr => curr !== id));
-      } else {
-        set(get.concat(id));
-      }
+      let res = get;
+
+      id.forEach(e => {
+        if (get.includes(e)) {
+          res = res.filter(curr => curr !== e);
+        } else {
+          res = res.concat(e);
+        }
+      });
+
+      set(res);
     };
   }
 
@@ -40,6 +47,7 @@ export function FileList({searchParameters, advancedSearchParameters}) {
 
   const [selectedResourceTypes, setSelectedResourceTypes] = useState([]);
   const toggleResourceTypes = (obj) => { return checkBoxesToggling(selectedResourceTypes, setSelectedResourceTypes)(obj) };
+
 
   const [selectedCreatedDate, setSelectedCreatedDate] = useState(new Date())
   const [createdDateAny, setCreatedDateAny] = useState(true)
@@ -58,6 +66,7 @@ export function FileList({searchParameters, advancedSearchParameters}) {
   const [filters, usingFilters] = useState(false);
 
   useEffect(() => {
+
     fetchFiles(0);
   }, [searchParameters, advancedSearchParameters]);
 
@@ -76,10 +85,11 @@ export function FileList({searchParameters, advancedSearchParameters}) {
     let full_url = basic_url
       + `${selectedProjectTypes.reduce((acc, e) => acc + "&projectTypes=" + e, "")}`
       + `${selectedResourceTypes.reduce((acc, e) => acc + "&resourceTypes=" + e, "")}`
-      // there is no auction type??
-      // + `${auctionTypesFilter.reduce((acc, e) => acc + "&auctionTypes=" + e, "")}`
+      + `${selectedAuctionTypes.reduce((acc, e) => acc + "&auctionTypes=" + e, "")}`
       + `${selectedFileTypes.reduce((acc, e) => acc + "&fileTypes=" + e, "")}`
+
       // + `&createdSince=${javaDate}`
+
       ;
       if (searchParameters != null) {
         console.log("im search")
