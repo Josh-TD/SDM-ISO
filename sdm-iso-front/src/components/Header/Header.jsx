@@ -6,7 +6,7 @@ export default function Header() {
       {/* Icon */}
       <div className="container pl-12  flex items-center justify-between">
         <div className="p-2">
-          <img src="iso_logo.jpg" alt="Logo" className="w-300 h-135" />
+          <img src="iso_logo.jpg" alt="ISO New England Logo" className="w-300 h-135" />
         </div>
       </div>
 
