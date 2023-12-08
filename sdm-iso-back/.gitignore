@@ -34,3 +34,9 @@ build/
 
 ### Environment Properties ###
 env.properties
+
+## Niya's DB SQL Files ###
+19thto51stFiles.sql
+addFile.sql
+addTestFiles.sql
+otherUpdates.sql
