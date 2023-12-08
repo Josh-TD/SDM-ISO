@@ -6,6 +6,7 @@ export default function SearchBar() {
       <input
         className='py-2 pl-4 mr-3'
         type="text"
+        aria-label="search input form"
         placeholder="SEARCH"
       />
       <svg 
