@@ -22,20 +22,20 @@ export function AuthBox(props) {
 
 
   return (
-    <div class="min-w-screen min-h-0 h-full flex justify-center items-center">
-      <div class="relative bg-iso-offwhite w-2/5 h-2/3 shadow">
-        <span class="m-10 flex justify-center items-center text-xl font-semibold text-iso-slate font-semibold">Please enter your email address and password.</span>
+    <div className="min-w-screen min-h-0 h-full flex justify-center items-center">
+      <div className="relative bg-iso-offwhite w-2/5 h-2/3 shadow">
+        <span className="m-10 flex justify-center items-center text-xl font-semibold text-iso-slate font-semibold">Please enter your email address and password.</span>
         <div className="w-full display-block text-center pr-7">
           {/* Email Address*/}
           <div className="mb-5">
-            <label className="m-2 top-0 text-iso-dim-gray justify-right font-regular" for="email">Email Address:</label>
+            <label className="m-2 top-0 text-iso-dim-gray justify-right font-regular" htmlFor="email">Email Address:</label>
             <input className="placeholder-color-iso-light-gray shadow cursor-text h-7 w-1/2 pl-2" placeholder="Email Address">
             </input>
           </div>
 
           {/* Password*/}
           <div>
-            <label className="m-2 pl-12 text-iso-dim-gray justify-right font-regular" for="password">Password:</label>
+            <label className="m-2 pl-12 text-iso-dim-gray justify-right font-regular" htmlFor="password">Password:</label>
             <input className="placeholder-color-iso-light-gray pl-2 shadow cursor-text h-7 w-1/2" placeholder="Password" type={showPassword ? 'text' : 'password'} 
             >
             </input>
@@ -49,7 +49,7 @@ export function AuthBox(props) {
               <div className="pr-1">
                 <input className="cursor-pointer" type="checkbox" id="staySignedIn" name="staySignedIn" value="staySignedIn"></input>
               </div>
-              <label for="html" className="text-base font-regular text-iso-medium-gray pr-10 font-regular">Keep Me Signed In</label>
+              <label htmlFor="html" className="text-base font-regular text-iso-medium-gray pr-10 font-regular">Keep Me Signed In</label>
             </div>
 
               <div className = "inline-flex mt-5 pl-10 items-right">

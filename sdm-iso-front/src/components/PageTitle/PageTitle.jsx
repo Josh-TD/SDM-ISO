@@ -1,6 +1,6 @@
 import React from "react";
-import SearchBar from "../SearchBar/SearchBar";
-import SearchDropdown from "../SearchDropdown/SearchDropdown";
+import SearchBar from "../RegularSearch/SearchBar/SearchBar";
+import SearchDropdown from "../RegularSearch/SearchDropdown/SearchDropdown";
 
 export function PageTitle() {
   return (
