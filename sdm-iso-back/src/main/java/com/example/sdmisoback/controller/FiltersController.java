@@ -1,6 +1,5 @@
 package com.example.sdmisoback.controller;
 
-import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.Arrays;
 import java.util.List;
@@ -8,32 +7,26 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
-import com.example.sdmisoback.dto.AttachmentFileView;
+import com.example.sdmisoback.dto.FileViewDTO;
 import com.example.sdmisoback.dto.FiltersDTO;
-import com.example.sdmisoback.service.FiltersService;
+import com.example.sdmisoback.repository.FiltersRepo;
 
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
+import lombok.AllArgsConstructor;
 
 
+@AllArgsConstructor
 @RestController
 @RequestMapping("/api/v3")
+@CrossOrigin("http://localhost:3000")
 public class FiltersController {
 
-    private FiltersService filtersService;
-
-    @Autowired
-    public FiltersController(FiltersService filtersService){
-        this.filtersService = filtersService;
-    }
-
+    private final FiltersRepo filtersRepo;
 
     // Swagger UI link for documentation and request sending 
     // http://localhost:8080/swagger-ui/index.html#/
@@ -41,12 +34,12 @@ public class FiltersController {
     // if you want to use Postman for API testing instead: use SDM email, details in the google doc
     @GetMapping("/files/list")
     @Operation(summary = "Get a single page of FileViews sorted, with many optional filters", 
-               description = "returns a Spring Page object with content AttachmentFileView based on the filters and sorting applied")
+               description = "returns a Spring Page object with content FileViewDTO based on the filters and sorting applied")
     @ApiResponses(value = {
         @ApiResponse(responseCode = "200", description = "Successfully retrieved page of FileViews")
         //TODO: add error response class and respond back with proper codes 401, 400, 404
     })  
-    public Page<AttachmentFileView> filterAttachments(
+    public Page<FileViewDTO> filterAttachments(
         // required parameters
         @RequestParam(name = "pageNum") 
         @Parameter(description = "Page number for pagination, starts at 0", example = "0") 
@@ -112,12 +105,12 @@ public class FiltersController {
         String propPeriodDesc,
 
         @RequestParam(name = "propPeriodBeginDate", required = false) 
-        @Parameter(description = "Searches for begin date after {propPeriodBeginDate} format 'yyyy-MM-dd' ex '2018-04-01'")
-        LocalDate propPeriodBeginDate,
+        @Parameter(description = "Searches for begin date after {propPeriodBeginDate} format 'yyyy-MM-ddTHH:mm:ss' ex '2018-04-01T00:00:00'. Timestamp does matter, use with time 00:00:00 or some standard")
+        LocalDateTime propPeriodBeginDate,
 
         @RequestParam(name = "propPeriodEndDate", required = false) 
-        @Parameter(description = "Searches for end date before {propPeriodEndDate} format 'yyyy-MM-dd' ex '2018-04-01'")
-        LocalDate propPeriodEndDate,
+        @Parameter(description = "Searches for end date before {propPeriodEndDate} format 'yyyy-MM-ddTHH:mm:ss' ex '2018-04-01T00:00:00'. Timestamp does matter, use with time 00:00:00 or some standard")
+        LocalDateTime propPeriodEndDate,
 
         // project filters
         @RequestParam(name = "projectId", required = false) 
@@ -164,12 +157,12 @@ public class FiltersController {
         List<String> auctionTypes,
 
         @RequestParam(name = "aucBeginDate", required = false) 
-        @Parameter(description = "Searches for begin date before {aucBeginDate} format 'yyyy-MM-dd' ex '2018-04-01'")
-        LocalDate aucBeginDate,
+        @Parameter(description = "Searches for begin date before {aucBeginDate} format 'yyyy-MM-ddTHH:mm:ss' ex '2018-04-01T00:00:00'. Timestamp does matter, use with time 00:00:00 or some standard")
+        LocalDateTime aucBeginDate,
 
         @RequestParam(name = "aucEndDate", required = false) 
-        @Parameter(description = "Searches for end date before {aucEndDate} format 'yyyy-MM-dd' ex '2018-04-01'")
-        LocalDate aucEndDate,
+        @Parameter(description = "Searches for end date before {aucEndDate} format 'yyyy-MM-ddTHH:mm:ss' ex '2018-04-01T00:00:00'. Timestamp does matter, use with time 00:00:00 or some standard")
+        LocalDateTime aucEndDate,
 
         // commitment period filters
         @RequestParam(name = "commitPeriodId", required = false) 
@@ -185,12 +178,12 @@ public class FiltersController {
         String commitPeriodDesc,
 
         @RequestParam(name = "commitPeriodBeginDate", required = false) 
-        @Parameter(description = "Searches for begin date before {commitPeriodBeginDate} format 'yyyy-MM-dd' ex '2018-04-01'")
-        LocalDate commitPeriodBeginDate,
+        @Parameter(description = "Searches for begin date before {commitPeriodBeginDate} format 'yyyy-MM-ddTHH:mm:ss' ex '2018-04-01T00:00:00'. Timestamp does matter, use with time 00:00:00 or some standard")
+        LocalDateTime commitPeriodBeginDate,
 
         @RequestParam(name = "commitPeriodEndDate", required = false) 
-        @Parameter(description = "Searches for end date before {commitPeriodEndDate} format 'yyyy-MM-dd' ex '2018-04-01'")
-        LocalDate commitPeriodEndDate,
+        @Parameter(description = "Searches for end date before {commitPeriodEndDate} format 'yyyy-MM-ddTHH:mm:ss' ex '2018-04-01T00:00:00'. Timestamp does matter, use with time 00:00:00 or some standard")
+        LocalDateTime commitPeriodEndDate,
     
         @RequestParam(name = "aucPeriodId", required = false) 
         @Parameter(description = "Must be exact")
@@ -205,12 +198,12 @@ public class FiltersController {
         String aucPeriodDesc,
 
         @RequestParam(name = "aucPeriodBeginDate", required = false) 
-        @Parameter(description = "Searches for begin date before {aucPeriodBeginDate} format 'yyyy-MM-dd' ex '2018-04-01'")
-        LocalDate aucPeriodBeginDate,
+        @Parameter(description = "Searches for begin date before {aucPeriodBeginDate} format 'yyyy-MM-ddTHH:mm:ss' ex '2018-04-01T00:00:00'. Timestamp does matter, use with time 00:00:00 or some standard")
+        LocalDateTime aucPeriodBeginDate,
 
         @RequestParam(name = "aucPeriodEndDate", required = false) 
-        @Parameter(description = "Searches for end date before {aucPeriodEndDate} format 'yyyy-MM-dd' ex '2018-04-01'")
-        LocalDate aucPeriodEndDate
+        @Parameter(description = "Searches for end date before {aucPeriodEndDate} format 'yyyy-MM-ddTHH:mm:ss' ex '2018-04-01T00:00:00'. Timestamp does matter, use with time 00:00:00 or some standard")
+        LocalDateTime aucPeriodEndDate
 
         ) { //end parameters
 
@@ -234,10 +227,19 @@ public class FiltersController {
         if (!validSortBy.contains(sortBy))
             throw new IllegalArgumentException("Invalid sortBy value: " + sortBy);
         
-        if(sortBy.equals("customerName")) {
-            sortBy = "attachProposals.proposalInfo.custInfo.customerName";
-        } else if(sortBy.equals("projectName")){
-            sortBy = "attachProposals.proposalInfo.projInfo.projectName";
+        switch(sortBy){
+            case "customerName":
+                sortBy = "c.customerName";
+                break;
+            case "projectName":
+                sortBy = "pj.projectName";
+                break;
+            case "createDate":
+                sortBy = "af.createDate";
+                break;
+            case "fileName":
+                sortBy = "af.fileName";
+                break;
         }
         
         if (fileTypes != null && !fileTypes.stream().allMatch(validFileTypes::contains))
@@ -256,6 +258,7 @@ public class FiltersController {
             aucPeriodId, aucPeriodTypes, aucPeriodDesc, aucPeriodBeginDate, aucPeriodEndDate
         );
 
-        return filtersService.filterAttachments(filters);
+        return filtersRepo.filterAttachments(filters);
     }
 }
+

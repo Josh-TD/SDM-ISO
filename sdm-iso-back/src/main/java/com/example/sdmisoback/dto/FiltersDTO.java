@@ -1,7 +1,6 @@
 package com.example.sdmisoback.dto;
 
 import java.time.LocalDateTime;
-import java.time.LocalDate;
 import java.util.List;
 
 
@@ -12,8 +11,8 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 @Data
-@NoArgsConstructor
 @AllArgsConstructor
+@NoArgsConstructor
 public class FiltersDTO {
     // required
     public PageRequest pr;
@@ -36,8 +35,8 @@ public class FiltersDTO {
     public Integer propPeriodId;
     public List<String> propPeriodTypes;
     public String propPeriodDesc;
-    public LocalDate propPeriodBeginDate;
-    public LocalDate propPeriodEndDate;
+    public LocalDateTime propPeriodBeginDate;
+    public LocalDateTime propPeriodEndDate;
 
     // project
     public Integer projectId;
@@ -56,20 +55,20 @@ public class FiltersDTO {
     // auction
     public Integer auctionId;
     public List<String> auctionTypes;
-    public LocalDate aucBeginDate;
-    public LocalDate aucEndDate;
+    public LocalDateTime aucBeginDate;
+    public LocalDateTime aucEndDate;
 
     // commitment period
     public Integer commitPeriodId;
     public List<String> commitPeriodTypes;
     public String commitPeriodDesc;
-    public LocalDate commitPeriodBeginDate;
-    public LocalDate commitPeriodEndDate;
+    public LocalDateTime commitPeriodBeginDate;
+    public LocalDateTime commitPeriodEndDate;
 
     // auction period
     public Integer aucPeriodId;
     public List<String> aucPeriodTypes;
     public String aucPeriodDesc;
-    public LocalDate aucPeriodBeginDate;
-    public LocalDate aucPeriodEndDate;
+    public LocalDateTime aucPeriodBeginDate;
+    public LocalDateTime aucPeriodEndDate;
 }

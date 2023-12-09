@@ -1,11 +1,12 @@
 import React from 'react';
 
-export default function SearchBar() {
+export default function SearchBar(onSearchPressed) {
   return(
     <div className='mr-4 flex items-center justify-between bg-white border-2 border-iso-border-light'>
       <input
         className='py-2 pl-4 mr-3'
         type="text"
+        aria-label="search input form"
         placeholder="SEARCH"
       />
       <svg 

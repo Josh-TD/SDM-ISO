@@ -1,37 +1,40 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { useMemo } from 'react';
-import mockData from "./mockData.json";
 import { useTable, usePagination, useSortBy, useRowSelect } from "react-table";
 import Modal from "react-modal";
 import "./FileTable.css"
 import {FileTableCheckbox} from "./FileTableCheckbox"
+<<<<<<< HEAD
 import FileFetcher from "../FileViewer/FileFetcher";
+=======
+import {FileRender} from "../FileViewer/FileRender";
+>>>>>>> 0f488af2d71aee5e4c71daa35cb9dff7a514b5f6
 
 const COLUMNS = [
 
     // Select is different than the rest as it contains checkboxes in its cells rather than data
     {
-        accessor: 'fName',
+        accessor: 'fileName',
         Header: 'File Name',
         cell: (props) => <p>{props.getValue()}</p>
     },
     {
-        accessor: 'pName',
+        accessor: 'projectName',
         Header: 'Project Name',
         cell: (props) => <p>{props.getValue()}</p>
     },
     {
-        accessor: 'cName',
+        accessor: 'customerName',
         Header: 'Customer',
         cell: (props) => <p>{props.getValue()}</p>
     },
     {
-        accessor: 'cDateTime',
+        accessor: 'fileCreateDate',
         Header: 'Date Created',
         cell: (props) => <p>{props.getValue()}</p>
     },
     {
-        accessor: 'fDescript',
+        accessor: 'fileDescription',
         Header: 'Descriptions',
         cell: (props) => <p>{props.getValue()}</p>
     },
@@ -39,10 +42,23 @@ const COLUMNS = [
 
 Modal.setAppElement("#root");
 
-export const FileTable = () => {
+export const FileTable = ({ data, fetchFunction }) => {
     const columns = useMemo(() => COLUMNS, [])
-    const data = useMemo(() => mockData, [])
-    
+    let [ page, setPage ] = useState(0)
+
+    useEffect(() => {
+        fetchFunction(page)
+    }, [page])
+
+    function handleNextClick() {
+        setPage(page => page + 1)
+        console.log('next')
+    }
+    function handlePrevClick() {
+        setPage(page => page - 1)
+        console.log('prev')
+    }
+
     const { 
         getTableProps, 
         getTableBodyProps, 
@@ -50,21 +66,24 @@ export const FileTable = () => {
         rows,
         prepareRow,
         selectedFlatRows
-    } = useTable (
+    } = useTable(
         {
-        columns,
-        data
+            columns,
+            data: data?.content
         },
         useSortBy,
         useRowSelect,
         (hooks) => {
             hooks.visibleColumns.push(columns => [
                 {
-                id: 'select',
-                Header: ({ getToggleAllRowsSelectedProps }) => (
-                    <FileTableCheckbox {...getToggleAllRowsSelectedProps()} />
-                ),
-                Cell: ({ row }) => <FileTableCheckbox {...row.getToggleRowSelectedProps()} />
+                    id: 'select',
+                    Header: ({ getToggleAllRowsSelectedProps }) => (
+                        <div className="flex items-center w-28">
+                            <span className="text-base">Select All </span>
+                            <FileTableCheckbox {...getToggleAllRowsSelectedProps()} />
+                        </div>
+                    ),
+                    Cell: ({ row }) => <FileTableCheckbox {...row.getToggleRowSelectedProps()} />
                 },
                 ...columns
             ])
@@ -83,49 +102,48 @@ export const FileTable = () => {
     return (
         <>
             <div className="bg-white col-start-2 row-start-1 flex items-center justify-start">
-                <div className="inline-flex items-center justify-between mx-3">
-                    <div className="pr-1">
-                        <input type="checkbox" id="selectAll" name="selectAll" onClick={() => {handleSelectAll}}></input>
-                    </div>
-                    <label for="html" className="text-base font-semibold text-iso-secondary-text">Select All</label>
-                </div>
                 <div className="flex items-center justify-between mx-3">
                     <div className="text-base font-semibold text-iso-secondary-text cursor-pointer">Download</div>
                     <div className="text-base font-semibold text-iso-secondary-text">&nbsp;|&nbsp;</div>
                     <div className="text-base font-semibold text-iso-secondary-text cursor-pointer">View</div>
                 </div>
             </div>
-            <table className="bg-iso-offwhite w-full h-4/5" {...getTableProps()}>
-                <thead className="bg-iso-offwhite h-12">
-                    {headerGroups.map((headerGroup) => (
-                    <tr {...headerGroup.getHeaderGroupProps()} className="items-center">
-                        {headerGroup.headers.map((column) => (
-                            <th {...column.getHeaderProps(
-                                // if column id is equal to select then don't have sort by for that column
-                                column.id !== 'select' ? column.getSortByToggleProps() : {}
-                                )} className="p-2 place-items-center">
-                                {column.render('Header')}
-                                <span className="inline-block relative top-1.5">
-                                {column.isSorted ? (column.isSortedDesc ? 
-                                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
-                                        <path stroke-linecap="round" stroke-linejoin="round" d="M4.5 15.75l7.5-7.5 7.5 7.5" />
-                                    </svg>
-                                    : 
-                                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
-                                        <path stroke-linecap="round" stroke-linejoin="round" d="M19.5 8.25l-7.5 7.5-7.5-7.5" />
-                                    </svg>
-                                  ) :
-                                    // removes icon for select row
-                                    column.id == 'select' ? <></> : 
-                                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
-                                        <path stroke-linecap="round" stroke-linejoin="round" d="M8.25 15L12 18.75 15.75 15m-7.5-6L12 5.25 15.75 9" />
-                                    </svg>
-                                }
-                                </span>
-                            </th>
-                        ))}
-                    </tr>
+
+            {data.content.length > 0 ? (
+            <React.Fragment>
+                <table className="bg-iso-offwhite w-full h-4/5" {...getTableProps()}>
+                    <thead className="bg-iso-offwhite h-12">
+                        {headerGroups.map((headerGroup) => (
+
+                        <tr {...headerGroup.getHeaderGroupProps()} className="items-center">
+                            {headerGroup.headers.map((column) => (
+                                <th {...column.getHeaderProps(
+                                    // if column id is equal to select then don't have sort by for that column
+                                    column.id !== 'select' ? column.getSortByToggleProps() : {}
+                                    )} className="p-2 place-items-center">
+                                    {column.render('Header')}
+                                    <span className="inline-block relative top-1.5">
+                                        {column.isSorted ? (column.isSortedDesc ?
+                                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="1.5" stroke="currentColor" className="w-6 h-6">
+                                                <path strokeLinecap="round" strokeLinejoin="round" d="M4.5 15.75l7.5-7.5 7.5 7.5" />
+                                            </svg>
+                                            :
+                                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="1.5" stroke="currentColor" className="w-6 h-6">
+                                                <path strokeLinecap="round" strokeLinejoin="round" d="M19.5 8.25l-7.5 7.5-7.5-7.5" />
+                                            </svg>
+                                        ) :
+                                            // removes icon for select row
+                                            column.id == 'select' ? <></> :
+                                                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="1.5" stroke="currentColor" className="w-6 h-6">
+                                                    <path strokeLinecap="round" strokeLinejoin="round" d="M8.25 15L12 18.75 15.75 15m-7.5-6L12 5.25 15.75 9" />
+                                                </svg>
+                                        }
+                                    </span>
+                                </th>
+                            ))}
+                        </tr>
                     ))}
+
                 </thead>
                 <tbody {...getTableBodyProps()} className="text-center">
                     {rows.map((row, index) => {
@@ -134,6 +152,7 @@ export const FileTable = () => {
                         return (
                             <tr {...row.getRowProps()}
                                 onClick={(e) => {
+<<<<<<< HEAD
                                         if (!e.target.closest('input[type="checkbox"]')) {
                                             // TODO: For some reason the filename being passed in is "undefined"
                                             openModal(row.original.fName)
@@ -141,10 +160,16 @@ export const FileTable = () => {
                                             setSelectedFileName(row.original.fName)
                                         }
                                     }    
+=======
+                                    if (!e.target.closest('input[type="checkbox"]')) {
+                                        openModal(row.original.fileName)
+                                    }
+                                }
+>>>>>>> 0f488af2d71aee5e4c71daa35cb9dff7a514b5f6
                                 }
                                 className={`cursor-pointer hover:bg-gray-200 ${rowClassName}`}
                             >
-                                {row.cells.map( cell => {
+                                {row.cells.map(cell => {
                                     return <td {...cell.getCellProps()} className="p-2">{cell.render('Cell')}</td>
                                 })}
                             </tr>
@@ -156,25 +181,32 @@ export const FileTable = () => {
                 isOpen={modalIsOpen}
                 onRequestClose={() => setIsOpen(false)}
                 contentLabel="File Modal"
+<<<<<<< HEAD
                 preventScroll={true}
             >
                 <FileFetcher fileName={selectedFileName} />
+=======
+                preventScroll={true}>
+                <FileRender filename={selectedFileName} closeModal={() => setIsOpen(false)}/>
+>>>>>>> 0f488af2d71aee5e4c71daa35cb9dff7a514b5f6
             </Modal>
             <div>
-                <button className="bg-iso-offwhite p-1 border-solid border-2">Previous</button>
-                <button className="bg-iso-offwhite p-1 border-solid border-2">Next</button>
+                {
+                    data.first != true && (
+                        <button className="bg-iso-offwhite p-1 border-solid border-2" onClick={handlePrevClick}>Previous</button>
+                    )
+                }
+                {
+                    data.last != true && (
+                        <button className="bg-iso-offwhite p-1 border-solid border-2" onClick={handleNextClick}>Next</button>
+                    )
+                }
             </div>
-            <pre>
-                <code>
-                {JSON.stringify(
-                    {
-                    selectedRows: selectedFlatRows.map(row => row.original)
-                    },
-                    null,
-                    2
-                )}
-                </code>
-            </pre>
+            </React.Fragment>
+                ) : (
+                    <p>Loading...</p>
+                )
+            }
         </>
     )
 }
