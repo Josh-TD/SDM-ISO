@@ -1,13 +1,13 @@
 import React from 'react';
 import Header from '../Header/Header';
-import { PageTitleWithSearchBar } from '../PageTitle/PageTitle';
+import SearchBar from "../RegularSearch/SearchBar/SearchBar";
+import SearchDropdown from "../RegularSearch/SearchDropdown/SearchDropdown";
 import { FileList } from '../FileList/FileList';
 
 import {UserButton } from "@clerk/clerk-react";
 import {useState} from 'react';
 import Popup from '../Misc/Popup';
 import { AdvancedSearch } from '../AdvancedSearch/AdvancedSearch';
-import SearchBar from "../RegularSearch/SearchBar/SearchBar";
 
 export default function MainPage() {
   const [buttonPopup, setButtonPopup] = useState(false);
@@ -32,7 +32,13 @@ export default function MainPage() {
     <div className='flex flex-col h-screen'>
     <UserButton/>
       <Header />
-      <PageTitleWithSearchBar />
+      <div className="bg-iso-offwhite w-full">
+      <div className="pr-10 pl-10 flex items-center justify-between w-full font-light text-iso-slate">
+        <div className="grow py-4 text-5xl">SDM File Manager</div>
+          <SearchDropdown />
+          <SearchBar onSearchPressed={saveSearchParameters}/>
+        </div> 
+      </div> 
       <button onClick = {() => setButtonPopup(true)} className="place-self-end mr-14 text-sm hover:text-iso-link-blue">Advanced Search</button>
       <main className="flex-grow overflow-visible">
         {advancedSearch ? (<FileList advancedSearchParameters={advancedSearchParameters} />) :
