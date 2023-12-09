@@ -65,12 +65,15 @@ export function FileList({searchParameters, advancedSearchParameters}) {
   const [data, setData] = useState(null);
   const [filters, usingFilters] = useState(false);
 
+  const [currPage, setCurrPage] = useState(0)
+
   useEffect(() => {
 
     fetchFiles(0,10,'createDate',true);
   }, [searchParameters, advancedSearchParameters]);
 
   const onApplyFilters = () => {
+    setCurrPage(currPage + 1)
     usingFilters(true)
     fetchFiles(0,10,'createDate',true)
   }
@@ -110,6 +113,7 @@ export function FileList({searchParameters, advancedSearchParameters}) {
   };
 
   const fetchUnfiltered = () => {
+    setCurrPage(currPage + 1)
     const basic_url = endpoint + `?pageNum=${pageNum}&pageSize=${pageSize}&sortBy=${sortBy}&sortAsc=${sortAsc ? "true" : "false"}`;
     axios.get(basic_url).then((res) => {
       setData(
@@ -183,7 +187,7 @@ export function FileList({searchParameters, advancedSearchParameters}) {
       <div className="bg-white col-start-2 row-start-1 p-4">
         {/* File list */}
         <div className="width: 100% height: 100%">
-          {data && <FileTable data={data} fetchFunction={fetchFiles} />}
+          {data && <FileTable data={data} fetchFunction={fetchFiles} pageNum={currPage}/>}
         </div>
       </div>
     </div>

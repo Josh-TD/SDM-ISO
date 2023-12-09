@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useLayoutEffect, useState } from "react";
 import { useMemo } from 'react';
 import { useTable, usePagination, useSortBy, useRowSelect } from "react-table";
 import Modal from "react-modal";
@@ -38,16 +38,20 @@ const COLUMNS = [
 
 Modal.setAppElement("#root");
 
-export const FileTable = ({ data, fetchFunction }) => {
+export const FileTable = ({ data, fetchFunction, pageNum }) => {
     const columns = useMemo(() => COLUMNS, [])
     let [ page, setPage ] = useState(0)
     let [pageSize ,setPageSize] = useState(10)
     let [sortBy, setSortBy] = useState('createDate')
     let [sortAsc, setSortAsc] = useState(true)
 
+    useEffect( () => {
+        setPage(0)
+    }, [pageNum])
     useEffect(() => {
         // fetchFiles(0,10,'createDate',true)
         fetchFunction(page,pageSize,sortBy,sortAsc)
+
     }, [page])
 
     function handleNextClick() {
