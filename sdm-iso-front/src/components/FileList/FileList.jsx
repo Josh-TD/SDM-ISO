@@ -78,6 +78,12 @@ export function FileList({searchParameters, advancedSearchParameters}) {
     fetchFiles(0,10,'createDate',true)
   }
 
+  // resets states of checkboxes 
+  const resetCheckboxStates = () => {
+    
+    // han can you implement this
+  };
+
     // default is fetchFiles(0,10,'createDate',true)
   const fetchFiles = (pageNum,pageSize,sortBy,sortAsc) => {
     // not enough contents in the entry so we need more for proper filtering
@@ -113,7 +119,9 @@ export function FileList({searchParameters, advancedSearchParameters}) {
   };
 
   const fetchUnfiltered = () => {
-    setCurrPage(currPage + 1)
+
+    resetCheckboxStates();
+    setCurrPage(currPage + 1);
     const basic_url = endpoint + `?pageNum=${pageNum}&pageSize=${pageSize}&sortBy=${sortBy}&sortAsc=${sortAsc ? "true" : "false"}`;
     axios.get(basic_url).then((res) => {
       setData(
