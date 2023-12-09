@@ -43,7 +43,6 @@ export default function MainPage() {
         <AdvancedSearch onClosePopup = {() => setButtonPopup(false)}
                         onAdvancedSearchPressed={saveAdvancedSearchParameters}/>
       </Popup>
-      <SearchBar onSearchPressed = {saveSearchParameters}> </SearchBar>
     </div>
   )
 };

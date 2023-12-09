@@ -1,6 +1,6 @@
 import React from 'react';
 
-export default function SearchBar() {
+export default function SearchBar(onSearchPressed) {
   return(
     <div className='mr-4 flex items-center justify-between bg-white border-2 border-iso-border-light'>
       <input
