@@ -67,15 +67,16 @@ export function FileList({searchParameters, advancedSearchParameters}) {
 
   useEffect(() => {
 
-    fetchFiles(0);
+    fetchFiles(0,10,'createDate',true);
   }, [searchParameters, advancedSearchParameters]);
 
   const onApplyFilters = () => {
     usingFilters(true)
-    fetchFiles(0)
+    fetchFiles(0,10,'createDate',true)
   }
 
-  const fetchFiles = (pageNum) => {
+    // default is fetchFiles(0,10,'createDate',true)
+  const fetchFiles = (pageNum,pageSize,sortBy,sortAsc) => {
     // not enough contents in the entry so we need more for proper filtering
     const basic_url = endpoint + `?pageNum=${pageNum}&pageSize=${pageSize}&sortBy=${sortBy}&sortAsc=${sortAsc ? "true" : "false"}`;
 

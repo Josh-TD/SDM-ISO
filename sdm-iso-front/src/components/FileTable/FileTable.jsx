@@ -41,9 +41,13 @@ Modal.setAppElement("#root");
 export const FileTable = ({ data, fetchFunction }) => {
     const columns = useMemo(() => COLUMNS, [])
     let [ page, setPage ] = useState(0)
+    let [pageSize ,setPageSize] = useState(10)
+    let [sortBy, setSortBy] = useState('createDate')
+    let [sortAsc, setSortAsc] = useState(true)
 
     useEffect(() => {
-        fetchFunction(page)
+        // fetchFiles(0,10,'createDate',true)
+        fetchFunction(page,pageSize,sortBy,sortAsc)
     }, [page])
 
     function handleNextClick() {
