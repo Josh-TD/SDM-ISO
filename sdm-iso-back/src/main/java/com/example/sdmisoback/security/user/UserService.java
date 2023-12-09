@@ -7,7 +7,7 @@ import org.springframework.security.authentication.UsernamePasswordAuthenticatio
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
-import com.example.sdmisoback.dto.AttachmentFileView;
+import com.example.sdmisoback.dto.FileViewDTO;
 import com.example.sdmisoback.repository.FiltersRepo;
 
 import lombok.RequiredArgsConstructor;
@@ -40,6 +40,7 @@ public class UserService {
         user_repo.save(user);
     }
 
+    // TODO: fix: duplicate files returned, probably have to add a fileID -> PropID pair
     public void addFileToRecentlyViewed(Principal connectedUser, Integer fileId) {
         var user = (User) ((UsernamePasswordAuthenticationToken) connectedUser).getPrincipal();
         
@@ -60,7 +61,8 @@ public class UserService {
         user_repo.save(user);
     }
 
-    public List<AttachmentFileView> getRecentlyViewedFiles(Principal connectedUser){
+    // TODO: fix: duplicate files returned
+    public List<FileViewDTO> getRecentlyViewedFiles(Principal connectedUser){
         var user = (User) ((UsernamePasswordAuthenticationToken) connectedUser).getPrincipal();
 
         List<Integer> recentlyViewed = user.getRecentlyViewed();

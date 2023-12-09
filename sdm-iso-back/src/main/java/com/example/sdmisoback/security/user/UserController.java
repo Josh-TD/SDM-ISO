@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.example.sdmisoback.dto.AttachmentFileView;
+import com.example.sdmisoback.dto.FileViewDTO;
 
 import lombok.RequiredArgsConstructor;
 
@@ -33,6 +33,7 @@ public class UserController {
         return ResponseEntity.ok().build();
     }
 
+    // TODO: fix: duplicate files returned
     @PostMapping("/recently-viewed")
     public ResponseEntity<?> addRecentlyViewed(
         @RequestBody Integer fileId,
@@ -42,12 +43,13 @@ public class UserController {
         return ResponseEntity.ok().build();
     }
 
+    // TODO: fix: duplicate files returned
     @GetMapping("/recently-viewed")
     public ResponseEntity<?> getRecentlyViewed(
         Principal connectedUser
     ) {
         try {
-            List<AttachmentFileView> files = service.getRecentlyViewedFiles(connectedUser);
+            List<FileViewDTO> files = service.getRecentlyViewedFiles(connectedUser);
             if (files.isEmpty()) {
                 return ResponseEntity.status(HttpStatus.NOT_FOUND)
                     .body("No recently viewed files found for the user");
