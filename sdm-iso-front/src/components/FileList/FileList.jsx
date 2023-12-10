@@ -80,8 +80,10 @@ export function FileList({searchParameters, advancedSearchParameters}) {
 
   // resets states of checkboxes 
   const resetCheckboxStates = () => {
-    
-    // han can you implement this
+    setSelectedFileTypes([]);
+    setSelectedResourceTypes([]);
+    setSelectedProjectTypes([]);
+    setSelectedAuctionTypes([]);
   };
 
     // default is fetchFiles(0,10,'createDate',true)
@@ -159,15 +161,15 @@ export function FileList({searchParameters, advancedSearchParameters}) {
           <div className="text-base font-semibold text-iso-secondary-text pl-4 pt-1 pb-16">Filtered by:</div>
 
           <DropDown label="Project Type" defaultHidden={true}>
-            <CheckBoxes array={projectTypesFilter} onChange={toggleProjectTypes} />
+            <CheckBoxes array={projectTypesFilter} onChange={toggleProjectTypes} selectedElem={selectedProjectTypes} />
           </DropDown>
 
           <DropDown label="Resource Type" defaultHidden={true}>
-            <CheckBoxes array={resourceTypesFilter} onChange={toggleResourceTypes} />
+            <CheckBoxes array={resourceTypesFilter} onChange={toggleResourceTypes} selectedElem={selectedResourceTypes} />
           </DropDown>
 
           <DropDown label="Auction Type" defaultHidden={true}>
-            <CheckBoxes array={auctionTypesFilter} onChange={toggleAuctionTypes} />
+            <CheckBoxes array={auctionTypesFilter} onChange={toggleAuctionTypes} selectedElem={selectedAuctionTypes} />
           </DropDown>
 
           <DropDown label="Auction Period" defaultHidden={true}>
@@ -182,7 +184,7 @@ export function FileList({searchParameters, advancedSearchParameters}) {
           </DropDown>
 
           <DropDown label="File Type" defaultHidden={true}>
-            <CheckBoxes array={fileTypesFilter} onChange={toggleFileTypes} />
+            <CheckBoxes array={fileTypesFilter} onChange={toggleFileTypes} selectedElem={selectedFileTypes} />
           </DropDown>
 
           <div className="inline-flex mt-5 pl-5 mb-5 items-left">
