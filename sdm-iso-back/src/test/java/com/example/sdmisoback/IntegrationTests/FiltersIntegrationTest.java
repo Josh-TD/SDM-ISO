@@ -1,4 +1,4 @@
-package com.example.sdmisoback.UnitTests;
+package com.example.sdmisoback.IntegrationTests;
 
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
@@ -22,13 +22,10 @@ import com.example.sdmisoback.repository.FiltersRepo;
 @SpringBootTest(webEnvironment = WebEnvironment.MOCK, classes = BackendServerApp.class)
 @AutoConfigureMockMvc
 @TestPropertySource(locations = "classpath:test.properties")
-public class FiltersControllerTest {
+public class FiltersIntegrationTest {
     
     @Autowired
     private MockMvc mvc;
-
-    @Autowired
-    private FiltersRepo filtersRepo;
 
     private static String baseUrl = "/api/v3/files/list";
     private static String defaultReqParams = "?pageNum=0&pageSize=10&sortBy=createDate&sortAsc=false";
