@@ -67,8 +67,21 @@ export function FileList({searchParameters, advancedSearchParameters}) {
 
   const [currPage, setCurrPage] = useState(0)
 
-  useEffect(() => {
 
+  const [searchCurrParams, setSearchCurrParams] = useState(searchParameters);
+  const [advancedSearchCurrParams, setAdvancedSearchCurrParams] = useState(advancedSearchParameters);
+
+  useEffect( () => {
+    setAdvancedSearchCurrParams(advancedSearchParameters);
+    setSearchCurrParams(searchParameters);
+    console.log("param changed")
+    console.log(advancedSearchParameters);
+  }, [searchParameters, advancedSearchParameters])
+
+
+  useEffect(() => {
+    console.log('updating table')
+    console.log(advancedSearchCurrParams)
     fetchFiles(0,10,'createDate',true);
   }, [searchParameters, advancedSearchParameters]);
 
@@ -84,6 +97,9 @@ export function FileList({searchParameters, advancedSearchParameters}) {
     setSelectedResourceTypes([]);
     setSelectedProjectTypes([]);
     setSelectedAuctionTypes([]);
+    setAdvancedSearchCurrParams("");
+    setSearchCurrParams("");
+
   };
 
     // default is fetchFiles(0,10,'createDate',true)
@@ -103,13 +119,13 @@ export function FileList({searchParameters, advancedSearchParameters}) {
       // + `&createdSince=${javaDate}`
 
       ;
-      if (searchParameters != null) {
+      if (searchCurrParams != null) {
         console.log("im search")
-        full_url = full_url + searchParameters;
+        full_url = full_url + searchCurrParams;
       }
-      if (advancedSearchParameters != null) {
+      if (advancedSearchCurrParams != null) {
         console.log("im advanced")
-        full_url = full_url + advancedSearchParameters;
+        full_url = full_url + advancedSearchCurrParams;
       }
       console.log(full_url)
 
