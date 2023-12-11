@@ -107,10 +107,10 @@ export const FileTable = ({ data, fetchFunction }) => {
             {data.content.length > 0 ? (
             <React.Fragment>
                 <table className="bg-iso-offwhite w-full h-4/5" {...getTableProps()}>
-                    <thead className="bg-iso-offwhite h-12">
+                    <thead className="bg-iso-offwhite h-12" id="header-container">
                         {headerGroups.map((headerGroup) => (
 
-                        <tr {...headerGroup.getHeaderGroupProps()} className="items-center">
+                        <tr {...headerGroup.getHeaderGroupProps()} className="items-center" id="header-titles">
                             {headerGroup.headers.map((column) => (
                                 <th {...column.getHeaderProps(
                                     // if column id is equal to select then don't have sort by for that column
@@ -155,7 +155,7 @@ export const FileTable = ({ data, fetchFunction }) => {
                                 className={`cursor-pointer hover:bg-gray-200 ${rowClassName}`}
                             >
                                 {row.cells.map(cell => {
-                                    return <td {...cell.getCellProps()} className="p-2">{cell.render('Cell')}</td>
+                                    return <td {...cell.getCellProps()} className="p-2" id={`row-${index}`}>{cell.render('Cell')}</td>
                                 })}
                             </tr>
                         )
