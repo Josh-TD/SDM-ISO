@@ -172,12 +172,12 @@ export const FileTable = ({ data, fetchFunction }) => {
             <div>
                 {
                     data.first != true && (
-                        <button className="bg-iso-offwhite p-1 border-solid border-2" onClick={handlePrevClick}>Previous</button>
+                        <button id="previous-button" className="bg-iso-offwhite p-1 border-solid border-2" onClick={handlePrevClick}>Previous</button>
                     )
                 }
                 {
                     data.last != true && (
-                        <button className="bg-iso-offwhite p-1 border-solid border-2" onClick={handleNextClick}>Next</button>
+                        <button id="next-button" className="bg-iso-offwhite p-1 border-solid border-2" onClick={handleNextClick}>Next</button>
                     )
                 }
             </div>
