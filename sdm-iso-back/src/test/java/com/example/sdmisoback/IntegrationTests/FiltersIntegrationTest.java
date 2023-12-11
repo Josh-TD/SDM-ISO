@@ -31,7 +31,7 @@ public class FiltersIntegrationTest {
     private static String defaultReqParams = "?pageNum=0&pageSize=10&sortBy=createDate&sortAsc=false";
 
     @Test
-    public void FiltersController_NoFilters_Test() throws Exception {
+    public void Filters_NoFilters_ReturnsOkAndCorrectFirstValue() throws Exception {
         mvc.perform(get(baseUrl + defaultReqParams))
             .andExpect(status().isOk())
             .andExpect(content().contentType(MediaType.APPLICATION_JSON))
@@ -43,5 +43,33 @@ public class FiltersIntegrationTest {
             .andExpect(jsonPath("$.first").value(true))
             .andExpect(jsonPath("$.last").value(false))
             .andExpect(jsonPath("$.empty").value(false));
+    }
+
+    @Test 
+    public void Filters_Error403_BadFileTypeSingular() throws Exception{
+        // customer instead of customerName
+        mvc.perform(get(baseUrl + defaultReqParams + "&fileTypes=jpeg"))
+            .andExpect(status().isBadRequest());
+    }
+
+    @Test 
+    public void Filters_Error403_BadFileTypeMultiple() throws Exception{
+        // customer instead of customerName
+        mvc.perform(get(baseUrl + defaultReqParams + "&fileTypes=pdf&fileTypes=jpg&fileTypes=jpeg"))
+            .andExpect(status().isBadRequest());
+    }
+
+    @Test 
+    public void Filters_Error403_BadSortBy() throws Exception{
+        // customer instead of customerName
+        mvc.perform(get(baseUrl + "?pageNum=0&pageSize=10&sortBy=description&sortAsc=false"))
+            .andExpect(status().isBadRequest());
+    }
+
+    @Test 
+    public void Filters_Error404_NoMatch() throws Exception{
+        // customer instead of customerName
+        mvc.perform(get(baseUrl + defaultReqParams + "&fileId=999999"))
+            .andExpect(status().isNotFound());
     }
 }
