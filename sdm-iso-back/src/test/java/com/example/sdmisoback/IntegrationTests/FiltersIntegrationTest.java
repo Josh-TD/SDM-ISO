@@ -449,4 +449,8 @@ public class FiltersIntegrationTest {
                 .andExpect(jsonPath("$.totalElements").value(25))
                 .andExpect(jsonPath("$.content[0].attachmentId").value(1038));
     }
+
+    // TODO: For all the "Types" Filters, make call for multiple
+    // TODO: All more tests where there is more than 1 filter being applied
+    // TODO: SQL injection test (kinda redundent since we already know its SQL injection proof)
 }
