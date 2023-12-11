@@ -1,11 +1,11 @@
 import {React, useState} from 'react';
 
-export default function SearchDropdown({ setSelectedParam }) {
+export default function SearchDropdown({setSelectedParam}) {
   const [selectedValue, setSelectedValue] = useState('select');
 
   const handleSelectChange = (e) => {
     setSelectedValue(e.target.value);
-    setSelectedParam(e.target.value);
+    console.log("selected param is " + e.target.value);
   };
 
     return (
