@@ -14,6 +14,7 @@ export default function MainPage() {
 
   const [search, usingSearch] = useState(false);
   const [searchParameters, setSearchParameters] = useState(null)
+  const [selectedParam, setSelectedParam] = useState('');
 
   const [advancedSearch, usingAdvancedSearch] = useState(false);
   const [advancedSearchParameters, setAdvancedSearchParameters] = useState(null)
@@ -35,7 +36,7 @@ export default function MainPage() {
       <div className="bg-iso-offwhite w-full">
       <div className="pr-10 pl-10 flex items-center justify-between w-full font-light text-iso-slate">
         <div className="grow py-4 text-5xl">SDM File Manager</div>
-          <SearchDropdown />
+          <SearchDropdown setSelectedParam={setSelectedParam}/>
           <SearchBar onSearchPressed={saveSearchParameters}/>
         </div> 
       </div> 

@@ -1,7 +1,12 @@
 import React, { useState } from "react";
 
-export default function SearchBar({onSearchPressed, setSelectedParam}) {
+export default function SearchBar({onSearchPressed}) {
   const [input, setInput] = useState('');
+  const [selectedParam, setSelectedParam] = useState('');
+  
+  const handleChange = (e) => {
+    setInput(e.target.value);
+  };
 
   const constructEndpoint = (selectedParam, input) => {
     let parameterURL = ''
@@ -22,7 +27,6 @@ export default function SearchBar({onSearchPressed, setSelectedParam}) {
 
   const performSearch = () => {
     constructEndpoint(selectedParam, input);
-    onClosePopup();
   }
 
   return(
@@ -32,7 +36,8 @@ export default function SearchBar({onSearchPressed, setSelectedParam}) {
         type="text"
         aria-label="search input form"
         placeholder="SEARCH"
-        onChange={(e) => setInput(e.target.value)}
+        value={input}
+        onChange={handleChange}
       />
       <svg 
         className="w-6 h-6 mr-4 cursor-pointer"
