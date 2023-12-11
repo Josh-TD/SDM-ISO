@@ -237,7 +237,7 @@ public class FiltersController {
         // process parameters
         PageRequest pr = PageRequest.of(pageNum, pageSize);
         if (!validSortBy.contains(sortBy))
-            ResponseEntity.badRequest().body("Invalid sortBy value: " + sortBy);
+            return ResponseEntity.badRequest().body("Invalid sortBy value: " + sortBy);
         
         switch(sortBy){
             case "customerName":
