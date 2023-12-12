@@ -94,11 +94,16 @@ export const FileTable = ({ data, fetchFunction }) => {
         setIsOpen(true);
     };
 
+    const handleDownload = () => {
+        // Here is the handle download
+        // selectedFlatRows is like any other array, just console.log it to see updates
+    }
+
     return (
         <>
             <div className="bg-white col-start-2 row-start-1 flex items-center justify-start">
                 <div className="flex items-center justify-between mx-3">
-                    <div className="text-base font-semibold text-iso-secondary-text cursor-pointer">Download</div>
+                    <div className="text-base font-semibold text-iso-secondary-text cursor-pointer" onClick={handleDownload}>Download</div>
                     <div className="text-base font-semibold text-iso-secondary-text">&nbsp;|&nbsp;</div>
                     <div className="text-base font-semibold text-iso-secondary-text cursor-pointer">View</div>
                 </div>
