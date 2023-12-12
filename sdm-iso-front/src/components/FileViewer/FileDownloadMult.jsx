@@ -2,16 +2,23 @@ import React, {useEffect, useState} from 'react';
 import axios from "axios";
 import saveAs from 'file-saver';
 
-const FileDownloader = ({fileName}) => {
-    const [fileData, setFileData] = useState(null);
+
+const FileDownloadMult = ({fileNameArr}) => {
+    console.log("fileNameArr: ", fileNameArr)
     useEffect(() => {
-        const endpointUrl = `http://localhost:8080/api/sdmisofiles/viewordownload?filePath=FCTS_data/Attachments/${encodeURIComponent(fileName)}`;
+        let endpointUrl = "http://localhost:8080/api/sdmisofiles/download-zip?fileNames="
+        fileNameArr.forEach(file => {
+            endpointUrl += `FCTS_data/Attachments/${encodeURIComponent(file)},`
+        });
+        endpointUrl = endpointUrl.slice(0, -1)
+        console.log("url: ", endpointUrl)
         axios.get(endpointUrl, {
             responseType: 'arraybuffer',
         })
         .then(response => {
+            console.log("response: ", response)
             const blob = new Blob([response.data]);
-            saveAs(blob, fileName)
+            saveAs(blob, 'FCTS_data.zip')
             const file = URL.createObjectURL(blob)
             const a = document.createElement('a')
             a.href = file
@@ -21,10 +28,10 @@ const FileDownloader = ({fileName}) => {
             a.click()
         })
         .catch(error => {
-            console.error('Error downloading this file:', error);
+            console.error('Error downloading the zip file:', error);
             window.alert(`Error downloading this zip: ${error}`);
         });
-    }, [fileName]);
-};
+    }, [fileNameArr])
+}
 
-export default FileDownloader;
+export default FileDownloadMult;

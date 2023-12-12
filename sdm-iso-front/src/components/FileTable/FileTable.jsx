@@ -5,6 +5,8 @@ import Modal from "react-modal";
 import "./FileTable.css"
 import {FileTableCheckbox} from "./FileTableCheckbox"
 import {FileRender} from "../FileViewer/FileRender";
+import FileDownloader from "../FileViewer/FileDownloader";
+import FileDownloadMult from "../FileViewer/FileDownloadMult";
 
 const COLUMNS = [
 
@@ -101,6 +103,27 @@ export const FileTable = ({ data, fetchFunction, pageNum }) => {
         setIsOpen(true);
     };
 
+    let [selectedFiles, setSelectedFiles] = React.useState([])
+    let [downloadMult, setDownloadMult] = useState(false)
+    let [download, setDownload] = useState(false)
+    const handleDownload = () => {
+        // Here is the handle download
+        selectedFiles = selectedFlatRows.map(row => row.original.fileName);
+        setSelectedFiles(selectedFiles);
+
+        if (selectedFlatRows.length == 1) {
+            console.log("one file only: ", selectedFiles[0])
+            download = true;
+            setDownload(true);
+        } else if (selectedFlatRows.length > 1) {
+            downloadMult = true;
+            setDownloadMult(true);
+            console.log("selected file names: ", selectedFiles)
+        }
+        
+        console.log("Number of selected rows: ", selectedFlatRows.length)
+        console.log("Downloading files")
+    }
     const handleSortHeader = (columnID) => {
         console.log(`ColumnID: ${columnID}`)
         if(columnID === 'fileCreateDate') {
@@ -115,9 +138,13 @@ export const FileTable = ({ data, fetchFunction, pageNum }) => {
         <>
             <div className="bg-white col-start-2 row-start-1 flex items-center justify-start">
                 <div className="flex items-center justify-between mx-3">
-                    <div className="text-base font-semibold text-iso-secondary-text cursor-pointer">Download</div>
-                    <div className="text-base font-semibold text-iso-secondary-text">&nbsp;|&nbsp;</div>
-                    <div className="text-base font-semibold text-iso-secondary-text cursor-pointer">View</div>
+                    <div className="text-base font-semibold text-iso-secondary-text cursor-pointer">
+                        <button onClick={handleDownload}>
+                            <span>Download</span>
+                            {download && <FileDownloader fileName={selectedFiles[0]} />}
+                            {downloadMult && <FileDownloadMult fileNameArr={selectedFiles}/>}
+                        </button>
+                    </div>
                 </div>
             </div>
 

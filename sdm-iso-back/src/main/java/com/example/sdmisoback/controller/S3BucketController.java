@@ -11,6 +11,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.io.IOException;
+import java.util.Map;
+import java.util.HashMap;
 import java.util.List;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipOutputStream;
@@ -69,12 +71,21 @@ public class S3BucketController {
         ByteArrayOutputStream baos = new ByteArrayOutputStream();
         ZipOutputStream zipOut = new ZipOutputStream(baos);
 
+        // Hashmap to store the count of each file
+        Map<String, Integer> fileNameCountMap = new HashMap<>();
+
         // Iterate through file names, add each file to the zip output
         for (String fileName : fileNames) {
+            int count = fileNameCountMap.getOrDefault(fileName, 0);
+            fileNameCountMap.put(fileName, count + 1);
+
+            String newFileName = count > 0 ? modifyFileName(fileName, count) : fileName;
+            System.out.println(newFileName);
+
             S3Object s3Object = amazonS3.getObject(S3_BUCKET_NAME, fileName);
             byte[] content = s3Object.getObjectContent().readAllBytes();
 
-            ZipEntry zipEntry = new ZipEntry(fileName);
+            ZipEntry zipEntry = new ZipEntry(newFileName);
             zipOut.putNextEntry(zipEntry);
             zipOut.write(content);
         }
@@ -84,5 +95,13 @@ public class S3BucketController {
         return ResponseEntity.ok()
                 .headers(headers)
                 .body(baos.toByteArray());
+    }
+
+    // Helper method to rename duplicate files in the zip 
+    private String modifyFileName(String file, int count) {
+        int extensionDotIndex = file.lastIndexOf('.');
+        String extension = extensionDotIndex == -1 ? "" : file.substring(extensionDotIndex);
+        String nameWithoutExtension = extensionDotIndex == -1 ? file : file.substring(0, extensionDotIndex);
+        return nameWithoutExtension + "_(" + count + ")" + extension;
     }
 }
