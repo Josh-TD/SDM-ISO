@@ -152,7 +152,7 @@ export function FileList({ searchParameters, advancedSearchParameters }) {
     }
 
     if (selectedCommitPeriod.length != 0) {
-      full_url += "&commitPeriodDesc" + selectedCommitPeriod;
+      full_url += "&commitPeriodDesc=" + selectedCommitPeriod;
     }
 
     if (!auctionDateAny) {
