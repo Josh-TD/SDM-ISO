@@ -70,6 +70,7 @@ export function FileList({searchParameters, advancedSearchParameters}) {
 
   const [searchCurrParams, setSearchCurrParams] = useState(searchParameters);
   const [advancedSearchCurrParams, setAdvancedSearchCurrParams] = useState(advancedSearchParameters);
+  const [appliedFilters, setAppliedFilters] = useState("");
 
   useEffect( () => {
     setAdvancedSearchCurrParams(advancedSearchParameters);
@@ -89,6 +90,24 @@ export function FileList({searchParameters, advancedSearchParameters}) {
     setCurrPage(currPage + 1)
     usingFilters(true)
     fetchFiles(0,10,'createDate',true)
+    updateAppliedFilters()
+  }
+  const updateAppliedFilters = () => {
+    const appliedFiltersArray = []
+    if (selectedProjectTypes.length > 0) {
+      appliedFiltersArray.push(`Project Type(s): ${selectedProjectTypes.join(', ')} `);
+    }
+    if (selectedResourceTypes.length > 0) {
+      appliedFiltersArray.push(`Resource Type(s): ${selectedResourceTypes.join(', ')} `);
+    }
+    if (selectedAuctionTypes.length > 0) {
+      appliedFiltersArray.push(`Auction Type(s): ${selectedAuctionTypes.join(', ')} `);
+    }
+    if (selectedFileTypes.length > 0) {
+      appliedFiltersArray.push(`File Type(s): ${selectedFileTypes.join(', ')} `);
+    }
+    setAppliedFilters(appliedFiltersArray)
+    //console.log(appliedFiltersArray)
   }
 
   // resets states of checkboxes 
@@ -137,7 +156,7 @@ export function FileList({searchParameters, advancedSearchParameters}) {
   };
 
   const fetchUnfiltered = () => {
-
+    setAppliedFilters([])
     resetCheckboxStates();
     setCurrPage(currPage + 1);
     const basic_url = endpoint + `?pageNum=${pageNum}&pageSize=${pageSize}&sortBy=${sortBy}&sortAsc=${sortAsc ? "true" : "false"}`;
@@ -174,7 +193,9 @@ export function FileList({searchParameters, advancedSearchParameters}) {
       <div className="col-start-1 row-span-2 pr-1">
         <div className="bg-white container w-full flex flex-col shadow-[10px_0px_8px_-8px_#a0aec0]">
 
-          <div className="text-base font-semibold text-iso-secondary-text pl-4 pt-1 pb-16">Filtered by:</div>
+          <div className="text-base font-semibold text-iso-secondary-text pl-4 pt-1 pb-16">Filtered by:
+            <p className="text-sm text-gray-600">{appliedFilters}</p>
+          </div>
 
           <DropDown label="Project Type" defaultHidden={true}>
             <CheckBoxes array={projectTypesFilter} onChange={toggleProjectTypes} selectedElem={selectedProjectTypes} />
