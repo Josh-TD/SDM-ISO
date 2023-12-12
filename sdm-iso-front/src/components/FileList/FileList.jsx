@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from "react";
+import React, { useEffect, useState } from "react";
 import DatePicker from "react-datepicker";
 import Modal from "react-modal";
 import axios from "axios";
@@ -14,7 +14,7 @@ import { projectTypesFilter } from "./filters/projectTypes";
 
 // in the future, this file  list should also takes in how many files to display
 
-export function FileList({searchParameters, advancedSearchParameters}) {
+export function FileList({ searchParameters, advancedSearchParameters }) {
   // hardcoded endpoints, use .env file?
   const endpoint = "http://localhost:8080/api/v3/files/list";
   // these are the things that should pass into this file list in the future
@@ -71,7 +71,7 @@ export function FileList({searchParameters, advancedSearchParameters}) {
   const [searchCurrParams, setSearchCurrParams] = useState(searchParameters);
   const [advancedSearchCurrParams, setAdvancedSearchCurrParams] = useState(advancedSearchParameters);
 
-  useEffect( () => {
+  useEffect(() => {
     setAdvancedSearchCurrParams(advancedSearchParameters);
     setSearchCurrParams(searchParameters);
     console.log("param changed")
@@ -82,13 +82,13 @@ export function FileList({searchParameters, advancedSearchParameters}) {
   useEffect(() => {
     console.log('updating table')
     console.log(advancedSearchCurrParams)
-    fetchFiles(0,10,'createDate',true);
+    fetchFiles(0, 10, 'createDate', true);
   }, [searchParameters, advancedSearchParameters]);
 
   const onApplyFilters = () => {
     setCurrPage(currPage + 1)
     usingFilters(true)
-    fetchFiles(0,10,'createDate',true)
+    fetchFiles(0, 10, 'createDate', true)
   }
 
   // resets states of checkboxes 
@@ -102,8 +102,8 @@ export function FileList({searchParameters, advancedSearchParameters}) {
 
   };
 
-    // default is fetchFiles(0,10,'createDate',true)
-  const fetchFiles = (pageNum,pageSize,sortBy,sortAsc) => {
+  // default is fetchFiles(0,10,'createDate',true)
+  const fetchFiles = (pageNum, pageSize, sortBy, sortAsc) => {
     // not enough contents in the entry so we need more for proper filtering
     const basic_url = endpoint + `?pageNum=${pageNum}&pageSize=${pageSize}&sortBy=${sortBy}&sortAsc=${sortAsc ? "true" : "false"}`;
 
@@ -119,20 +119,26 @@ export function FileList({searchParameters, advancedSearchParameters}) {
       // + `&createdSince=${javaDate}`
 
       ;
-      if (searchCurrParams != null) {
-        console.log("im search")
-        full_url = full_url + searchCurrParams;
-      }
-      if (advancedSearchCurrParams != null) {
-        console.log("im advanced")
-        full_url = full_url + advancedSearchCurrParams;
-      }
-      console.log(full_url)
+    if (searchCurrParams != null) {
+      console.log("im search")
+      full_url = full_url + searchCurrParams;
+    }
+    if (advancedSearchCurrParams != null) {
+      console.log("im advanced")
+      full_url = full_url + advancedSearchCurrParams;
+    }
+    console.log(full_url)
 
     axios.get(full_url).then((res) => {
       setData(
         res.data
       );
+    }).catch(err => {
+      if (err.response && err.response.status === 404) {
+        setData(undefined);
+      } else {
+        console.log(err);
+      }
     })
   };
 
@@ -213,7 +219,7 @@ export function FileList({searchParameters, advancedSearchParameters}) {
       <div className="bg-white col-start-2 row-start-1 p-4">
         {/* File list */}
         <div className="width: 100% height: 100%">
-          {data && <FileTable data={data} fetchFunction={fetchFiles} pageNum={currPage}/>}
+          {data ? <FileTable data={data} fetchFunction={fetchFiles} pageNum={currPage} /> : <b className="text-center text-4xl">No data</b>}
         </div>
       </div>
     </div>
