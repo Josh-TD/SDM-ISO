@@ -127,8 +127,6 @@ export const FileTable = ({ data, fetchFunction }) => {
                             {downloadMult && <FileDownloadMult fileNameArr={selectedFiles}/>}
                         </button>
                     </div>
-                    <div className="text-base font-semibold text-iso-secondary-text">&nbsp;|&nbsp;</div>
-                    <div className="text-base font-semibold text-iso-secondary-text cursor-pointer">View</div>
                 </div>
             </div>
 
