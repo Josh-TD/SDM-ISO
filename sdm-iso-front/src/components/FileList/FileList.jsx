@@ -185,6 +185,8 @@ export function FileList({ searchParameters, advancedSearchParameters }) {
     setCurrPage(currPage + 1);
     setCreatedDateAny(true);
     setSelectedCreatedDate(new Date());
+    setAuctionDateStart(new Date());
+    setAuctionDateEnd(new Date());
     setSelectedCommitPeriod("");
     setAuctionDateAny(true);
 
