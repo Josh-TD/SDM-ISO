@@ -25,11 +25,11 @@ const FileFetcher = ({ fileName }) => {
                 const blob = new Blob([arrayBuffer]);
                 if (['BMP', 'JPG'].includes(fileType)) {
                     const imageUrl = URL.createObjectURL(blob);
-                    setFileData(<img src={imageUrl} alt={fileName}/>);
+                    setFileData(<img src={imageUrl} id={fileName} alt={fileName}/>);
                 } else if (fileType === 'PDF') {
                     const pdfBlob = new Blob([response.data], {type: 'application/pdf'});
                     const pdfURL = URL.createObjectURL(pdfBlob);
-                    setFileData(<iframe src={pdfURL} width="100%" height="500px" style={{border: 'none'}}/>);
+                    setFileData(<iframe src={pdfURL} width="100%" height="500px" id={fileName} style={{border: 'none'}}/>);
                 } else if (['TXT', 'HTML', 'HTM'].includes(fileType)) {
                     const reader = new FileReader();
                     reader.onloadend = function () {setFileData(parse(reader.result));};
@@ -44,7 +44,7 @@ const FileFetcher = ({ fileName }) => {
                 }
                 else if (fileType == 'MSG') {
                     const msgBody = new MsgReader(arrayBuffer).getFileData().body;
-                    setFileData(<div>{msgBody}</div>);
+                    setFileData(<div id={fileName}>{msgBody}</div>);
                 }
                 else if (fileType == 'DOC') {
                     // TODO: Render .doc files

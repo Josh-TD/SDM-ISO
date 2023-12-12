@@ -29,14 +29,14 @@ export function AuthBox(props) {
           {/* Email Address*/}
           <div className="mb-5">
             <label className="m-2 top-0 text-iso-dim-gray justify-right font-regular" htmlFor="email">Email Address:</label>
-            <input className="placeholder-color-iso-light-gray shadow cursor-text h-7 w-1/2 pl-2" placeholder="Email Address">
+            <input id="username" className="placeholder-color-iso-light-gray shadow cursor-text h-7 w-1/2 pl-2" placeholder="Email Address">
             </input>
           </div>
 
           {/* Password*/}
           <div>
             <label className="m-2 pl-12 text-iso-dim-gray justify-right font-regular" htmlFor="password">Password:</label>
-            <input className="placeholder-color-iso-light-gray pl-2 shadow cursor-text h-7 w-1/2" placeholder="Password" type={showPassword ? 'text' : 'password'} 
+            <input id="password" className="placeholder-color-iso-light-gray pl-2 shadow cursor-text h-7 w-1/2" placeholder="Password" type={showPassword ? 'text' : 'password'}
             >
             </input>
             <Icon icon={showPassword ? eye : eyeOff} onClick={togglePasswordVisibility} className='ml-2 cursor-pointer'></Icon>
@@ -58,7 +58,7 @@ export function AuthBox(props) {
           </div> 
 
           <div className="w-full text-right p-7">
-            <a className="text-iso-link-blue font-regular pr-5" href='/protected'>Sign in with SSO </a>
+            <a id="sso" className="text-iso-link-blue font-regular pr-5" href='/protected'>Sign in with SSO </a>
             <a className="text-iso-link-blue font-regular">Forgot your password?</a>
           </div> 
  
