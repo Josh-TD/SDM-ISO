@@ -134,11 +134,12 @@ export const FileTable = ({ data, fetchFunction, pageNum }) => {
                                         {
                                             column.id === 'select' || column.id === 'fileDescription' ? <></> : (
                                                 <>
-                                                    {sortBy !== column.id ? (
-                                                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="1.5" stroke="currentColor" className="w-6 h-6">
-                                                            <path strokeLinecap="round" strokeLinejoin="round" d="M8.25 15L12 18.75 15.75 15m-7.5-6L12 5.25 15.75 9" />
-                                                        </svg>
-                                                    ) : column.id === 'fileCreateDate' ? (
+                                                    {column.id === 'fileCreateDate' ? (
+                                                        sortBy !== 'createDate' ? (
+                                                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="1.5" stroke="currentColor" className="w-6 h-6">
+                                                                <path strokeLinecap="round" strokeLinejoin="round" d="M8.25 15L12 18.75 15.75 15m-7.5-6L12 5.25 15.75 9" />
+                                                            </svg>
+                                                        ) : (
                                                         sortAsc !== false ? (
                                                             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="1.5" stroke="currentColor" className="w-6 h-6">
                                                                 <path strokeLinecap="round" strokeLinejoin="round" d="M4.5 15.75l7.5-7.5 7.5 7.5" />
@@ -148,6 +149,11 @@ export const FileTable = ({ data, fetchFunction, pageNum }) => {
                                                                 <path strokeLinecap="round" strokeLinejoin="round" d="M19.5 8.25l-7.5 7.5-7.5-7.5" />
                                                             </svg>
                                                         )
+                                                    )) : (
+                                                    sortBy !== column.id ? (
+                                                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="1.5" stroke="currentColor" className="w-6 h-6">
+                                                            <path strokeLinecap="round" strokeLinejoin="round" d="M8.25 15L12 18.75 15.75 15m-7.5-6L12 5.25 15.75 9" />
+                                                        </svg>
                                                     ) : (
                                                     sortAsc !== false ? (
                                                         <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="1.5" stroke="currentColor" className="w-6 h-6">
@@ -157,7 +163,7 @@ export const FileTable = ({ data, fetchFunction, pageNum }) => {
                                                         <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="1.5" stroke="currentColor" className="w-6 h-6">
                                                             <path strokeLinecap="round" strokeLinejoin="round" d="M19.5 8.25l-7.5 7.5-7.5-7.5" />
                                                         </svg>
-                                                    ))}
+                                                    )))}
                                                 </>
                                             )
                                         }
