@@ -44,6 +44,7 @@ export const FileTable = ({ data, fetchFunction, pageNum }) => {
     let [pageSize ,setPageSize] = useState(10)
     let [sortBy, setSortBy] = useState('createDate')
     let [sortAsc, setSortAsc] = useState(true)
+    let [sortState, setSortState] = useState(0) //0 is none, 1 is asc, 2 is desc
 
     useEffect( () => {
         setPage(0)
@@ -51,8 +52,7 @@ export const FileTable = ({ data, fetchFunction, pageNum }) => {
     useEffect(() => {
         // fetchFiles(0,10,'createDate',true)
         fetchFunction(page,pageSize,sortBy,sortAsc)
-
-    }, [page])
+    }, [page, sortAsc])
 
     function handleNextClick() {
         setPage(page => page + 1)
@@ -75,7 +75,6 @@ export const FileTable = ({ data, fetchFunction, pageNum }) => {
             columns,
             data: data?.content
         },
-        useSortBy,
         useRowSelect,
         (hooks) => {
             hooks.visibleColumns.push(columns => [
@@ -102,6 +101,16 @@ export const FileTable = ({ data, fetchFunction, pageNum }) => {
         setIsOpen(true);
     };
 
+    const handleSortHeader = (columnID) => {
+        console.log(`ColumnID: ${columnID}`)
+        if(columnID === 'fileCreateDate') {
+            setSortBy('createDate')
+        } else {
+            setSortBy(columnID);
+        }
+        sortAsc === true ? setSortAsc(false) : setSortAsc(true)
+    };
+
     return (
         <>
             <div className="bg-white col-start-2 row-start-1 flex items-center justify-start">
@@ -117,29 +126,40 @@ export const FileTable = ({ data, fetchFunction, pageNum }) => {
                 <table className="bg-iso-offwhite w-full h-4/5" {...getTableProps()}>
                     <thead className="bg-iso-offwhite h-12">
                         {headerGroups.map((headerGroup) => (
-
                         <tr {...headerGroup.getHeaderGroupProps()} className="items-center">
                             {headerGroup.headers.map((column) => (
-                                <th {...column.getHeaderProps(
-                                    // if column id is equal to select then don't have sort by for that column
-                                    column.id !== 'select' ? column.getSortByToggleProps() : {}
-                                    )} className="p-2 place-items-center">
+                                <th {...column.getHeaderProps()} onClick={() => {column.id !== 'select' && column.id !== 'fileDescription' ? handleSortHeader(column.id) : {}}} className="p-2 place-items-center">
                                     {column.render('Header')}
                                     <span className="inline-block relative top-1.5">
-                                        {column.isSorted ? (column.isSortedDesc ?
-                                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="1.5" stroke="currentColor" className="w-6 h-6">
-                                                <path strokeLinecap="round" strokeLinejoin="round" d="M4.5 15.75l7.5-7.5 7.5 7.5" />
-                                            </svg>
-                                            :
-                                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="1.5" stroke="currentColor" className="w-6 h-6">
-                                                <path strokeLinecap="round" strokeLinejoin="round" d="M19.5 8.25l-7.5 7.5-7.5-7.5" />
-                                            </svg>
-                                        ) :
-                                            // removes icon for select row
-                                            column.id == 'select' ? <></> :
-                                                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="1.5" stroke="currentColor" className="w-6 h-6">
-                                                    <path strokeLinecap="round" strokeLinejoin="round" d="M8.25 15L12 18.75 15.75 15m-7.5-6L12 5.25 15.75 9" />
-                                                </svg>
+                                        {
+                                            column.id === 'select' || column.id === 'fileDescription' ? <></> : (
+                                                <>
+                                                    {sortBy !== column.id ? (
+                                                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="1.5" stroke="currentColor" className="w-6 h-6">
+                                                            <path strokeLinecap="round" strokeLinejoin="round" d="M8.25 15L12 18.75 15.75 15m-7.5-6L12 5.25 15.75 9" />
+                                                        </svg>
+                                                    ) : column.id === 'fileCreateDate' ? (
+                                                        sortAsc !== false ? (
+                                                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="1.5" stroke="currentColor" className="w-6 h-6">
+                                                                <path strokeLinecap="round" strokeLinejoin="round" d="M4.5 15.75l7.5-7.5 7.5 7.5" />
+                                                            </svg>
+                                                        ) : (
+                                                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="1.5" stroke="currentColor" className="w-6 h-6">
+                                                                <path strokeLinecap="round" strokeLinejoin="round" d="M19.5 8.25l-7.5 7.5-7.5-7.5" />
+                                                            </svg>
+                                                        )
+                                                    ) : (
+                                                    sortAsc !== false ? (
+                                                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="1.5" stroke="currentColor" className="w-6 h-6">
+                                                            <path strokeLinecap="round" strokeLinejoin="round" d="M4.5 15.75l7.5-7.5 7.5 7.5" />
+                                                        </svg>
+                                                    ) : (
+                                                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="1.5" stroke="currentColor" className="w-6 h-6">
+                                                            <path strokeLinecap="round" strokeLinejoin="round" d="M19.5 8.25l-7.5 7.5-7.5-7.5" />
+                                                        </svg>
+                                                    ))}
+                                                </>
+                                            )
                                         }
                                     </span>
                                 </th>
