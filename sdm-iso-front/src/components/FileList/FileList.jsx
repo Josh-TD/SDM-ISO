@@ -105,6 +105,10 @@ export function FileList({ searchParameters, advancedSearchParameters }) {
     if (selectedAuctionTypes.length > 0) {
       appliedFiltersArray.push(`Auction Type(s): ${selectedAuctionTypes.join(', ')} `);
     }
+    console.log(selectedCommitPeriod)
+    if (selectedCommitPeriod.length > 0) {
+      appliedFiltersArray.push(`Commitment  Period: ${selectedCommitPeriod} `);
+    }
     if (selectedFileTypes.length > 0) {
       appliedFiltersArray.push(`File Type(s): ${selectedFileTypes.join(', ')} `);
     }
