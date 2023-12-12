@@ -191,6 +191,15 @@ public class FiltersIntegrationTest {
     }
 
     @Test
+    public void Filters_SingularFilter_ProposalPeriodTypesEmpty() throws Exception {
+        mvc.perform(get(defaultRequest + "&propPeriodTypes=AUCTION"))
+                .andExpect(status().isOk())
+                .andExpect(content().contentType(MediaType.APPLICATION_JSON))
+                .andExpect(jsonPath("$.empty").value(true))
+                .andExpect(jsonPath("$.totalElements").value(0));
+    }
+
+    @Test
     public void Filters_SingularFilter_ProposalPeriodDescription() throws Exception {
         mvc.perform(get(defaultRequest + "&propPeriodDesc=2011"))
                 .andExpect(status().isOk())
@@ -241,13 +250,23 @@ public class FiltersIntegrationTest {
     }
 
     @Test
-    public void Filters_SingularFilter_ProjectTypes() throws Exception {
+    public void Filters_SingularFilter_ProjectTypesSingular() throws Exception {
         mvc.perform(get(defaultRequest + "&projectTypes=INCREMENTAL"))
                 .andExpect(status().isOk())
                 .andExpect(content().contentType(MediaType.APPLICATION_JSON))
                 .andExpect(jsonPath("$.empty").value(false))
                 .andExpect(jsonPath("$.totalElements").value(29))
                 .andExpect(jsonPath("$.content[0].attachmentId").value(1041));
+    }
+
+    @Test
+    public void Filters_SingularFilter_ProjectTypesMultiple() throws Exception {
+        mvc.perform(get(defaultRequest + "&projectTypes=INCREMENTAL&projectTypes=NEW_DR"))
+                .andExpect(status().isOk())
+                .andExpect(content().contentType(MediaType.APPLICATION_JSON))
+                .andExpect(jsonPath("$.empty").value(false))
+                .andExpect(jsonPath("$.totalElements").value(95))
+                .andExpect(jsonPath("$.content[0].attachmentId").value(1042));
     }
 
     @Test
@@ -291,12 +310,21 @@ public class FiltersIntegrationTest {
     }
 
     @Test
-    public void Filters_SingularFilter_ResourceTypes() throws Exception {
+    public void Filters_SingularFilter_ResourceTypesSingluar() throws Exception {
         mvc.perform(get(defaultRequest + "&resourceTypes=GEN"))
                 .andExpect(status().isOk())
                 .andExpect(content().contentType(MediaType.APPLICATION_JSON))
                 .andExpect(jsonPath("$.empty").value(false))
                 .andExpect(jsonPath("$.totalElements").value(67))
+                .andExpect(jsonPath("$.content[0].attachmentId").value(1042));
+    }
+    @Test
+    public void Filters_SingularFilter_ResourceTypesMultiple() throws Exception {
+        mvc.perform(get(defaultRequest + "&resourceTypes=GEN&resourceTypes=DR"))
+                .andExpect(status().isOk())
+                .andExpect(content().contentType(MediaType.APPLICATION_JSON))
+                .andExpect(jsonPath("$.empty").value(false))
+                .andExpect(jsonPath("$.totalElements").value(133))
                 .andExpect(jsonPath("$.content[0].attachmentId").value(1042));
     }
 
@@ -450,7 +478,6 @@ public class FiltersIntegrationTest {
                 .andExpect(jsonPath("$.content[0].attachmentId").value(1038));
     }
 
-    // TODO: For all the "Types" Filters, make call for multiple
     // TODO: All more tests where there is more than 1 filter being applied
     // TODO: SQL injection test (kinda redundent since we already know its SQL injection proof)
 }
