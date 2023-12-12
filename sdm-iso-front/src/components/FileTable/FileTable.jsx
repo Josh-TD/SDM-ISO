@@ -108,17 +108,19 @@ export const FileTable = ({ data, fetchFunction, pageNum }) => {
     let [download, setDownload] = useState(false)
     const handleDownload = () => {
         // Here is the handle download
-        // selectedFlatRows is like any other array, just console.log it to see updates
+        selectedFiles = selectedFlatRows.map(row => row.original.fileName);
+        setSelectedFiles(selectedFiles);
+
         if (selectedFlatRows.length == 1) {
+            console.log("one file only: ", selectedFiles[0])
             download = true;
             setDownload(true);
         } else if (selectedFlatRows.length > 1) {
-            selectedFiles = selectedFlatRows.map(row => row.original.fileName);
-            setSelectedFiles(selectedFiles);
             downloadMult = true;
             setDownloadMult(true);
             console.log("selected file names: ", selectedFiles)
         }
+        
         console.log("Number of selected rows: ", selectedFlatRows.length)
         console.log("Downloading files")
     }
@@ -139,7 +141,7 @@ export const FileTable = ({ data, fetchFunction, pageNum }) => {
                     <div className="text-base font-semibold text-iso-secondary-text cursor-pointer">
                         <button onClick={handleDownload}>
                             <span>Download</span>
-                            {download && <FileDownloader fileName={selectedFileName} />}
+                            {download && <FileDownloader fileName={selectedFiles[0]} />}
                             {downloadMult && <FileDownloadMult fileNameArr={selectedFiles}/>}
                         </button>
                     </div>
