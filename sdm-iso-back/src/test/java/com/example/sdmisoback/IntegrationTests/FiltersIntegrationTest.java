@@ -2,6 +2,8 @@ package com.example.sdmisoback.IntegrationTests;
 
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
+import static org.hamcrest.Matchers.everyItem;
+import static org.hamcrest.Matchers.equalTo;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -193,10 +195,7 @@ public class FiltersIntegrationTest {
     @Test
     public void Filters_SingularFilter_ProposalPeriodTypesEmpty() throws Exception {
         mvc.perform(get(defaultRequest + "&propPeriodTypes=AUCTION"))
-                .andExpect(status().isOk())
-                .andExpect(content().contentType(MediaType.APPLICATION_JSON))
-                .andExpect(jsonPath("$.empty").value(true))
-                .andExpect(jsonPath("$.totalElements").value(0));
+                .andExpect(status().isNotFound());
     }
 
     @Test
@@ -478,6 +477,27 @@ public class FiltersIntegrationTest {
                 .andExpect(jsonPath("$.content[0].attachmentId").value(1038));
     }
 
-    // TODO: All more tests where there is more than 1 filter being applied
-    // TODO: SQL injection test (kinda redundent since we already know its SQL injection proof)
+    @Test
+    public void Filters_MultipleFilters_AucPeriodDescAndCustName() throws Exception {
+        mvc.perform(get(defaultRequest + "&customerName=cons&aucPeriodDesc=2020"))
+                .andExpect(status().isOk())
+                .andExpect(content().contentType(MediaType.APPLICATION_JSON))
+                .andExpect(jsonPath("$.empty").value(false))
+                .andExpect(jsonPath("$.totalElements").value(8))
+                .andExpect(jsonPath("$.content[0].attachmentId").value(1042))
+                .andExpect(jsonPath("$.content[*].customerName").value(everyItem(equalTo("Constant Energy"))));
+    }
+
+    // Parameterized Queries are used for almost every single parameter the same exact way
+    // Only one thats different is fileTypes, which we handle and test for here
+    @Test
+    public void Filters_SQL_Injection_Test() throws Exception {
+        String sqlInjectionValue = "'; SELECT * FROM attachment_files; --";
+
+        mvc.perform(get(defaultRequest + "&customerName=" + sqlInjectionValue))
+                .andExpect(status().isNotFound());
+
+        mvc.perform(get(defaultRequest + "&fileTypes=" + sqlInjectionValue))
+                .andExpect(status().isBadRequest());
+    }
 }
