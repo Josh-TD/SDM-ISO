@@ -91,7 +91,7 @@ export function FileList({ searchParameters, advancedSearchParameters }) {
   const onApplyFilters = () => {
     setCurrPage(currPage + 1)
     usingFilters(true)
-    fetchFiles(0,10,'createDate',true)
+    fetchFiles(0, 10, 'createDate', true)
     updateAppliedFilters()
   }
   const updateAppliedFilters = () => {
@@ -256,7 +256,7 @@ export function FileList({ searchParameters, advancedSearchParameters }) {
       <div className="bg-white col-start-2 row-start-1 p-4">
         {/* File list */}
         <div className="width: 100% height: 100%">
-          {data ? <FileTable data={data} fetchFunction={fetchFiles} pageNum={currPage} /> : <b className="text-center text-4xl">No data</b>}
+          {data ? <FileTable data={data} fetchFunction={fetchFiles} pageNum={currPage} /> : <b className="text-center text-4xl">No files to display.</b>}
         </div>
       </div>
     </div>
