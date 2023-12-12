@@ -62,6 +62,8 @@ export function FileList({searchParameters, advancedSearchParameters}) {
   const [auctionDateEnd, setAuctionDateEnd] = useState(new Date());
   const [auctionDateAny, setAuctionDateAny] = useState(true);
 
+  const [selectedCommitPeriod, setSelectedCommitPeriod] = useState(new String())
+
   const [data, setData] = useState(null);
   const [filters, usingFilters] = useState(false);
 
@@ -115,6 +117,7 @@ export function FileList({searchParameters, advancedSearchParameters}) {
       + `${selectedResourceTypes.reduce((acc, e) => acc + "&resourceTypes=" + e, "")}`
       + `${selectedAuctionTypes.reduce((acc, e) => acc + "&auctionTypes=" + e, "")}`
       + `${selectedFileTypes.reduce((acc, e) => acc + "&fileTypes=" + e, "")}`
+      + `${"&commitPeriodDesc=" + selectedCommitPeriod}`
 
       // + `&createdSince=${javaDate}`
 
@@ -193,6 +196,19 @@ export function FileList({searchParameters, advancedSearchParameters}) {
             <DatePicker selected={auctionDateStart} onChange={(date) => { setAuctionDateStart(date); setAuctionDateAny(false) }} />
             <legend>End date:</legend>
             <DatePicker selected={auctionDateEnd} onChange={(date) => { setAuctionDateEnd(date); setAuctionDateAny(false) }} />
+          </DropDown>
+
+          <DropDown label="Commitment Period" defaultHidden={true}>
+            <select id="commitment-period" onChange={(e) => setSelectedCommitPeriod(e.target.value)} className="block w-full mt-1 py-2 px-3 border focus-ring bg-white focus:border-blue-300">
+              <option value="select">Select...</option>
+              <option value="2010-11">2010-11</option>
+              <option value="2012-13">2012-13</option>
+              <option value="2014-15">2014-15</option>
+              <option value="2016-17">2016-17</option>
+              <option value="2018-19">2018-19</option>
+              <option value="2020-21">2020-21</option>
+              <option value="2022-23">2022-23</option>
+            </select>
           </DropDown>
 
           <DropDown label="Created Date" defaultHidden={true}>
