@@ -22,7 +22,7 @@ const FileDownloader = ({fileName}) => {
         })
         .catch(error => {
             console.error('Error downloading this file:', error);
-            window.alert("Error downloading this file: \{error}", error);
+            window.alert(`Error downloading this zip: ${error}`);
         });
     }, [fileName]);
 };

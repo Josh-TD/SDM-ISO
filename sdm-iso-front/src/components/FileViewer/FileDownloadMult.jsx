@@ -29,7 +29,7 @@ const FileDownloadMult = ({fileNameArr}) => {
         })
         .catch(error => {
             console.error('Error downloading the zip file:', error);
-            window.alert("Error downloading this zip: \{error}", error);
+            window.alert(`Error downloading this zip: ${error}`);
         });
     }, [fileNameArr])
 }
