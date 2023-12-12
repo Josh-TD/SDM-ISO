@@ -3,9 +3,9 @@ Cypress.Commands.add(`signOut`, () => {
     cy.clearCookies({ domain: null });
 });
 
-Cypress.Commands.add(`signIn`, () => {
-    cy.log(`Signing in.`);
-    cy.visit(`http://localhost:3000/protected`);
+Cypress.Commands.add("LoggingIn", () => {
+    cy.log(`Starting to Log In.`);
+    cy.visit(`http://localhost:3000/`);
     cy.window()
         .should((window) => {
             expect(window).to.not.have.property(`Clerk`, undefined);
@@ -17,11 +17,11 @@ Cypress.Commands.add(`signIn`, () => {
                 identifier: Cypress.env(`test_email`),
                 password: Cypress.env(`test_password`),
             });
-
             await window.Clerk.setActive({
                 session: res.createdSessionId,
             });
-
-            cy.log(`Finished Signing in.`);
+            cy.log(`Finished Logging In.`);
         });
 });
+
+
