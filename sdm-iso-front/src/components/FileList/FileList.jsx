@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from "react";
+import React, { useEffect, useState } from "react";
 import DatePicker from "react-datepicker";
 import Modal from "react-modal";
 import axios from "axios";
@@ -14,7 +14,7 @@ import { projectTypesFilter } from "./filters/projectTypes";
 
 // in the future, this file  list should also takes in how many files to display
 
-export function FileList({searchParameters, advancedSearchParameters}) {
+export function FileList({ searchParameters, advancedSearchParameters }) {
   // hardcoded endpoints, use .env file?
   const endpoint = "http://localhost:8080/api/v3/files/list";
   // these are the things that should pass into this file list in the future
@@ -74,7 +74,7 @@ export function FileList({searchParameters, advancedSearchParameters}) {
   const [advancedSearchCurrParams, setAdvancedSearchCurrParams] = useState(advancedSearchParameters);
   const [appliedFilters, setAppliedFilters] = useState("");
 
-  useEffect( () => {
+  useEffect(() => {
     setAdvancedSearchCurrParams(advancedSearchParameters);
     setSearchCurrParams(searchParameters);
     console.log("param changed")
@@ -85,13 +85,13 @@ export function FileList({searchParameters, advancedSearchParameters}) {
   useEffect(() => {
     console.log('updating table')
     console.log(advancedSearchCurrParams)
-    fetchFiles(0,10,'createDate',true);
+    fetchFiles(0, 10, 'createDate', true);
   }, [searchParameters, advancedSearchParameters]);
 
   const onApplyFilters = () => {
     setCurrPage(currPage + 1)
     usingFilters(true)
-    fetchFiles(0,10,'createDate',true)
+    fetchFiles(0, 10, 'createDate', true)
     updateAppliedFilters()
   }
   const updateAppliedFilters = () => {
@@ -123,33 +123,48 @@ export function FileList({searchParameters, advancedSearchParameters}) {
 
   };
 
-    // default is fetchFiles(0,10,'createDate',true)
-  const fetchFiles = (pageNum,pageSize,sortBy,sortAsc) => {
-    // not enough contents in the entry so we need more for proper filtering
+  const dateObjectToJavaDate = (date_obj) => {
+    const binding = date_obj.toISOString();
+    return binding.substring(0, binding.length - 5)
+  }
+
+  // default is fetchFiles(0,10,'createDate',true)
+  const fetchFiles = (pageNum, pageSize, sortBy, sortAsc) => {
     const basic_url = endpoint + `?pageNum=${pageNum}&pageSize=${pageSize}&sortBy=${sortBy}&sortAsc=${sortAsc ? "true" : "false"}`;
 
-    // const isoDate = getFilterDateFormat(selectedDateRange);
-    // const javaDate = isoDate.substring(0, isoDate.length - 5);
+    const createdSinceJava = dateObjectToJavaDate(selectedCreatedDate);
+    const auctionDateStartJava = dateObjectToJavaDate(auctionDateStart);
+    const auctionDateEndJava = dateObjectToJavaDate(auctionDateEnd);
 
     let full_url = basic_url
       + `${selectedProjectTypes.reduce((acc, e) => acc + "&projectTypes=" + e, "")}`
       + `${selectedResourceTypes.reduce((acc, e) => acc + "&resourceTypes=" + e, "")}`
       + `${selectedAuctionTypes.reduce((acc, e) => acc + "&auctionTypes=" + e, "")}`
       + `${selectedFileTypes.reduce((acc, e) => acc + "&fileTypes=" + e, "")}`
-      + `${"&commitPeriodDesc=" + selectedCommitPeriod}`
-
-      // + `&createdSince=${javaDate}`
-
       ;
-      if (searchCurrParams != null) {
-        console.log("im search")
-        full_url = full_url + searchCurrParams;
-      }
-      if (advancedSearchCurrParams != null) {
-        console.log("im advanced")
-        full_url = full_url + advancedSearchCurrParams;
-      }
-      console.log(full_url)
+
+    if (!createdDateAny) {
+      full_url += "&createdSince=" + createdSinceJava;
+    }
+
+    if (selectedCommitPeriod.length != 0) {
+      full_url += "&commitPeriodDesc" + selectedCommitPeriod;
+    }
+
+    if (!auctionDateAny) {
+      full_url += "&aucBeginDate=" + auctionDateStartJava;
+      full_url += "&aucEndDate=" + auctionDateEndJava;
+    }
+
+    if (searchCurrParams != null) {
+      console.log("im search")
+      full_url = full_url + searchCurrParams;
+    }
+    if (advancedSearchCurrParams != null) {
+      console.log("im advanced")
+      full_url = full_url + advancedSearchCurrParams;
+    }
+    console.log(full_url)
 
     axios.get(full_url).then((res) => {
       setData(
@@ -162,6 +177,11 @@ export function FileList({searchParameters, advancedSearchParameters}) {
     setAppliedFilters([])
     resetCheckboxStates();
     setCurrPage(currPage + 1);
+    setCreatedDateAny(true);
+    setSelectedCreatedDate(new Date());
+    setSelectedCommitPeriod("");
+    setAuctionDateAny(true);
+
     const basic_url = endpoint + `?pageNum=${pageNum}&pageSize=${pageSize}&sortBy=${sortBy}&sortAsc=${sortAsc ? "true" : "false"}`;
     axios.get(basic_url).then((res) => {
       setData(
@@ -220,7 +240,7 @@ export function FileList({searchParameters, advancedSearchParameters}) {
           </DropDown>
 
           <DropDown label="Commitment Period" defaultHidden={true}>
-            <select id="commitment-period" onChange={(e) => setSelectedCommitPeriod(e.target.value)} className="block w-full mt-1 py-2 px-3 border focus-ring bg-white focus:border-blue-300">
+            <select value={selectedCommitPeriod} id="commitment-period" onChange={(e) => setSelectedCommitPeriod(e.target.value)} className="block w-full mt-1 py-2 px-3 border focus-ring bg-white focus:border-blue-300">
               <option value="select">Select...</option>
               <option value="2010-11">2010-11</option>
               <option value="2012-13">2012-13</option>
@@ -250,7 +270,7 @@ export function FileList({searchParameters, advancedSearchParameters}) {
       <div className="bg-white col-start-2 row-start-1 p-4">
         {/* File list */}
         <div className="width: 100% height: 100%">
-          {data && <FileTable data={data} fetchFunction={fetchFiles} pageNum={currPage}/>}
+          {data && <FileTable data={data} fetchFunction={fetchFiles} pageNum={currPage} />}
         </div>
       </div>
     </div>
