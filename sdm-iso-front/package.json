@@ -75,6 +75,8 @@
     "babel-plugin-transform-es2015-object-super": "^6.24.1",
     "babel-plugin-transform-runtime": "^6.23.0",
     "babel-preset-stage-0": "^6.24.1",
+    "clerk-cypress": "^0.1.11",
+    "cypress": "^13.6.1",
     "mocha": "^10.2.0",
     "postcss": "^8.4.31",
     "react-router-dom": "^6.16.0",

@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import {Icon} from 'react-icons-kit';
 import {eyeOff} from 'react-icons-kit/feather/eyeOff';
 import {eye} from 'react-icons-kit/feather/eye'
-
+import { SignedIn, SignedOut } from "@clerk/clerk-react";
 
 export function AuthBox(props) {
 
@@ -60,7 +60,13 @@ export function AuthBox(props) {
           <div className="w-full text-right p-7">
             <a id="sso" className="text-iso-link-blue font-regular pr-5" href='/protected'>Sign in with SSO </a>
             <a className="text-iso-link-blue font-regular">Forgot your password?</a>
-          </div> 
+          </div>
+          <SignedIn>
+            <h1>Signed in</h1>
+          </SignedIn>
+          <SignedOut>
+            <h1>Signed out</h1>
+          </SignedOut>
  
         </div>
       </div>

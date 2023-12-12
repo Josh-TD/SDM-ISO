@@ -2,7 +2,7 @@ import React from 'react';
 import Header from '../Header/Header';
 import { FileList } from '../FileList/FileList';
 
-import {UserButton } from "@clerk/clerk-react";
+import {SignedIn, UserButton} from "@clerk/clerk-react";
 import {useState} from 'react';
 import Popup from '../Misc/Popup';
 

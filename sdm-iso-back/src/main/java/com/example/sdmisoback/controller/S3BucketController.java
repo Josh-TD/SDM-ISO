@@ -55,7 +55,6 @@ public class S3BucketController {
                 .headers(headers)
                 .body(content);
     }
-
     // Endpoint to download multiple files as a zip
     // Testing: "http://localhost:8080/api/sdmisofiles/download-zip?fileNames=FCM%20-%20Document%20Management%20App.pdf,Proposal_Attachement_Results_Query.xlsx,Final%20Arch%20Diagram.png"
     // Testing: The downloaded zip after calling that endpoint should contain these three files: FCM - Document Management App.pdf, Proposal_Attachement_Results_Query.xlsx, Final Arch Diagram.png
