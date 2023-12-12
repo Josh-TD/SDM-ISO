@@ -62,6 +62,8 @@ export function FileList({ searchParameters, advancedSearchParameters }) {
   const [auctionDateEnd, setAuctionDateEnd] = useState(new Date());
   const [auctionDateAny, setAuctionDateAny] = useState(true);
 
+  const [selectedCommitPeriod, setSelectedCommitPeriod] = useState(new String())
+
   const [data, setData] = useState(null);
   const [filters, usingFilters] = useState(false);
 
@@ -70,6 +72,7 @@ export function FileList({ searchParameters, advancedSearchParameters }) {
 
   const [searchCurrParams, setSearchCurrParams] = useState(searchParameters);
   const [advancedSearchCurrParams, setAdvancedSearchCurrParams] = useState(advancedSearchParameters);
+  const [appliedFilters, setAppliedFilters] = useState("");
 
   useEffect(() => {
     setAdvancedSearchCurrParams(advancedSearchParameters);
@@ -88,7 +91,25 @@ export function FileList({ searchParameters, advancedSearchParameters }) {
   const onApplyFilters = () => {
     setCurrPage(currPage + 1)
     usingFilters(true)
-    fetchFiles(0, 10, 'createDate', true)
+    fetchFiles(0,10,'createDate',true)
+    updateAppliedFilters()
+  }
+  const updateAppliedFilters = () => {
+    const appliedFiltersArray = []
+    if (selectedProjectTypes.length > 0) {
+      appliedFiltersArray.push(`Project Type(s): ${selectedProjectTypes.join(', ')} `);
+    }
+    if (selectedResourceTypes.length > 0) {
+      appliedFiltersArray.push(`Resource Type(s): ${selectedResourceTypes.join(', ')} `);
+    }
+    if (selectedAuctionTypes.length > 0) {
+      appliedFiltersArray.push(`Auction Type(s): ${selectedAuctionTypes.join(', ')} `);
+    }
+    if (selectedFileTypes.length > 0) {
+      appliedFiltersArray.push(`File Type(s): ${selectedFileTypes.join(', ')} `);
+    }
+    setAppliedFilters(appliedFiltersArray)
+    //console.log(appliedFiltersArray)
   }
 
   // resets states of checkboxes 
@@ -115,6 +136,7 @@ export function FileList({ searchParameters, advancedSearchParameters }) {
       + `${selectedResourceTypes.reduce((acc, e) => acc + "&resourceTypes=" + e, "")}`
       + `${selectedAuctionTypes.reduce((acc, e) => acc + "&auctionTypes=" + e, "")}`
       + `${selectedFileTypes.reduce((acc, e) => acc + "&fileTypes=" + e, "")}`
+      + `${"&commitPeriodDesc=" + selectedCommitPeriod}`
 
       // + `&createdSince=${javaDate}`
 
@@ -143,7 +165,7 @@ export function FileList({ searchParameters, advancedSearchParameters }) {
   };
 
   const fetchUnfiltered = () => {
-
+    setAppliedFilters([])
     resetCheckboxStates();
     setCurrPage(currPage + 1);
     const basic_url = endpoint + `?pageNum=${pageNum}&pageSize=${pageSize}&sortBy=${sortBy}&sortAsc=${sortAsc ? "true" : "false"}`;
@@ -180,7 +202,9 @@ export function FileList({ searchParameters, advancedSearchParameters }) {
       <div className="col-start-1 row-span-2 pr-1">
         <div className="bg-white container w-full flex flex-col shadow-[10px_0px_8px_-8px_#a0aec0]">
 
-          <div className="text-base font-semibold text-iso-secondary-text pl-4 pt-1 pb-16">Filtered by:</div>
+          <div className="text-base font-semibold text-iso-secondary-text pl-4 pt-1 pb-16">Filtered by:
+            <p className="text-sm text-gray-600">{appliedFilters}</p>
+          </div>
 
           <DropDown label="Project Type" defaultHidden={true}>
             <CheckBoxes array={projectTypesFilter} onChange={toggleProjectTypes} selectedElem={selectedProjectTypes} />
@@ -199,6 +223,19 @@ export function FileList({ searchParameters, advancedSearchParameters }) {
             <DatePicker selected={auctionDateStart} onChange={(date) => { setAuctionDateStart(date); setAuctionDateAny(false) }} />
             <legend>End date:</legend>
             <DatePicker selected={auctionDateEnd} onChange={(date) => { setAuctionDateEnd(date); setAuctionDateAny(false) }} />
+          </DropDown>
+
+          <DropDown label="Commitment Period" defaultHidden={true}>
+            <select id="commitment-period" onChange={(e) => setSelectedCommitPeriod(e.target.value)} className="block w-full mt-1 py-2 px-3 border focus-ring bg-white focus:border-blue-300">
+              <option value="select">Select...</option>
+              <option value="2010-11">2010-11</option>
+              <option value="2012-13">2012-13</option>
+              <option value="2014-15">2014-15</option>
+              <option value="2016-17">2016-17</option>
+              <option value="2018-19">2018-19</option>
+              <option value="2020-21">2020-21</option>
+              <option value="2022-23">2022-23</option>
+            </select>
           </DropDown>
 
           <DropDown label="Created Date" defaultHidden={true}>
