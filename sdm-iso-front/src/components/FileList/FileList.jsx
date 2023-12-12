@@ -123,24 +123,39 @@ export function FileList({ searchParameters, advancedSearchParameters }) {
 
   };
 
+  const dateObjectToJavaDate = (date_obj) => {
+    const binding = date_obj.toISOString();
+    return binding.substring(0, binding.length - 5)
+  }
+
   // default is fetchFiles(0,10,'createDate',true)
   const fetchFiles = (pageNum, pageSize, sortBy, sortAsc) => {
-    // not enough contents in the entry so we need more for proper filtering
     const basic_url = endpoint + `?pageNum=${pageNum}&pageSize=${pageSize}&sortBy=${sortBy}&sortAsc=${sortAsc ? "true" : "false"}`;
 
-    // const isoDate = getFilterDateFormat(selectedDateRange);
-    // const javaDate = isoDate.substring(0, isoDate.length - 5);
+    const createdSinceJava = dateObjectToJavaDate(selectedCreatedDate);
+    const auctionDateStartJava = dateObjectToJavaDate(auctionDateStart);
+    const auctionDateEndJava = dateObjectToJavaDate(auctionDateEnd);
 
     let full_url = basic_url
       + `${selectedProjectTypes.reduce((acc, e) => acc + "&projectTypes=" + e, "")}`
       + `${selectedResourceTypes.reduce((acc, e) => acc + "&resourceTypes=" + e, "")}`
       + `${selectedAuctionTypes.reduce((acc, e) => acc + "&auctionTypes=" + e, "")}`
       + `${selectedFileTypes.reduce((acc, e) => acc + "&fileTypes=" + e, "")}`
-      + `${"&commitPeriodDesc=" + selectedCommitPeriod}`
-
-      // + `&createdSince=${javaDate}`
-
       ;
+
+    if (!createdDateAny) {
+      full_url += "&createdSince=" + createdSinceJava;
+    }
+
+    if (selectedCommitPeriod.length != 0) {
+      full_url += "&commitPeriodDesc" + selectedCommitPeriod;
+    }
+
+    if (!auctionDateAny) {
+      full_url += "&aucBeginDate=" + auctionDateStartJava;
+      full_url += "&aucEndDate=" + auctionDateEndJava;
+    }
+
     if (searchCurrParams != null) {
       console.log("im search")
       full_url = full_url + searchCurrParams;
@@ -168,6 +183,13 @@ export function FileList({ searchParameters, advancedSearchParameters }) {
     setAppliedFilters([])
     resetCheckboxStates();
     setCurrPage(currPage + 1);
+    setCreatedDateAny(true);
+    setSelectedCreatedDate(new Date());
+    setAuctionDateStart(new Date());
+    setAuctionDateEnd(new Date());
+    setSelectedCommitPeriod("");
+    setAuctionDateAny(true);
+
     const basic_url = endpoint + `?pageNum=${pageNum}&pageSize=${pageSize}&sortBy=${sortBy}&sortAsc=${sortAsc ? "true" : "false"}`;
     axios.get(basic_url).then((res) => {
       setData(
@@ -226,7 +248,7 @@ export function FileList({ searchParameters, advancedSearchParameters }) {
           </DropDown>
 
           <DropDown label="Commitment Period" defaultHidden={true}>
-            <select id="commitment-period" onChange={(e) => setSelectedCommitPeriod(e.target.value)} className="block w-full mt-1 py-2 px-3 border focus-ring bg-white focus:border-blue-300">
+            <select value={selectedCommitPeriod} id="commitment-period" onChange={(e) => setSelectedCommitPeriod(e.target.value)} className="block w-full mt-1 py-2 px-3 border focus-ring bg-white focus:border-blue-300">
               <option value="select">Select...</option>
               <option value="2010-11">2010-11</option>
               <option value="2012-13">2012-13</option>
