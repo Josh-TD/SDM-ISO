@@ -3,10 +3,16 @@ import java.time.LocalDateTime;
 import java.util.Set;
 
 import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 @Entity
 @Data
+@NoArgsConstructor
+@AllArgsConstructor
+@Builder
 public class AttachmentFile {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

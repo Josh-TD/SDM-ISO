@@ -34,6 +34,7 @@ build/
 
 ### Environment Properties ###
 env.properties
+test_env.properties
 
 ## Niya's DB SQL Files ###
 19thto51stFiles.sql

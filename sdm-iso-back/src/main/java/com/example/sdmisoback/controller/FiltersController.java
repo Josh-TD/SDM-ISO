@@ -4,9 +4,12 @@ import java.time.LocalDateTime;
 import java.util.Arrays;
 import java.util.List;
 
+import org.apache.coyote.Response;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import com.example.sdmisoback.dto.FileViewDTO;
@@ -15,6 +18,8 @@ import com.example.sdmisoback.repository.FiltersRepo;
 
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
+import io.swagger.v3.oas.annotations.media.Content;
+import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import lombok.AllArgsConstructor;
@@ -36,10 +41,17 @@ public class FiltersController {
     @Operation(summary = "Get a single page of FileViews sorted, with many optional filters", 
                description = "returns a Spring Page object with content FileViewDTO based on the filters and sorting applied")
     @ApiResponses(value = {
-        @ApiResponse(responseCode = "200", description = "Successfully retrieved page of FileViews")
-        //TODO: add error response class and respond back with proper codes 401, 400, 404
+
+        @ApiResponse(responseCode = "200", description = "Successfully retrieved page of FileViews",
+            content = @Content(mediaType = "application/json", schema = @Schema(implementation = Page.class),
+            examples = @io.swagger.v3.oas.annotations.media.ExampleObject(name = "Single File As Content",
+            value = "{\"content\": [{\"attachmentId\": 1, \"fileName\": \"example.txt\", \"fileDescription\": \"Sample File\", \"fileCreateDate\": \"2023-01-01T12:00:00\", \"projectId\": 1, \"projectName\": \"Project A\", \"customerId\": 1, \"customerName\": \"Customer X\"}], \"totalElements\": 1, \"totalPages\": 1, \"size\": 10, \"number\": 0, \"first\": true, \"last\": true, \"empty\": false}"))),
+        @ApiResponse(responseCode = "400", description = "Invalid filter parameters",
+            content = @Content(mediaType = "text/plain")),
+        @ApiResponse(responseCode = "404", description = "Query Successful, but no files matching the filter criteria were found",
+            content = @Content(mediaType = "text/plain"))
     })  
-    public Page<FileViewDTO> filterAttachments(
+    public ResponseEntity<?> filterAttachments(
         // required parameters
         @RequestParam(name = "pageNum") 
         @Parameter(description = "Page number for pagination, starts at 0", example = "0") 
@@ -225,7 +237,7 @@ public class FiltersController {
         // process parameters
         PageRequest pr = PageRequest.of(pageNum, pageSize);
         if (!validSortBy.contains(sortBy))
-            throw new IllegalArgumentException("Invalid sortBy value: " + sortBy);
+            return ResponseEntity.badRequest().body("Invalid sortBy value: " + sortBy);
         
         switch(sortBy){
             case "customerName":
@@ -243,7 +255,7 @@ public class FiltersController {
         }
         
         if (fileTypes != null && !fileTypes.stream().allMatch(validFileTypes::contains))
-            throw new IllegalArgumentException("Invalid fileType value: " + fileTypes);
+            return ResponseEntity.badRequest().body("Invalid fileType value: " + fileTypes);
 
         FiltersDTO filters = new FiltersDTO(
             pr, sortBy, sortAsc,
@@ -258,6 +270,10 @@ public class FiltersController {
             aucPeriodId, aucPeriodTypes, aucPeriodDesc, aucPeriodBeginDate, aucPeriodEndDate
         );
 
-        return filtersRepo.filterAttachments(filters);
+        Page<FileViewDTO> result = filtersRepo.filterAttachments(filters);
+        if(result.isEmpty())
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Query Successful, but no files matching the filter criteria were found");
+        
+        return ResponseEntity.ok(result);
     }
 }

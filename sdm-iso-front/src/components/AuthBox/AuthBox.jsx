@@ -53,7 +53,7 @@ export function AuthBox(props) {
             </div>
 
               <div className = "inline-flex mt-5 pl-10 items-right">
-                <button id="Sign In" className="bg-iso-light-slate hover:bg-iso-link-blue text-white font-semibold py-2 px-4 rounded cursor-pointer float-right" href='/protected' onClick={props.authenticateFn}>Sign In</button>
+                <a className="bg-iso-light-slate hover:bg-iso-link-blue text-white font-semibold py-2 px-4 rounded cursor-pointer float-right" href='/protected'>Sign In</a>
               </div>
           </div> 
 
