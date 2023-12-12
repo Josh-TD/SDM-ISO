@@ -5,6 +5,8 @@ import Modal from "react-modal";
 import "./FileTable.css"
 import {FileTableCheckbox} from "./FileTableCheckbox"
 import {FileRender} from "../FileViewer/FileRender";
+import FileDownloader from "../FileViewer/FileDownloader";
+import FileDownloadMult from "../FileViewer/FileDownloadMult";
 
 const COLUMNS = [
 
@@ -94,16 +96,37 @@ export const FileTable = ({ data, fetchFunction }) => {
         setIsOpen(true);
     };
 
+    let [selectedFiles, setSelectedFiles] = React.useState([])
+    let [downloadMult, setDownloadMult] = useState(false)
+    let [download, setDownload] = useState(false)
     const handleDownload = () => {
         // Here is the handle download
         // selectedFlatRows is like any other array, just console.log it to see updates
+        if (selectedFlatRows.length == 1) {
+            download = true;
+            setDownload(true);
+        } else if (selectedFlatRows.length > 1) {
+            selectedFiles = selectedFlatRows.map(row => row.original.fileName);
+            setSelectedFiles(selectedFiles);
+            downloadMult = true;
+            setDownloadMult(true);
+            console.log("selected file names: ", selectedFiles)
+        }
+        console.log("Number of selected rows: ", selectedFlatRows.length)
+        console.log("Downloading files")
     }
 
     return (
         <>
             <div className="bg-white col-start-2 row-start-1 flex items-center justify-start">
                 <div className="flex items-center justify-between mx-3">
-                    <div className="text-base font-semibold text-iso-secondary-text cursor-pointer" onClick={handleDownload}>Download</div>
+                    <div className="text-base font-semibold text-iso-secondary-text cursor-pointer">
+                        <button onClick={handleDownload}>
+                            <span>Download</span>
+                            {download && <FileDownloader fileName={selectedFileName} />}
+                            {downloadMult && <FileDownloadMult fileNameArr={selectedFiles}/>}
+                        </button>
+                    </div>
                     <div className="text-base font-semibold text-iso-secondary-text">&nbsp;|&nbsp;</div>
                     <div className="text-base font-semibold text-iso-secondary-text cursor-pointer">View</div>
                 </div>
