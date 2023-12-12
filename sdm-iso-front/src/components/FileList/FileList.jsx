@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from "react";
+import React, { useEffect, useState } from "react";
 import DatePicker from "react-datepicker";
 import Modal from "react-modal";
 import axios from "axios";
@@ -14,7 +14,7 @@ import { projectTypesFilter } from "./filters/projectTypes";
 
 // in the future, this file  list should also takes in how many files to display
 
-export function FileList({searchParameters, advancedSearchParameters}) {
+export function FileList({ searchParameters, advancedSearchParameters }) {
   // hardcoded endpoints, use .env file?
   const endpoint = "http://localhost:8080/api/v3/files/list";
   // these are the things that should pass into this file list in the future
@@ -62,53 +62,138 @@ export function FileList({searchParameters, advancedSearchParameters}) {
   const [auctionDateEnd, setAuctionDateEnd] = useState(new Date());
   const [auctionDateAny, setAuctionDateAny] = useState(true);
 
+  const [selectedCommitPeriod, setSelectedCommitPeriod] = useState(new String())
+
   const [data, setData] = useState(null);
   const [filters, usingFilters] = useState(false);
 
-  useEffect(() => {
+  const [currPage, setCurrPage] = useState(0)
 
-    fetchFiles(0);
+
+  const [searchCurrParams, setSearchCurrParams] = useState(searchParameters);
+  const [advancedSearchCurrParams, setAdvancedSearchCurrParams] = useState(advancedSearchParameters);
+  const [appliedFilters, setAppliedFilters] = useState("");
+
+  useEffect(() => {
+    setAdvancedSearchCurrParams(advancedSearchParameters);
+    setSearchCurrParams(searchParameters);
+    console.log("param changed")
+    console.log(advancedSearchParameters);
+  }, [searchParameters, advancedSearchParameters])
+
+
+  useEffect(() => {
+    console.log('updating table')
+    console.log(advancedSearchCurrParams)
+    fetchFiles(0, 10, 'createDate', true);
   }, [searchParameters, advancedSearchParameters]);
 
   const onApplyFilters = () => {
+    setCurrPage(currPage + 1)
     usingFilters(true)
-    fetchFiles(0)
+    fetchFiles(0, 10, 'createDate', true)
+    updateAppliedFilters()
+  }
+  const updateAppliedFilters = () => {
+    const appliedFiltersArray = []
+    if (selectedProjectTypes.length > 0) {
+      appliedFiltersArray.push(`Project Type(s): ${selectedProjectTypes.join(', ')} `);
+    }
+    if (selectedResourceTypes.length > 0) {
+      appliedFiltersArray.push(`Resource Type(s): ${selectedResourceTypes.join(', ')} `);
+    }
+    if (selectedAuctionTypes.length > 0) {
+      appliedFiltersArray.push(`Auction Type(s): ${selectedAuctionTypes.join(', ')} `);
+    }
+    console.log(selectedCommitPeriod)
+    if (selectedCommitPeriod.length > 0) {
+      appliedFiltersArray.push(`Commitment  Period: ${selectedCommitPeriod} `);
+    }
+    if (selectedFileTypes.length > 0) {
+      appliedFiltersArray.push(`File Type(s): ${selectedFileTypes.join(', ')} `);
+    }
+    setAppliedFilters(appliedFiltersArray)
+    //console.log(appliedFiltersArray)
   }
 
-  const fetchFiles = (pageNum) => {
-    // not enough contents in the entry so we need more for proper filtering
+  // resets states of checkboxes 
+  const resetCheckboxStates = () => {
+    setSelectedFileTypes([]);
+    setSelectedResourceTypes([]);
+    setSelectedProjectTypes([]);
+    setSelectedAuctionTypes([]);
+    setAdvancedSearchCurrParams("");
+    setSearchCurrParams("");
+
+  };
+
+  const dateObjectToJavaDate = (date_obj) => {
+    const binding = date_obj.toISOString();
+    return binding.substring(0, binding.length - 5)
+  }
+
+  // default is fetchFiles(0,10,'createDate',true)
+  const fetchFiles = (pageNum, pageSize, sortBy, sortAsc) => {
     const basic_url = endpoint + `?pageNum=${pageNum}&pageSize=${pageSize}&sortBy=${sortBy}&sortAsc=${sortAsc ? "true" : "false"}`;
 
-    // const isoDate = getFilterDateFormat(selectedDateRange);
-    // const javaDate = isoDate.substring(0, isoDate.length - 5);
+    const createdSinceJava = dateObjectToJavaDate(selectedCreatedDate);
+    const auctionDateStartJava = dateObjectToJavaDate(auctionDateStart);
+    const auctionDateEndJava = dateObjectToJavaDate(auctionDateEnd);
 
     let full_url = basic_url
       + `${selectedProjectTypes.reduce((acc, e) => acc + "&projectTypes=" + e, "")}`
       + `${selectedResourceTypes.reduce((acc, e) => acc + "&resourceTypes=" + e, "")}`
       + `${selectedAuctionTypes.reduce((acc, e) => acc + "&auctionTypes=" + e, "")}`
       + `${selectedFileTypes.reduce((acc, e) => acc + "&fileTypes=" + e, "")}`
-
-      // + `&createdSince=${javaDate}`
-
       ;
-      if (searchParameters != null) {
-        console.log("im search")
-        full_url = full_url + searchParameters;
-      }
-      if (advancedSearchParameters != null) {
-        console.log("im advanced")
-        full_url = full_url + advancedSearchParameters;
-      }
-      console.log(full_url)
+
+    if (!createdDateAny) {
+      full_url += "&createdSince=" + createdSinceJava;
+    }
+
+    if (selectedCommitPeriod.length != 0) {
+      full_url += "&commitPeriodDesc" + selectedCommitPeriod;
+    }
+
+    if (!auctionDateAny) {
+      full_url += "&aucBeginDate=" + auctionDateStartJava;
+      full_url += "&aucEndDate=" + auctionDateEndJava;
+    }
+
+    if (searchCurrParams != null) {
+      console.log("im search")
+      full_url = full_url + searchCurrParams;
+    }
+    if (advancedSearchCurrParams != null) {
+      console.log("im advanced")
+      full_url = full_url + advancedSearchCurrParams;
+    }
+    console.log(full_url)
 
     axios.get(full_url).then((res) => {
       setData(
         res.data
       );
+    }).catch(err => {
+      if (err.response && err.response.status === 404) {
+        setData(undefined);
+      } else {
+        console.log(err);
+      }
     })
   };
 
   const fetchUnfiltered = () => {
+    setAppliedFilters([])
+    resetCheckboxStates();
+    setCurrPage(currPage + 1);
+    setCreatedDateAny(true);
+    setSelectedCreatedDate(new Date());
+    setAuctionDateStart(new Date());
+    setAuctionDateEnd(new Date());
+    setSelectedCommitPeriod("");
+    setAuctionDateAny(true);
+
     const basic_url = endpoint + `?pageNum=${pageNum}&pageSize=${pageSize}&sortBy=${sortBy}&sortAsc=${sortAsc ? "true" : "false"}`;
     axios.get(basic_url).then((res) => {
       setData(
@@ -143,18 +228,20 @@ export function FileList({searchParameters, advancedSearchParameters}) {
       <div className="col-start-1 row-span-2 pr-1">
         <div className="bg-white container w-full flex flex-col shadow-[10px_0px_8px_-8px_#a0aec0]">
 
-          <div className="text-base font-semibold text-iso-secondary-text pl-4 pt-1 pb-16">Filtered by:</div>
+          <div className="text-base font-semibold text-iso-secondary-text pl-4 pt-1 pb-16">Filtered by:
+            <p className="text-sm text-gray-600">{appliedFilters}</p>
+          </div>
 
           <DropDown label="Project Type" defaultHidden={true}>
-            <CheckBoxes array={projectTypesFilter} onChange={toggleProjectTypes} />
+            <CheckBoxes array={projectTypesFilter} onChange={toggleProjectTypes} selectedElem={selectedProjectTypes} />
           </DropDown>
 
           <DropDown label="Resource Type" defaultHidden={true}>
-            <CheckBoxes array={resourceTypesFilter} onChange={toggleResourceTypes} />
+            <CheckBoxes array={resourceTypesFilter} onChange={toggleResourceTypes} selectedElem={selectedResourceTypes} />
           </DropDown>
 
           <DropDown label="Auction Type" defaultHidden={true}>
-            <CheckBoxes array={auctionTypesFilter} onChange={toggleAuctionTypes} />
+            <CheckBoxes array={auctionTypesFilter} onChange={toggleAuctionTypes} selectedElem={selectedAuctionTypes} />
           </DropDown>
 
           <DropDown label="Auction Period" defaultHidden={true}>
@@ -164,12 +251,25 @@ export function FileList({searchParameters, advancedSearchParameters}) {
             <DatePicker selected={auctionDateEnd} onChange={(date) => { setAuctionDateEnd(date); setAuctionDateAny(false) }} />
           </DropDown>
 
+          <DropDown label="Commitment Period" defaultHidden={true}>
+            <select value={selectedCommitPeriod} id="commitment-period" onChange={(e) => setSelectedCommitPeriod(e.target.value)} className="block w-full mt-1 py-2 px-3 border focus-ring bg-white focus:border-blue-300">
+              <option value="select">Select...</option>
+              <option value="2010-11">2010-11</option>
+              <option value="2012-13">2012-13</option>
+              <option value="2014-15">2014-15</option>
+              <option value="2016-17">2016-17</option>
+              <option value="2018-19">2018-19</option>
+              <option value="2020-21">2020-21</option>
+              <option value="2022-23">2022-23</option>
+            </select>
+          </DropDown>
+
           <DropDown label="Created Date" defaultHidden={true}>
             <DatePicker selected={selectedCreatedDate} onChange={(date) => { setSelectedCreatedDate(date); setCreatedDateAny(false) }} />
           </DropDown>
 
           <DropDown label="File Type" defaultHidden={true}>
-            <CheckBoxes array={fileTypesFilter} onChange={toggleFileTypes} />
+            <CheckBoxes array={fileTypesFilter} onChange={toggleFileTypes} selectedElem={selectedFileTypes} />
           </DropDown>
 
           <div className="inline-flex mt-5 pl-5 mb-5 items-left">
@@ -182,7 +282,7 @@ export function FileList({searchParameters, advancedSearchParameters}) {
       <div className="bg-white col-start-2 row-start-1 p-4">
         {/* File list */}
         <div className="width: 100% height: 100%">
-          {data && <FileTable data={data} fetchFunction={fetchFiles} />}
+          {data ? <FileTable data={data} fetchFunction={fetchFiles} pageNum={currPage} /> : <b className="text-center text-4xl">No files to display.</b>}
         </div>
       </div>
     </div>

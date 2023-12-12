@@ -8,16 +8,16 @@ export function AdvancedSearch({onClosePopup, onAdvancedSearchPressed}) {
 
     const constructEndpoint = (selectedCustomerName, selectedProposalName, selectedProjectName, selectedFileDescription) => {
         let parameterURL = ''
-        if (selectedCustomerName != ''){
+        if (selectedCustomerName !== ''){
             parameterURL = parameterURL + `${"&customerName=" + selectedCustomerName}`
         }
-        if (selectedProposalName != ''){
+        if (selectedProposalName !== ''){
             parameterURL = parameterURL + `${"&proposalName=" + selectedProposalName}`
         }
-        if (selectedProjectName != ''){
+        if (selectedProjectName !== ''){
             parameterURL = parameterURL + `${"&projectName=" + selectedProjectName}`
         }
-        if (selectedFileDescription != ''){
+        if (selectedFileDescription !== ''){
             parameterURL = parameterURL + `${"&fileDescription=" + selectedFileDescription}`
         }
         onAdvancedSearchPressed(parameterURL)
