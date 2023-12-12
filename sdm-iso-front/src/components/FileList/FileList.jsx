@@ -170,6 +170,12 @@ export function FileList({ searchParameters, advancedSearchParameters }) {
       setData(
         res.data
       );
+    }).catch(err => {
+      if (err.response && err.response.status === 404) {
+        setData(undefined);
+      } else {
+        console.log(err);
+      }
     })
   };
 
@@ -270,7 +276,7 @@ export function FileList({ searchParameters, advancedSearchParameters }) {
       <div className="bg-white col-start-2 row-start-1 p-4">
         {/* File list */}
         <div className="width: 100% height: 100%">
-          {data && <FileTable data={data} fetchFunction={fetchFiles} pageNum={currPage} />}
+          {data ? <FileTable data={data} fetchFunction={fetchFiles} pageNum={currPage} /> : <b className="text-center text-4xl">No files to display.</b>}
         </div>
       </div>
     </div>
