@@ -65,17 +65,45 @@ export function FileList({searchParameters, advancedSearchParameters}) {
   const [data, setData] = useState(null);
   const [filters, usingFilters] = useState(false);
 
-  useEffect(() => {
+  const [currPage, setCurrPage] = useState(0)
 
-    fetchFiles(0);
+
+  const [searchCurrParams, setSearchCurrParams] = useState(searchParameters);
+  const [advancedSearchCurrParams, setAdvancedSearchCurrParams] = useState(advancedSearchParameters);
+
+  useEffect( () => {
+    setAdvancedSearchCurrParams(advancedSearchParameters);
+    setSearchCurrParams(searchParameters);
+    console.log("param changed")
+    console.log(advancedSearchParameters);
+  }, [searchParameters, advancedSearchParameters])
+
+
+  useEffect(() => {
+    console.log('updating table')
+    console.log(advancedSearchCurrParams)
+    fetchFiles(0,10,'createDate',true);
   }, [searchParameters, advancedSearchParameters]);
 
   const onApplyFilters = () => {
+    setCurrPage(currPage + 1)
     usingFilters(true)
-    fetchFiles(0)
+    fetchFiles(0,10,'createDate',true)
   }
 
-  const fetchFiles = (pageNum) => {
+  // resets states of checkboxes 
+  const resetCheckboxStates = () => {
+    setSelectedFileTypes([]);
+    setSelectedResourceTypes([]);
+    setSelectedProjectTypes([]);
+    setSelectedAuctionTypes([]);
+    setAdvancedSearchCurrParams("");
+    setSearchCurrParams("");
+
+  };
+
+    // default is fetchFiles(0,10,'createDate',true)
+  const fetchFiles = (pageNum,pageSize,sortBy,sortAsc) => {
     // not enough contents in the entry so we need more for proper filtering
     const basic_url = endpoint + `?pageNum=${pageNum}&pageSize=${pageSize}&sortBy=${sortBy}&sortAsc=${sortAsc ? "true" : "false"}`;
 
@@ -91,13 +119,13 @@ export function FileList({searchParameters, advancedSearchParameters}) {
       // + `&createdSince=${javaDate}`
 
       ;
-      if (searchParameters != null) {
+      if (searchCurrParams != null) {
         console.log("im search")
-        full_url = full_url + searchParameters;
+        full_url = full_url + searchCurrParams;
       }
-      if (advancedSearchParameters != null) {
+      if (advancedSearchCurrParams != null) {
         console.log("im advanced")
-        full_url = full_url + advancedSearchParameters;
+        full_url = full_url + advancedSearchCurrParams;
       }
       console.log(full_url)
 
@@ -109,6 +137,9 @@ export function FileList({searchParameters, advancedSearchParameters}) {
   };
 
   const fetchUnfiltered = () => {
+
+    resetCheckboxStates();
+    setCurrPage(currPage + 1);
     const basic_url = endpoint + `?pageNum=${pageNum}&pageSize=${pageSize}&sortBy=${sortBy}&sortAsc=${sortAsc ? "true" : "false"}`;
     axios.get(basic_url).then((res) => {
       setData(
@@ -146,15 +177,15 @@ export function FileList({searchParameters, advancedSearchParameters}) {
           <div className="text-base font-semibold text-iso-secondary-text pl-4 pt-1 pb-16">Filtered by:</div>
 
           <DropDown label="Project Type" defaultHidden={true}>
-            <CheckBoxes array={projectTypesFilter} onChange={toggleProjectTypes} />
+            <CheckBoxes array={projectTypesFilter} onChange={toggleProjectTypes} selectedElem={selectedProjectTypes} />
           </DropDown>
 
           <DropDown label="Resource Type" defaultHidden={true}>
-            <CheckBoxes array={resourceTypesFilter} onChange={toggleResourceTypes} />
+            <CheckBoxes array={resourceTypesFilter} onChange={toggleResourceTypes} selectedElem={selectedResourceTypes} />
           </DropDown>
 
           <DropDown label="Auction Type" defaultHidden={true}>
-            <CheckBoxes array={auctionTypesFilter} onChange={toggleAuctionTypes} />
+            <CheckBoxes array={auctionTypesFilter} onChange={toggleAuctionTypes} selectedElem={selectedAuctionTypes} />
           </DropDown>
 
           <DropDown label="Auction Period" defaultHidden={true}>
@@ -169,7 +200,7 @@ export function FileList({searchParameters, advancedSearchParameters}) {
           </DropDown>
 
           <DropDown label="File Type" defaultHidden={true}>
-            <CheckBoxes array={fileTypesFilter} onChange={toggleFileTypes} />
+            <CheckBoxes array={fileTypesFilter} onChange={toggleFileTypes} selectedElem={selectedFileTypes} />
           </DropDown>
 
           <div className="inline-flex mt-5 pl-5 mb-5 items-left">
@@ -182,7 +213,7 @@ export function FileList({searchParameters, advancedSearchParameters}) {
       <div className="bg-white col-start-2 row-start-1 p-4">
         {/* File list */}
         <div className="width: 100% height: 100%">
-          {data && <FileTable data={data} fetchFunction={fetchFiles} />}
+          {data && <FileTable data={data} fetchFunction={fetchFiles} pageNum={currPage}/>}
         </div>
       </div>
     </div>
